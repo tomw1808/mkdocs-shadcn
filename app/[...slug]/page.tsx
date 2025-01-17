@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Script from 'next/script'
 import Image from 'next/image'
 import { LightboxGallery, GalleryImage } from '@/components/LightboxGallery'
+import { LightboxImage } from '@/components/LightboxImage'
 import path from 'path'
 import { ensurePublicImageExists } from '@/lib/images'
 
@@ -45,23 +46,13 @@ export default async function Page({ params }: PageProps) {
                   }
                   galleryImages.push(galleryImage)
                   
-                  // Return image that will open the gallery at its index
+                  // Return the client component
                   return (
-                    <div 
-                      className="cursor-pointer"
-                      onClick={() => {
-                        const index = galleryImages.length - 1
-                        setGalleryIndex(index)
-                      }}
-                    >
-                      <Image
-                        src={publicPath}
-                        alt={props.alt || ''}
-                        width={800}
-                        height={600}
-                        style={{ maxWidth: '100%', height: 'auto' }}
-                      />
-                    </div>
+                    <LightboxImage
+                      src={publicPath}
+                      alt={props.alt}
+                      index={galleryImages.length - 1}
+                    />
                   )
                 }
                 // Fall back to regular image for remote URLs
