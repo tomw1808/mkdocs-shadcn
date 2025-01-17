@@ -3,8 +3,14 @@ import path from 'path'
 import matter from 'gray-matter'
 
 function preprocessHtmlInMarkdown(content: string): string {
-  // Convert style attributes to valid JSX
-  return content.replace(
+  // First convert MkDocs-style links to markdown links
+  let processedContent = content.replace(
+    /<(https?:\/\/[^>]+)>/g,
+    (match, url) => `[${url}](${url})`
+  );
+
+  // Then convert style attributes to valid JSX
+  processedContent = processedContent.replace(
     /style="([^"]*?)"/g,
     (match, styleString) => {
       const styleObject = styleString
@@ -22,7 +28,12 @@ function preprocessHtmlInMarkdown(content: string): string {
       
       return `style={${JSON.stringify(styleObject)}}`;
     }
-  ).replace(/frameborder=/g, "frameBorder=").replace(/allowfullscreen/g,"allowFullScreen");
+  );
+
+  // Handle other HTML attribute conversions
+  return processedContent
+    .replace(/frameborder=/g, "frameBorder=")
+    .replace(/allowfullscreen/g, "allowFullScreen");
 }
 
 export async function getMarkdownContent(slug: string[]) {
