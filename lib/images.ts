@@ -20,11 +20,16 @@ export function ensurePublicImageExists(originalPath: string): string {
   
   const publicPath = path.join(publicDir, publicFilename)
   
-  // Copy the file if it doesn't exist in the public directory
-  if (!fs.existsSync(publicPath)) {
-    fs.copyFileSync(fullOriginalPath, publicPath)
+  try {
+    // Copy the file if it doesn't exist in the public directory
+    if (!fs.existsSync(publicPath)) {
+      fs.copyFileSync(fullOriginalPath, publicPath)
+    }
+    
+    // Return the public URL path
+    return `/${PUBLIC_IMAGES_DIR}/${publicFilename}`
+  } catch (error) {
+    console.error(`Failed to process image: ${originalPath}`, error)
+    throw error
   }
-  
-  // Return the public URL path
-  return `/${PUBLIC_IMAGES_DIR}/${publicFilename}`
 }
