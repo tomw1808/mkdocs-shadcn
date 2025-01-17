@@ -18,7 +18,6 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
-import { LogoIcon } from "./Icons";
 import { useEffect, useState } from "react";
 
 interface RouteProps {
@@ -61,7 +60,7 @@ export const Navbar = () => {
                     </NavigationMenuItem>
 
                     {/* mobile */}
-                    <div className="flex visible md:hidden" suppressHydrationWarning>
+                    <div className="flex visible md:hidden">
                         <ModeToggle />
                         <ClientOnlySheet />
                     </div>
@@ -110,7 +109,7 @@ const ClientOnlySheet = () => {
     }, []);
 
     return (
-        <div suppressHydrationWarning>
+        <div>
             {isMounted && (
         <Sheet>
             <SheetTrigger className="px-2 md:hidden">
