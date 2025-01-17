@@ -5,6 +5,18 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Script from 'next/script'
 
+// Convert style string to object
+function styleStringToObject(style: string): React.CSSProperties {
+  return style.split(';').reduce((acc: any, style) => {
+    if (style.trim()) {
+      const [key, value] = style.split(':');
+      const propertyName = key.trim().replace(/-([a-z])/g, g => g[1].toUpperCase());
+      acc[propertyName] = value.trim();
+    }
+    return acc;
+  }, {});
+}
+
 interface PageProps {
   params: {
     slug: string[]
@@ -30,7 +42,13 @@ export default async function Page({ params }: PageProps) {
                 return <img {...props} src={src} />
               },
               // Allow HTML elements like div and iframe
-              div: (props) => <div {...props} />,
+              div: (props) => {
+                const { style, ...rest } = props;
+                return <div 
+                  {...rest} 
+                  style={typeof style === 'string' ? styleStringToObject(style) : style}
+                />
+              },
               iframe: (props) => <iframe {...props} />,
               script: (props) => <Script {...props} />
             }}
