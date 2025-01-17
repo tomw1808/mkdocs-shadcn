@@ -17,6 +17,7 @@ import { buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { LogoIcon } from "./Icons";
+import { useEffect, useState } from "react";
 
 interface RouteProps {
     href: string;
@@ -58,10 +59,10 @@ export const Navbar = () => {
                     </NavigationMenuItem>
 
                     {/* mobile */}
-                    <div className="flex visible md:hidden">
+                    <div className="flex visible md:hidden" suppressHydrationWarning>
                         <ModeToggle />
-
-                        <Sheet>
+                        
+                        <ClientOnlySheet />
                             <SheetTrigger className="px-2 md:hidden">
                                 <Menu className="flex md:hidden h-5 w-5">
                                     <span className="sr-only">Menu Icon</span>
@@ -135,5 +136,61 @@ export const Navbar = () => {
                 </NavigationMenuList>
             </NavigationMenu>
         </header>
+    );
+};
+
+// Client-only Sheet component
+const ClientOnlySheet = () => {
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return null;
+    }
+
+    return (
+        <Sheet>
+            <SheetTrigger className="px-2 md:hidden">
+                <Menu className="flex md:hidden h-5 w-5">
+                    <span className="sr-only">Menu Icon</span>
+                </Menu>
+            </SheetTrigger>
+
+            <SheetContent side={"left"}>
+                <SheetHeader>
+                    <SheetTitle className="font-bold text-xl">
+                        Shadcn/React
+                    </SheetTitle>
+                </SheetHeader>
+                <SheetClose>
+                    <nav className="flex flex-col justify-center items-center gap-2 mt-4">
+                        {routeList.map(({ href, label }: RouteProps) => (
+                            <a
+                                rel="noreferrer noopener"
+                                key={label}
+                                href={href}
+                                className={buttonVariants({ variant: "ghost" })}
+                            >
+                                {label}
+                            </a>
+                        ))}
+                        <a
+                            rel="noreferrer noopener"
+                            href="https://github.com/leoMirandaa/shadcn-landing-page.git"
+                            target="_blank"
+                            className={`w-[110px] border ${buttonVariants({
+                                variant: "secondary",
+                            })}`}
+                        >
+                            <GitHubLogoIcon className="mr-2 w-5 h-5" />
+                            Github
+                        </a>
+                    </nav>
+                </SheetClose>
+            </SheetContent>
+        </Sheet>
     );
 };
