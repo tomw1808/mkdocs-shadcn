@@ -22,7 +22,7 @@ function preprocessHtmlInMarkdown(content: string): string {
       
       return `style={${JSON.stringify(styleObject)}}`;
     }
-  );
+  ).replace(/frameborder=/g, "frameBorder=").replace(/allowfullscreen/g,"allowFullScreen");
 }
 
 export async function getMarkdownContent(slug: string[]) {
