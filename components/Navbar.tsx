@@ -102,15 +102,24 @@ export const Navbar = () => {
 
 // Client-only Sheet component
 const ClientOnlySheet = () => {
-    
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return null;
+    }
 
     return (
         <div>
-            
-        <Sheet>
-            <SheetTrigger className="px-2 md:hidden h-full">
-                <Menu className="flex md:hidden h-5 w-5" aria-label="Menu Icon" />
-            </SheetTrigger>
+            <Sheet>
+                <SheetTrigger asChild>
+                    <button className="px-2 md:hidden h-full">
+                        <Menu className="h-5 w-5" aria-label="Menu Icon" />
+                    </button>
+                </SheetTrigger>
 
             <SheetContent side={"left"}>
                 <SheetHeader>
