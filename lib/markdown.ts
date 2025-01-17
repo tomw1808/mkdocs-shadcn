@@ -3,8 +3,14 @@ import path from 'path'
 import matter from 'gray-matter'
 
 function preprocessHtmlInMarkdown(content: string): string {
-  // First convert MkDocs-style links to markdown links
+  // First handle gallery images (!![]())
   let processedContent = content.replace(
+    /!!\[(.*?)\]\((.*?)\)/g,
+    (match, alt, src) => `<LightboxImage alt="${alt}" src="${src}" />`
+  );
+
+  // Then convert MkDocs-style links to markdown links
+  processedContent = processedContent.replace(
     /<(https?:\/\/[^>]+)>/g,
     (match, url) => `[${url}](${url})`
   );

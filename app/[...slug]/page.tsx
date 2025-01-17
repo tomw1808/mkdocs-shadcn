@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Script from 'next/script'
 import Image from 'next/image'
+import { LightboxGallery, GalleryImage } from '@/components/LightboxGallery'
 import path from 'path'
 import { ensurePublicImageExists } from '@/lib/images'
 
@@ -51,7 +52,34 @@ export default async function Page({ params }: PageProps) {
           <MDXRemote
             source={content}
             components={{
-              // Replace image sources with the correct path
+              LightboxImage: (props) => {
+                // Handle local images for lightbox gallery
+                if (!props.src?.startsWith('http')) {
+                  const originalPath = path.join('mkdocs', ...params.slug.slice(0, -1), props.src || '')
+                  const publicPath = ensurePublicImageExists(originalPath)
+                  return (
+                    <LightboxGallery
+                      images={[{
+                        src: publicPath,
+                        alt: props.alt,
+                        width: 800,
+                        height: 600
+                      }]}
+                    />
+                  )
+                }
+                // Fall back to regular image for remote URLs
+                return (
+                  <Image 
+                    src={props.src} 
+                    width={800} 
+                    height={600} 
+                    style={{maxWidth: '100%', height: 'auto'}} 
+                    alt={props.alt || 'Image'}
+                  />
+                )
+              },
+              // Regular image handling
               img: (props) => {
                 if (props.src?.startsWith('http')) {
                   // Handle remote images
