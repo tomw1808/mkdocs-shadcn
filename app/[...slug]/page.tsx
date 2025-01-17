@@ -7,7 +7,7 @@ import Script from 'next/script'
 
 // Convert style string to object
 function styleStringToObject(style: string): React.CSSProperties {
-  return style.split(';').reduce((acc: any, style) => {
+  const objStyle = style.split(';').reduce((acc: any, style) => {
     if (style.trim()) {
       const [key, value] = style.split(':');
       const propertyName = key.trim().replace(/-([a-z])/g, g => g[1].toUpperCase());
@@ -15,6 +15,8 @@ function styleStringToObject(style: string): React.CSSProperties {
     }
     return acc;
   }, {});
+  console.log(objStyle)
+  return objStyle;
 }
 
 interface PageProps {
@@ -48,8 +50,14 @@ export default async function Page({ params }: PageProps) {
                   {...rest} 
                   style={typeof style === 'string' ? styleStringToObject(style) : style}
                 />
+              }, 
+              iframe: (props) => {
+                const { style, ...rest } = props;
+                return <iframe 
+                  {...rest} 
+                  style={typeof style === 'string' ? styleStringToObject(style) : style}
+                />
               },
-              iframe: (props) => <iframe {...props} />,
               script: (props) => <Script {...props} />
             }}
             options={{
