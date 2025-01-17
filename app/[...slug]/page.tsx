@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Script from 'next/script'
 import Image from 'next/image'
-import { LightboxGallery, GalleryImage } from '@/components/LightboxGallery'
+import { GalleryProvider } from '@/components/GalleryProvider'
 import { LightboxImage } from '@/components/LightboxImage'
 import path from 'path'
 import { ensurePublicImageExists } from '@/lib/images'
@@ -28,6 +28,7 @@ export default async function Page({ params }: PageProps) {
     return (
       <main className="mx-auto px-4 py-8 prose dark:prose-invert max-w-max">
         <div className='container w-screen'>
+          <GalleryProvider>
           <MDXRemote
             source={content}
             components={{
@@ -123,9 +124,7 @@ export default async function Page({ params }: PageProps) {
               </Link>
             )}
           </div>
-          
-          {/* Single gallery for all images */}
-          <LightboxGallery images={galleryImages} />
+          </GalleryProvider>
         </div>
       </main>
     )

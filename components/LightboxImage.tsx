@@ -1,37 +1,37 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useGallery } from './GalleryProvider'
 
 interface LightboxImageProps {
   src: string
   alt?: string
-  index: number
 }
 
-export function LightboxImage({ src, alt, index }: LightboxImageProps) {
+export function LightboxImage({ src, alt }: LightboxImageProps) {
+  const { addImage, setGalleryIndex } = useGallery()
+  const [index, setIndex] = useState<number>(-1)
+
   useEffect(() => {
-    // Ensure the window object is available
-    if (typeof window !== 'undefined') {
-      const handleClick = () => {
-        if (typeof (window as any).setGalleryIndex === 'function') {
-          (window as any).setGalleryIndex(index)
-        }
-      }
-      
-      // Find the image container by data attribute
-      const container = document.querySelector(`[data-lightbox-index="${index}"]`)
-      if (container) {
-        container.addEventListener('click', handleClick)
-        return () => container.removeEventListener('click', handleClick)
-      }
-    }
-  }, [index])
+    // Add image to gallery and get its index
+    const imageIndex = addImage({
+      src,
+      alt,
+      width: 800,
+      height: 600
+    })
+    setIndex(imageIndex)
+  }, [src, alt, addImage])
+
+  const handleClick = () => {
+    setGalleryIndex(index)
+  }
 
   return (
     <div 
       className="cursor-pointer"
-      data-lightbox-index={index}
+      onClick={handleClick}
     >
       <Image
         src={src}
