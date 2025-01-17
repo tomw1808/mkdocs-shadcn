@@ -1,5 +1,3 @@
-"use client";
-
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -18,7 +16,6 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
-import { useEffect, useState } from "react";
 
 interface RouteProps {
     href: string;
@@ -102,24 +99,15 @@ export const Navbar = () => {
 
 // Client-only Sheet component
 const ClientOnlySheet = () => {
-    const [isMounted, setIsMounted] = useState(false);
-
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
-
-    if (!isMounted) {
-        return null;
-    }
+    
 
     return (
         <div>
-            <Sheet>
-                <SheetTrigger asChild>
-                    <button className="px-2 md:hidden h-full">
-                        <Menu className="h-5 w-5" aria-label="Menu Icon" />
-                    </button>
-                </SheetTrigger>
+            
+        <Sheet>
+            <SheetTrigger className="px-2 md:hidden h-full">
+                <Menu className="flex md:hidden h-5 w-5" aria-label="Menu Icon" />
+            </SheetTrigger>
 
             <SheetContent side={"left"}>
                 <SheetHeader>
