@@ -17,33 +17,20 @@ interface LightboxGalleryProps {
   initialIndex?: number
 }
 
-export function LightboxGallery({ images, initialIndex = -1 }: LightboxGalleryProps) {
-  const [index, setIndex] = useState(initialIndex)
+export function LightboxGallery({ images }: LightboxGalleryProps) {
+  const [index, setIndex] = useState(-1)
+
+  // Export the setIndex function to be used by parent components
+  if (typeof window !== 'undefined') {
+    (window as any).setGalleryIndex = setIndex
+  }
 
   return (
-    <>
-      {images.map((image, i) => (
-        <div 
-          key={image.src} 
-          onClick={() => setIndex(i)}
-          className="cursor-pointer"
-        >
-          <Image
-            src={image.src}
-            alt={image.alt || ''}
-            width={800}
-            height={600}
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
-        </div>
-      ))}
-      
-      <Lightbox
-        index={index}
-        slides={images}
-        open={index >= 0}
-        close={() => setIndex(-1)}
-      />
-    </>
+    <Lightbox
+      index={index}
+      slides={images}
+      open={index >= 0}
+      close={() => setIndex(-1)}
+    />
   )
 }

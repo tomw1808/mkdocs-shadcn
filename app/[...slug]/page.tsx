@@ -45,6 +45,9 @@ export default async function Page({ params }: PageProps) {
   try {
     const { content, imagesPath } = await getMarkdownContent(params.slug)
     const { prev, next } = getNavigation(params.slug.join('/'))
+    
+    // Create a ref to store all gallery images
+    const galleryImages: GalleryImage[] = []
 
     return (
       <main className="mx-auto px-4 py-8 prose dark:prose-invert max-w-max">
@@ -57,15 +60,33 @@ export default async function Page({ params }: PageProps) {
                 if (!props.src?.startsWith('http')) {
                   const originalPath = path.join('mkdocs', ...params.slug.slice(0, -1), props.src || '')
                   const publicPath = ensurePublicImageExists(originalPath)
+                  
+                  // Add image to gallery array
+                  const galleryImage = {
+                    src: publicPath,
+                    alt: props.alt,
+                    width: 800,
+                    height: 600
+                  }
+                  galleryImages.push(galleryImage)
+                  
+                  // Return image that will open the gallery at its index
                   return (
-                    <LightboxGallery
-                      images={[{
-                        src: publicPath,
-                        alt: props.alt,
-                        width: 800,
-                        height: 600
-                      }]}
-                    />
+                    <div 
+                      className="cursor-pointer"
+                      onClick={() => {
+                        const index = galleryImages.length - 1
+                        setGalleryIndex(index)
+                      }}
+                    >
+                      <Image
+                        src={publicPath}
+                        alt={props.alt || ''}
+                        width={800}
+                        height={600}
+                        style={{ maxWidth: '100%', height: 'auto' }}
+                      />
+                    </div>
                   )
                 }
                 // Fall back to regular image for remote URLs
@@ -136,6 +157,9 @@ export default async function Page({ params }: PageProps) {
               </Link>
             )}
           </div>
+          
+          {/* Single gallery for all images */}
+          <LightboxGallery images={galleryImages} />
         </div>
       </main>
     )
