@@ -107,11 +107,9 @@ const ClientOnlySheet = () => {
         setIsMounted(true);
     }, []);
 
-    if (!isMounted) {
-        return null;
-    }
-
     return (
+        <div suppressHydrationWarning>
+            {isMounted && (
         <Sheet>
             <SheetTrigger className="px-2 md:hidden">
                 <Menu className="flex md:hidden h-5 w-5">
@@ -151,6 +149,8 @@ const ClientOnlySheet = () => {
                     </nav>
                 </SheetClose>
             </SheetContent>
-        </Sheet>
+            </Sheet>
+            )}
+        </div>
     );
 };
