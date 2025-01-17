@@ -51,11 +51,20 @@ export default async function Page({ params }: PageProps) {
             components={{
               // Replace image sources with the correct path
               img: (props) => {
-                const src = props.src?.startsWith('http')
-                  ? props.src
-                  : `${imagesPath}/${props.src}`
-                  console.log(src);
-                return <Image {...props} src={src} width={50} height={50} />
+                if (props.src?.startsWith('http')) {
+                  // Handle remote images
+                  return <Image {...props} src={props.src} width={600} height={400} style={{height: 'auto'}} />
+                } else {
+                  // Handle local images
+                  const src = `${imagesPath}/${props.src}`
+                  return (
+                    <img 
+                      {...props} 
+                      src={src} 
+                      style={{maxWidth: '100%', height: 'auto'}}
+                    />
+                  )
+                }
               },
               // Allow HTML elements like div and iframe
               div: (props) => <div {...props} />,

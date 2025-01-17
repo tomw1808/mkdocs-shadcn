@@ -7,13 +7,15 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+    unoptimized: true,
   },
-  // // Enable serving static files from the mkdocs directory
-  // experimental: {
-  //   outputFileTracingIncludes: {
-  //     '/mkdocs/**/*': true,
-  //   },
-  // },
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.(png|jpg|jpeg|gif|svg)$/i,
+      type: 'asset/resource'
+    })
+    return config
+  }
 }
 
 module.exports = nextConfig
