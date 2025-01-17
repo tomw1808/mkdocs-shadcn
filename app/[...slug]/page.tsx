@@ -4,7 +4,9 @@ import { getNavigation } from '@/lib/mkdocs'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Script from 'next/script'
-import Image from 'next/image';
+import Image from 'next/image'
+import path from 'path'
+import { ensurePublicImageExists } from '@/lib/images'
 
 // Convert style string to object
 function styleStringToObject(style: string | undefined): React.CSSProperties | undefined {
@@ -53,15 +55,28 @@ export default async function Page({ params }: PageProps) {
               img: (props) => {
                 if (props.src?.startsWith('http')) {
                   // Handle remote images
-                  return <Image {...props} src={props.src} width={600} height={400} style={{height: 'auto'}} />
-                } else {
-                  // Handle local images
-                  const src = `${imagesPath}/${props.src}`
                   return (
-                    <img 
+                    <Image 
                       {...props} 
-                      src={src} 
+                      src={props.src} 
+                      width={800} 
+                      height={600} 
+                      style={{maxWidth: '100%', height: 'auto'}} 
+                      alt={props.alt || 'Image'}
+                    />
+                  )
+                } else {
+                  // Handle local images by copying them to public directory
+                  const originalPath = path.join('mkdocs', ...params.slug.slice(0, -1), 'images', props.src || '')
+                  const publicPath = ensurePublicImageExists(originalPath)
+                  return (
+                    <Image
+                      {...props}
+                      src={publicPath}
+                      width={800}
+                      height={600}
                       style={{maxWidth: '100%', height: 'auto'}}
+                      alt={props.alt || 'Image'}
                     />
                   )
                 }
