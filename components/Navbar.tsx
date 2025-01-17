@@ -114,9 +114,7 @@ const ClientOnlySheet = () => {
             {isMounted && (
         <Sheet>
             <SheetTrigger className="px-2 md:hidden">
-                <Menu className="flex md:hidden h-5 w-5">
-                    <span className="sr-only">Menu Icon</span>
-                </Menu>
+                <Menu className="flex md:hidden h-5 w-5" aria-label="Menu Icon" />
             </SheetTrigger>
 
             <SheetContent side={"left"}>
