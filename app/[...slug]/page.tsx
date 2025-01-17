@@ -6,17 +6,29 @@ import Link from 'next/link'
 import Script from 'next/script'
 
 // Convert style string to object
-function styleStringToObject(style: string): React.CSSProperties {
-  const objStyle = style.split(';').reduce((acc: any, style) => {
-    if (style.trim()) {
-      const [key, value] = style.split(':');
-      const propertyName = key.trim().replace(/-([a-z])/g, g => g[1].toUpperCase());
-      acc[propertyName] = value.trim();
-    }
-    return acc;
-  }, {});
-  console.log(objStyle)
-  return objStyle;
+function styleStringToObject(style: string | undefined): React.CSSProperties | undefined {
+  if (!style) return undefined;
+  
+  console.log('Processing style string:', style);
+  
+  try {
+    const objStyle = style.split(';').reduce((acc: any, style) => {
+      if (style.trim()) {
+        const [key, value] = style.split(':');
+        if (key && value) {
+          const propertyName = key.trim().replace(/-([a-z])/g, g => g[1].toUpperCase());
+          acc[propertyName] = value.trim();
+        }
+      }
+      return acc;
+    }, {});
+    
+    console.log('Converted style object:', objStyle);
+    return objStyle;
+  } catch (error) {
+    console.error('Error converting style:', error);
+    return undefined;
+  }
 }
 
 interface PageProps {
@@ -46,17 +58,17 @@ export default async function Page({ params }: PageProps) {
               // Allow HTML elements like div and iframe
               div: (props) => {
                 const { style, ...rest } = props;
-                return <div 
-                  {...rest} 
-                  style={typeof style === 'string' ? styleStringToObject(style) : style}
-                />
-              }, 
+                console.log('Div props:', props);
+                const convertedStyle = typeof style === 'string' ? styleStringToObject(style) : style;
+                console.log('Converted div style:', convertedStyle);
+                return <div {...rest} style={convertedStyle} />;
+              },
               iframe: (props) => {
                 const { style, ...rest } = props;
-                return <iframe 
-                  {...rest} 
-                  style={typeof style === 'string' ? styleStringToObject(style) : style}
-                />
+                console.log('Iframe props:', props);
+                const convertedStyle = typeof style === 'string' ? styleStringToObject(style) : style;
+                console.log('Converted iframe style:', convertedStyle);
+                return <iframe {...rest} style={convertedStyle} />;
               },
               script: (props) => <Script {...props} />
             }}
