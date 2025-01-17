@@ -13,19 +13,21 @@ export default async function Page({ params }: PageProps) {
     const { content, imagesPath } = await getMarkdownContent(params.slug)
 
     return (
-      <main className="container mx-auto px-4 py-8 prose dark:prose-invert max-w-none">
-        <MDXRemote 
-          source={content}
-          components={{
-            // Replace image sources with the correct path
-            img: (props) => {
-              const src = props.src?.startsWith('http') 
-                ? props.src 
-                : `${imagesPath}/${props.src}`
-              return <img {...props} src={src} />
-            }
-          }}
-        />
+      <main className=" mx-auto px-4 py-8 prose dark:prose-invert max-w-max">
+        <div className='container w-screen'>
+          <MDXRemote
+            source={content}
+            components={{
+              // Replace image sources with the correct path
+              img: (props) => {
+                const src = props.src?.startsWith('http')
+                  ? props.src
+                  : `${imagesPath}/${props.src}`
+                return <img {...props} src={src} />
+              }
+            }}
+          />
+          </div>
       </main>
     )
   } catch (error) {
