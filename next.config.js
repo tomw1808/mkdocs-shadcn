@@ -8,12 +8,12 @@ const nextConfig = {
       },
     ],
   },
-  // Enable serving static files from the mkdocs directory
-  experimental: {
-    outputFileTracingIncludes: {
-      '/mkdocs/**/*': true,
-    },
-  },
+  // // Enable serving static files from the mkdocs directory
+  // experimental: {
+  //   outputFileTracingIncludes: {
+  //     '/mkdocs/**/*': true,
+  //   },
+  // },
 }
 
 module.exports = nextConfig

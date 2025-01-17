@@ -4,6 +4,7 @@ import { getNavigation } from '@/lib/mkdocs'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Script from 'next/script'
+import Image from 'next/image';
 
 // Convert style string to object
 function styleStringToObject(style: string | undefined): React.CSSProperties | undefined {
@@ -53,7 +54,8 @@ export default async function Page({ params }: PageProps) {
                 const src = props.src?.startsWith('http')
                   ? props.src
                   : `${imagesPath}/${props.src}`
-                return <img {...props} src={src} />
+                  console.log(src);
+                return <Image {...props} src={src} width={50} height={50} />
               },
               // Allow HTML elements like div and iframe
               div: (props) => <div {...props} />,
