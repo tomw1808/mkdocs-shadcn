@@ -9,31 +9,6 @@ import { LightboxGallery, GalleryImage } from '@/components/LightboxGallery'
 import path from 'path'
 import { ensurePublicImageExists } from '@/lib/images'
 
-// Convert style string to object
-function styleStringToObject(style: string | undefined): React.CSSProperties | undefined {
-  if (!style) return undefined;
-  
-  console.log('Processing style string:', style);
-  
-  try {
-    const objStyle = style.split(';').reduce((acc: any, style) => {
-      if (style.trim()) {
-        const [key, value] = style.split(':');
-        if (key && value) {
-          const propertyName = key.trim().replace(/-([a-z])/g, g => g[1].toUpperCase());
-          acc[propertyName] = value.trim();
-        }
-      }
-      return acc;
-    }, {});
-    
-    console.log('Converted style object:', objStyle);
-    return objStyle;
-  } catch (error) {
-    console.error('Error converting style:', error);
-    return undefined;
-  }
-}
 
 interface PageProps {
   params: {
