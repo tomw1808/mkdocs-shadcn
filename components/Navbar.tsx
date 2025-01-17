@@ -61,47 +61,7 @@ export const Navbar = () => {
                     {/* mobile */}
                     <div className="flex visible md:hidden" suppressHydrationWarning>
                         <ModeToggle />
-                        
                         <ClientOnlySheet />
-                            <SheetTrigger className="px-2 md:hidden">
-                                <Menu className="flex md:hidden h-5 w-5">
-                                    <span className="sr-only">Menu Icon</span>
-                                </Menu>
-                            </SheetTrigger>
-
-                            <SheetContent side={"left"}>
-                                <SheetHeader>
-                                    <SheetTitle className="font-bold text-xl">
-                                        Shadcn/React
-                                    </SheetTitle>
-                                </SheetHeader>
-                                <SheetClose>
-                                    <nav className="flex flex-col justify-center items-center gap-2 mt-4">
-                                        {routeList.map(({ href, label }: RouteProps) => (
-                                            <a
-                                                rel="noreferrer noopener"
-                                                key={label}
-                                                href={href}
-                                                className={buttonVariants({ variant: "ghost" })}
-                                            >
-                                                {label}
-                                            </a>
-                                        ))}
-                                        <a
-                                            rel="noreferrer noopener"
-                                            href="https://github.com/leoMirandaa/shadcn-landing-page.git"
-                                            target="_blank"
-                                            className={`w-[110px] border ${buttonVariants({
-                                                variant: "secondary",
-                                            })}`}
-                                        >
-                                            <GitHubLogoIcon className="mr-2 w-5 h-5" />
-                                            Github
-                                        </a>
-                                    </nav>
-                                </SheetClose>
-                            </SheetContent>
-                        </Sheet>
                     </div>
 
                     {/* desktop */}
