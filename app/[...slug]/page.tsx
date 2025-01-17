@@ -3,6 +3,7 @@ import { getMarkdownContent } from '@/lib/markdown'
 import { getNavigation } from '@/lib/mkdocs'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Script from 'next/script'
 
 interface PageProps {
   params: {
@@ -27,6 +28,19 @@ export default async function Page({ params }: PageProps) {
                   ? props.src
                   : `${imagesPath}/${props.src}`
                 return <img {...props} src={src} />
+              },
+              // Allow HTML elements like div and iframe
+              div: (props) => <div {...props} />,
+              iframe: (props) => <iframe {...props} />,
+              script: (props) => <Script {...props} />
+            }}
+            options={{
+              parseFrontmatter: true,
+              mdxOptions: {
+                development: process.env.NODE_ENV === 'development',
+                remarkPlugins: [],
+                rehypePlugins: [],
+                format: 'mdx'
               }
             }}
           />
