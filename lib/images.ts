@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-const PUBLIC_IMAGES_DIR = 'public/content-images'
+const PUBLIC_IMAGES_DIR = 'content-images'
 
 export function ensurePublicImageExists(originalPath: string): string {
   // Get the full path of the original image
@@ -13,7 +13,7 @@ export function ensurePublicImageExists(originalPath: string): string {
   const publicFilename = `${filename}${ext}`
   
   // Ensure the public images directory exists
-  const publicDir = path.join(process.cwd(), PUBLIC_IMAGES_DIR)
+  const publicDir = path.join(process.cwd(), "public", PUBLIC_IMAGES_DIR)
   if (!fs.existsSync(publicDir)) {
     fs.mkdirSync(publicDir, { recursive: true })
   }
