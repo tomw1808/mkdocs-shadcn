@@ -29,6 +29,12 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const addImage = (image: GalleryImage) => {
+    // Check if image already exists to prevent duplicates
+    const existingIndex = images.findIndex(img => img.src === image.src)
+    if (existingIndex >= 0) {
+      return existingIndex
+    }
+    
     setImages(prev => [...prev, image])
     return images.length // Return the index where the image will be added
   }

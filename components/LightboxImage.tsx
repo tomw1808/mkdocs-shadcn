@@ -22,7 +22,7 @@ export function LightboxImage({ src, alt }: LightboxImageProps) {
       height: 600
     })
     setIndex(imageIndex)
-  }, [src, alt, addImage])
+  }, []) // Empty dependency array since we only want to add image once
 
   const handleClick = () => {
     setGalleryIndex(index)

@@ -20,10 +20,6 @@ interface LightboxGalleryProps {
 export function LightboxGallery({ images }: LightboxGalleryProps) {
   const [index, setIndex] = useState(-1)
 
-  // Export the setIndex function to be used by parent components
-  if (typeof window !== 'undefined') {
-    (window as any).setGalleryIndex = setIndex
-  }
 
   return (
     <Lightbox
