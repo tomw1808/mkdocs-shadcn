@@ -42,7 +42,10 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
   return (
     <GalleryContext.Provider value={{ addImage, setGalleryIndex: setIndex }}>
       {children}
-      <LightboxGallery images={images} initialIndex={index} />
+      <LightboxGallery 
+        images={images} 
+        initialIndex={index} 
+      />
     </GalleryContext.Provider>
   )
 }

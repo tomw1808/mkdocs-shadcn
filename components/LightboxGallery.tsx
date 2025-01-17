@@ -17,13 +17,17 @@ interface LightboxGalleryProps {
   initialIndex?: number
 }
 
-export function LightboxGallery({ images }: LightboxGalleryProps) {
-  const [index, setIndex] = useState(-1)
+export function LightboxGallery({ images, initialIndex = -1 }: LightboxGalleryProps) {
+  const [index, setIndex] = useState(initialIndex)
 
+  // Update index when initialIndex changes
+  useEffect(() => {
+    setIndex(initialIndex)
+  }, [initialIndex])
 
   return (
     <Lightbox
-      index={index}
+      index={initialIndex}
       slides={images}
       open={index >= 0}
       close={() => setIndex(-1)}
