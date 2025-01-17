@@ -56,20 +56,8 @@ export default async function Page({ params }: PageProps) {
                 return <img {...props} src={src} />
               },
               // Allow HTML elements like div and iframe
-              div: (props) => {
-                const { style, ...rest } = props;
-                console.log('Div props:', props);
-                const convertedStyle = typeof style === 'string' ? styleStringToObject(style) : style;
-                console.log('Converted div style:', convertedStyle);
-                return <div {...rest} style={convertedStyle} />;
-              },
-              iframe: (props) => {
-                const { style, ...rest } = props;
-                console.log('Iframe props:', props);
-                const convertedStyle = typeof style === 'string' ? styleStringToObject(style) : style;
-                console.log('Converted iframe style:', convertedStyle);
-                return <iframe {...rest} style={convertedStyle} />;
-              },
+              div: (props) => <div {...props} />,
+              iframe: (props) => <iframe {...props} />,
               script: (props) => <Script {...props} />
             }}
             options={{

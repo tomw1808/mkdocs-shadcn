@@ -2,6 +2,29 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 
+function preprocessHtmlInMarkdown(content: string): string {
+  // Convert style attributes to valid JSX
+  return content.replace(
+    /style="([^"]*?)"/g,
+    (match, styleString) => {
+      const styleObject = styleString
+        .split(';')
+        .filter(Boolean)
+        .reduce((acc: Record<string, string>, style: string) => {
+          const [key, value] = style.split(':').map(s => s.trim());
+          if (key && value) {
+            // Convert kebab-case to camelCase
+            const camelKey = key.replace(/-([a-z])/g, g => g[1].toUpperCase());
+            acc[camelKey] = value;
+          }
+          return acc;
+        }, {});
+      
+      return `style={${JSON.stringify(styleObject)}}`;
+    }
+  );
+}
+
 export async function getMarkdownContent(slug: string[]) {
   try {
     // Construct the file path from the slug
@@ -13,8 +36,11 @@ export async function getMarkdownContent(slug: string[]) {
     // Use gray-matter to parse the markdown frontmatter
     const { content, data } = matter(fileContents)
     
+    // Preprocess HTML in markdown content
+    const processedContent = preprocessHtmlInMarkdown(content)
+    
     return {
-      content,
+      content: processedContent,
       frontmatter: data,
       // Calculate the images base path for this markdown file
       imagesPath: path.join('/mkdocs', ...slug.slice(0, -1), 'images')
