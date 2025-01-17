@@ -1,8 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js MkDocs Material Alternative
+
+This project is a drop-in replacement for MkDocs Material, built with Next.js 13+, Tailwind CSS, and shadcn/ui. It aims to provide a modern, fast, and customizable documentation site generator that maintains compatibility with existing MkDocs projects.
+
+## Features
+
+- 📱 Fully responsive design
+- 🌓 Dark mode support
+- ⚡ Fast page loads with Next.js
+- 🎨 Customizable with Tailwind CSS
+- 🔍 Full-text search (coming soon)
+- 📊 Beautiful UI components from shadcn/ui
+- 🖼️ Automatic image optimization
+- 📱 Mobile-friendly navigation
+
+## Project Structure
+
+```
+your-project/
+├── mkdocs/              # Your documentation files
+│   ├── mkdocs.yml      # MkDocs configuration file
+│   └── **/*.md         # Markdown files in any subdirectory
+└── public/             # Public assets
+```
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+2. Place your `mkdocs.yml` file in the `mkdocs` directory.
+
+3. Place your markdown files in the `mkdocs` directory, maintaining your desired structure.
+
+4. Run the development server:
 
 ```bash
 npm run dev
@@ -10,27 +47,27 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open [http://localhost:3000](http://localhost:3000) to see your documentation site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## MkDocs Compatibility
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This project aims to maintain compatibility with MkDocs Material features while providing a modern Next.js-based alternative. Currently supported:
 
-## Learn More
+- ✅ Basic markdown rendering
+- ✅ Navigation structure from mkdocs.yml
+- ✅ Image handling
+- ✅ Previous/Next navigation
+- ✅ Dark mode
+- ⏳ Search (coming soon)
+- ⏳ Table of contents
+- ⏳ Admonitions
 
-To learn more about Next.js, take a look at the following resources:
+## Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+MIT License - feel free to use this in your own projects.
