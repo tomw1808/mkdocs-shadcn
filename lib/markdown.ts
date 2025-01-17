@@ -54,7 +54,7 @@ export async function getMarkdownContent(slug: string[]) {
       content: processedContent,
       frontmatter: data,
       // Calculate the images base path for this markdown file
-      imagesPath: path.join('/mkdocs', ...slug.slice(0, -1), 'images')
+      imagesPath: path.join('/mkdocs', ...slug.slice(0, -1))
     }
   } catch (error: any) {
     throw new Error(`Failed to read markdown file: ${error.message}`)

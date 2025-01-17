@@ -57,7 +57,6 @@ export default async function Page({ params }: PageProps) {
                   // Handle remote images
                   return (
                     <Image 
-                      {...props} 
                       src={props.src} 
                       width={800} 
                       height={600} 
@@ -67,16 +66,16 @@ export default async function Page({ params }: PageProps) {
                   )
                 } else {
                   // Handle local images by copying them to public directory
-                  const originalPath = path.join('mkdocs', ...params.slug.slice(0, -1), 'images', props.src || '')
+                  const originalPath = path.join('mkdocs', ...params.slug.slice(0, -1), props.src || '')
                   const publicPath = ensurePublicImageExists(originalPath)
                   return (
                     <Image
-                      {...props}
                       src={publicPath}
                       width={800}
                       height={600}
                       style={{maxWidth: '100%', height: 'auto'}}
                       alt={props.alt || 'Image'}
+                      placeholder={"blur"}
                     />
                   )
                 }
