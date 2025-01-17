@@ -47,8 +47,8 @@ const routeList: RouteProps[] = [
 export const Navbar = () => {
     return (
         <header className="sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background">
-            <NavigationMenu>
-                <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between mx-auto">
+            <NavigationMenu className="mx-auto">
+                <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between ">
                     <NavigationMenuItem className="font-bold flex">
                         <a
                             rel="noreferrer noopener"
@@ -60,7 +60,7 @@ export const Navbar = () => {
                     </NavigationMenuItem>
 
                     {/* mobile */}
-                    <div className="flex visible md:hidden">
+                    <div className="flex md:hidden">
                         <ModeToggle />
                         <ClientOnlySheet />
                     </div>
@@ -102,18 +102,14 @@ export const Navbar = () => {
 
 // Client-only Sheet component
 const ClientOnlySheet = () => {
-    const [isMounted, setIsMounted] = useState(false);
-
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
+    
 
     return (
         <div>
-            {isMounted && (
-        <Sheet key="nav-sheet">
-            <SheetTrigger>
-                <Menu className="flex md:hidden h-5 w-5 px-2 cursor-pointer" aria-label="Menu Icon" />
+            
+        <Sheet>
+            <SheetTrigger className="px-2 md:hidden h-full">
+                <Menu className="flex md:hidden h-5 w-5" aria-label="Menu Icon" />
             </SheetTrigger>
 
             <SheetContent side={"left"}>
@@ -149,7 +145,7 @@ const ClientOnlySheet = () => {
                 </SheetClose>
             </SheetContent>
             </Sheet>
-            )}
+
         </div>
     );
 };
