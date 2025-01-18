@@ -9,9 +9,22 @@ import { transformerCopyButton } from '@rehype-pretty/transformers';
  * Server Component example
  */
 
-export async function Code({ code }: { code: string }) {
+interface CodeProps {
+    code: string;
+    lang: string;
+    showLineNumbers?: boolean;
+    highlights?: string;
+}
 
-    const highlightedCode = await highlightCode(code);
+export async function Code({ code, lang, showLineNumbers = true, highlights }: CodeProps) {
+    // Construct the markdown code block
+    const codeBlock = [
+        '```' + lang + (showLineNumbers ? ' showLineNumbers' : '') + (highlights ? ' {' + highlights + '}' : ''),
+        code,
+        '```'
+    ].join('\n');
+
+    const highlightedCode = await highlightCode(codeBlock);
 
     return (
         <section
