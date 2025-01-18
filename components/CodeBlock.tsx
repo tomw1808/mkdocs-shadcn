@@ -2,10 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { CheckIcon, CopyIcon } from '@radix-ui/react-icons'
-import { codeToHast } from 'shiki'
-import { toJsxRuntime } from 'hast-util-to-jsx-runtime'
-import { Fragment, JSX } from 'react'
-import { jsx, jsxs } from 'react/jsx-runtime'
 
 interface CodeBlockProps {
   code: string
@@ -21,39 +17,7 @@ export function CodeBlock({
   showLineNumbers = true,
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false)
-  const [nodes, setNodes] = useState<JSX.Element | null>(null)
   const preRef = useRef<HTMLPreElement>(null)
-
-  useEffect(() => {
-    async function highlight() {
-      const hast = await codeToHast(code, {
-        lang: language,
-        theme: 'github-dark',
-        
-      })
-
-      const rendered = toJsxRuntime(hast, {
-        Fragment,
-        jsx,
-        jsxs,
-        components: {
-          pre: (props) => (
-            <pre
-              ref={preRef}
-              className={`overflow-x-auto p-4 text-sm ${showLineNumbers ? 'pl-12' : ''}`}
-              style={{ counterReset: 'line' }}
-              {...props}
-            />
-          )
-        }
-      }) as JSX.Element
-
-      console.log(rendered)
-      setNodes(rendered)
-    }
-
-    highlight()
-  }, [code, language, showLineNumbers])
 
   useEffect(() => {
     if (copied) {
@@ -67,10 +31,6 @@ export function CodeBlock({
       await navigator.clipboard.writeText(preRef.current.textContent)
       setCopied(true)
     }
-  }
-
-  if (!nodes) {
-    return <div>Loading...</div>
   }
 
   return (
@@ -92,7 +52,13 @@ export function CodeBlock({
             <CopyIcon className="h-4 w-4 text-zinc-400" />
           )}
         </button>
-        {nodes}
+        <pre
+          ref={preRef}
+          className={`overflow-x-auto p-4 text-sm ${showLineNumbers ? 'pl-12' : ''}`}
+          style={{ counterReset: 'line' }}
+        >
+          <code className={`language-${language}`}>{code}</code>
+        </pre>
       </div>
     </div>
   )
