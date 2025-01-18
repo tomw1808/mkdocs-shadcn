@@ -26,7 +26,7 @@ export default async function Page({ params }: PageProps) {
     const { prev, next } = getNavigation(params.slug.join('/'))
     
     return (
-      <main className="mx-auto px-4 py-8 prose dark:prose-invert max-w-max">
+      <main className="mx-auto px-4 py-8 max-w-4xl">
         <div className='container w-screen'>
           <GalleryProvider>
           <MDXRemote
