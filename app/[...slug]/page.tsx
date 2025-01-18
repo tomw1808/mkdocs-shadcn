@@ -135,8 +135,14 @@ export default async function Page({ params }: PageProps) {
                 
                 if (code.type === 'code') {
                   const language = code.props.className?.replace('language-', '') || 'text'
+                  // Reconstruct the full markdown code block
+                  const fullCodeBlock = [
+                    '```' + language,
+                    code.props.children,
+                    '```'
+                  ].join('\n')
                   return (
-                    <Code code={code.props.children as string} />
+                    <Code code={fullCodeBlock} />
                   )
                 }
                 return <pre {...props}>{children}</pre>
