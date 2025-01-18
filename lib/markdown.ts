@@ -3,8 +3,29 @@ import path from 'path'
 import matter from 'gray-matter'
 
 function preprocessHtmlInMarkdown(content: string): string {
-  // First handle admonitions
+  // First handle tabs
   let processedContent = content.replace(
+    /^===\s+"([^"]+)"\r?\n((?:(?:    .*|[ \t]*)\r?\n)*(?:    .*))/gm,
+    (match, label, content) => {
+      // Remove the 4-space indent from content and handle empty lines
+      const processedContent = content.split('\n')
+        .map((line: string) => {
+          // Handle completely empty lines or lines with only whitespace
+          if (!line.trim()) return ''
+          // Handle indented empty lines
+          if (line.match(/^    $/)) return ''
+          // Handle regular indented content
+          return line.replace(/^    /, '')
+        })
+        .join('\n')
+        .trim()
+      
+      return `<Tab label="${label}">\n\n${processedContent}\n\n</Tab>`
+    }
+  )
+
+  // Then handle admonitions
+  processedContent = processedContent.replace(
     /!!!\s*(\w+)(?:\s+"([^"]*)")?\r?\n((?:(?:    .*|[ \t]*)\r?\n)*(?:    .*))/gm,
     (match, type, title, content) => {
       console.log({type, title, content})
@@ -23,6 +44,12 @@ function preprocessHtmlInMarkdown(content: string): string {
       
       return `<Admonition type="${type}" title="${title || ''}">\n\n${processedContent}\n\n</Admonition>`
     }
+  )
+
+  // Wrap adjacent tabs in a Tabs component
+  processedContent = processedContent.replace(
+    /(?:<Tab[^>]*>[\s\S]*?<\/Tab>\s*)+/g,
+    match => `<Tabs>\n${match}</Tabs>`
   )
 
   // Then handle gallery images (!![]())

@@ -30,6 +30,22 @@ export default async function Page({ params }: PageProps) {
           <MDXRemote
             source={content}
             components={{
+              Tab: ({ label, children }) => {
+                // Individual tab content - this won't be rendered directly
+                return children
+              },
+              Tabs: ({ children }) => {
+                // Convert children to array if it isn't already
+                const childrenArray = React.Children.toArray(children)
+                
+                // Extract tab items from children
+                const items = childrenArray.map((child: any) => ({
+                  label: child.props.label,
+                  content: child.props.children
+                }))
+                
+                return <ContentTabs items={items} />
+              },
               Admonition: (props) => {
                 const { type, title, children } = props
                 return (
