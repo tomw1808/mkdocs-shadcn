@@ -40,7 +40,6 @@ export default async function Page({ params }: PageProps) {
                     <LightboxImage
                       src={publicPath}
                       alt={props.alt}
-                      index={galleryImages.length - 1}
                     />
                   )
                 }
