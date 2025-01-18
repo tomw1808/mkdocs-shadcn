@@ -7,6 +7,14 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+  },
+  webpack: (config, { isServer }) => {
+    // Add mkdocs directory to webpack watch list
+    config.watchOptions = {
+      ...config.watchOptions,
+      ignored: ['node_modules/**', '.next/**'],
+    }
+    return config
   }
 }
 
