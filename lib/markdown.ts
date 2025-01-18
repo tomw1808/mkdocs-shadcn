@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import rehypePrettyCode from 'rehype-pretty-code'
 
 function preprocessHtmlInMarkdown(content: string): string {
   // First handle tabs

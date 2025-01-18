@@ -1,6 +1,7 @@
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getMarkdownContent } from '@/lib/markdown'
 import { getNavigation } from '@/lib/mkdocs'
+import { CodeBlock } from '@/components/CodeBlock'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Script from 'next/script'
@@ -126,7 +127,23 @@ export default async function Page({ params }: PageProps) {
               // Allow HTML elements like div and iframe
               div: (props) => <div {...props} />,
               iframe: (props) => <iframe {...props} />,
-              script: (props) => <Script {...props} />
+              script: (props) => <Script {...props} />,
+              pre: ({ children, ...props }) => {
+                const childArray = React.Children.toArray(children)
+                const code = childArray[0] as React.ReactElement
+                
+                if (code.type === 'code') {
+                  const language = code.props.className?.replace('language-', '') || 'text'
+                  return (
+                    <CodeBlock
+                      code={code.props.children as string}
+                      language={language}
+                      showLineNumbers={true}
+                    />
+                  )
+                }
+                return <pre {...props}>{children}</pre>
+              }
             }}
             options={{
               parseFrontmatter: true,
