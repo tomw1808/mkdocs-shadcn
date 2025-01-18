@@ -5,12 +5,15 @@ import matter from 'gray-matter'
 function preprocessHtmlInMarkdown(content: string): string {
   // First handle admonitions
   let processedContent = content.replace(
-    /!!!\s*(\w+)(?:\s+"([^"]*)")?\r?\n((?:    .*(?:\n|$))*)/gm,
+    /!!!\s*(\w+)(?:\s+"([^"]*)")?\r?\n((?:(?:    .*\n)*(?:    .*))|(?:    .*))(?:\n|$)/gm,
     (match, type, title, content) => {
-      console.log({type, title, content})
-      // Remove the 4-space indent from content
+      // Remove the 4-space indent from content and handle empty lines
       const processedContent = content.split('\n')
-        .map((line: string) => line.replace(/^    /, ''))
+        .map((line: string) => {
+          // Preserve empty lines that are part of the content
+          if (line.match(/^    $/)) return ''
+          return line.replace(/^    /, '')
+        })
         .join('\n')
         .trim()
       
