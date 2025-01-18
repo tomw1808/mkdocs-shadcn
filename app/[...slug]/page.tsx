@@ -9,7 +9,9 @@ import { GalleryProvider } from '@/components/GalleryProvider'
 import { LightboxImage } from '@/components/LightboxImage'
 import path from 'path'
 import { ensurePublicImageExists } from '@/lib/images'
-import { Admonition } from '@/components/admonition'
+import { Admonition } from '@/components/Admonition'
+import React from 'react'
+import { ContentTabs } from '@/components/ContentTabs'
 
 
 interface PageProps {

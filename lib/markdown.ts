@@ -8,6 +8,7 @@ function preprocessHtmlInMarkdown(content: string): string {
     /^===\s+"([^"]+)"\r?\n((?:(?:    .*|[ \t]*)\r?\n)*(?:    .*))/gm,
     (match, label, content) => {
       // Remove the 4-space indent from content and handle empty lines
+      console.log({label, content})
       const processedContent = content.split('\n')
         .map((line: string) => {
           // Handle completely empty lines or lines with only whitespace
@@ -28,7 +29,6 @@ function preprocessHtmlInMarkdown(content: string): string {
   processedContent = processedContent.replace(
     /!!!\s*(\w+)(?:\s+"([^"]*)")?\r?\n((?:(?:    .*|[ \t]*)\r?\n)*(?:    .*))/gm,
     (match, type, title, content) => {
-      console.log({type, title, content})
       // Remove the 4-space indent from content and handle empty lines
       const processedContent = content.split('\n')
         .map((line: string) => {
