@@ -29,6 +29,14 @@ export default async function Page({ params }: PageProps) {
           <MDXRemote
             source={content}
             components={{
+              Admonition: (props) => {
+                const { type, title, children } = props
+                return (
+                  <Admonition type={type} title={title}>
+                    {children}
+                  </Admonition>
+                )
+              },
               LightboxImage: (props) => {
                 // Handle local images for lightbox gallery
                 if (!props.src?.startsWith('http')) {

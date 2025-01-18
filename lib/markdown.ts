@@ -3,8 +3,22 @@ import path from 'path'
 import matter from 'gray-matter'
 
 function preprocessHtmlInMarkdown(content: string): string {
-  // First handle gallery images (!![]())
+  // First handle admonitions
   let processedContent = content.replace(
+    /!!!\s*(\w+)(?:\s+"([^"]*)")?\n((?:    .*(?:\n|$))*)/gm,
+    (match, type, title, content) => {
+      // Remove the 4-space indent from content
+      const processedContent = content.split('\n')
+        .map(line => line.replace(/^    /, ''))
+        .join('\n')
+        .trim()
+      
+      return `<Admonition type="${type}" title="${title || ''}">\n\n${processedContent}\n\n</Admonition>`
+    }
+  )
+
+  // Then handle gallery images (!![]())
+  processedContent = processedContent.replace(
     /!!\[(.*?)\]\((.*?)\)/g,
     (match, alt, src) => `<LightboxImage alt="${alt}" src="${src}" />`
   );
