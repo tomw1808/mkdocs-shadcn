@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { CheckIcon, CopyIcon } from '@radix-ui/react-icons'
+import { getHighlighter } from 'shiki'
+import { useTheme } from 'next-themes'
 
 interface CodeBlockProps {
   code: string
@@ -17,7 +19,26 @@ export function CodeBlock({
   showLineNumbers = true,
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false)
+  const [highlightedCode, setHighlightedCode] = useState('')
   const preRef = useRef<HTMLPreElement>(null)
+  const { theme } = useTheme()
+
+  useEffect(() => {
+    async function highlight() {
+      const highlighter = await getHighlighter({
+        theme: 'github-dark',
+        langs: [language],
+      })
+
+      const highlighted = await highlighter.codeToHtml(code, {
+        lang: language,
+      })
+
+      setHighlightedCode(highlighted)
+    }
+
+    highlight()
+  }, [code, language])
 
   useEffect(() => {
     if (copied) {
@@ -52,7 +73,7 @@ export function CodeBlock({
             <CopyIcon className="h-4 w-4 text-zinc-400" />
           )}
         </button>
-        <pre
+        <div
           ref={preRef}
           className={`overflow-x-auto p-4 text-sm ${
             showLineNumbers ? 'pl-12' : ''
@@ -60,9 +81,8 @@ export function CodeBlock({
           style={{
             counterReset: 'line',
           }}
-        >
-          <code className={`language-${language}`}>{code}</code>
-        </pre>
+          dangerouslySetInnerHTML={{ __html: highlightedCode }}
+        />
       </div>
     </div>
   )
