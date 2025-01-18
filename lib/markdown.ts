@@ -58,8 +58,8 @@ function preprocessHtmlInMarkdown(content: string): string {
     (match, alt, src) => `<LightboxImage alt="${alt}" src="${src}" />`
   );
 
-   // Then convert MkDocs-style links to markdown links
-   processedContent = processedContent.replace(
+  // Convert MkDocs-style links to markdown links
+  processedContent = processedContent.replace(
     /<(https?:\/\/[^>]+)>/g,
     (match, url) => `[${url}](${url})`
   );
