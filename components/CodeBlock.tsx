@@ -28,7 +28,8 @@ export function CodeBlock({
     async function highlight() {
       const hast = await codeToHast(code, {
         lang: language,
-        theme: 'github-dark'
+        theme: 'github-dark',
+        
       })
 
       const rendered = toJsxRuntime(hast, {
@@ -47,6 +48,7 @@ export function CodeBlock({
         }
       }) as JSX.Element
 
+      console.log(rendered)
       setNodes(rendered)
     }
 
