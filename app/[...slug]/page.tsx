@@ -26,8 +26,8 @@ export default async function Page({ params }: PageProps) {
     const { prev, next } = getNavigation(params.slug.join('/'))
     
     return (
-      <main className="mx-auto px-4 py-8 max-w-4xl">
-        <div className='container w-screen'>
+      <main className="container mx-auto px-4 py-8">
+        <div className=''>
           <GalleryProvider>
           <MDXRemote
             source={content}
@@ -58,7 +58,7 @@ export default async function Page({ params }: PageProps) {
                   content: child.props.children
                 }))
                 
-                return <ContentTabs items={items} />
+                return <ContentTabs items={items} className='mb-4' />
               },
               Admonition: (props) => {
                 const { type, title, children } = props
@@ -79,6 +79,7 @@ export default async function Page({ params }: PageProps) {
                     <LightboxImage
                       src={publicPath}
                       alt={props.alt}
+                      className="mb-4"
                     />
                   )
                 }
