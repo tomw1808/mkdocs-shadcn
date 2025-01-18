@@ -130,25 +130,10 @@ export default async function Page({ params }: PageProps) {
               iframe: (props) => <iframe {...props} />,
               script: (props) => <Script {...props} />,
               pre: ({ children, ...props }) => {
-                console.log(children)
-                const childArray = React.Children.toArray(children)
-                const code = childArray[0] as React.ReactElement
-                
-                if (code.type === 'code') {
-                  const language = code.props.className?.replace('language-', '') || 'text'
-                  // Reconstruct the full markdown code block
-                  const fullCodeBlock = [
-                    '```' + language + " showLineNumbers",
-                    code.props.children,
-                    '```'
-                  ].join('\n')
-                  return (
-                    <div className='mb-4'><Code code={fullCodeBlock} />
-                    </div>
-                  )
-                }
-                return <pre {...props} >{children}</pre>
-              }
+                // Only handle regular pre tags, Code components are already processed
+                return <pre {...props}>{children}</pre>
+              },
+              Code: Code
             }}
             options={{
               parseFrontmatter: true,

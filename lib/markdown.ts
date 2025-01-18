@@ -51,15 +51,21 @@ function preprocessHtmlInMarkdown(content: string): string {
     match => `<Tabs>\n${match}</Tabs>`
   )
 
-  // Convert mkdocs hl_lines to rehype-pretty-code syntax
+  // Handle code blocks with highlighting
   processedContent = processedContent.replace(
-    /```(\w+)\s+hl_lines="([^"]+)"\n([\s\S]*?)```/g,
+    /```(\w+)(?:\s+hl_lines="([^"]+)")?\n([\s\S]*?)```/g,
     (match, lang, lines, code) => {
-      // Convert line ranges (e.g., "1-3 5" to "{1-3} {5}")
-      const highlightedLines = lines.split(/\s+/)
-        .map((range: string) => `{${range}}`)
-        .join(' ');
-      return '```' + lang + ' ' + highlightedLines + '\n' + code + '```';
+      let options = 'showLineNumbers';
+      
+      // Add line highlighting if specified
+      if (lines) {
+        const highlightedLines = lines.split(/\s+/)
+          .map((range: string) => `{${range}}`)
+          .join(' ');
+        options += ' ' + highlightedLines;
+      }
+
+      return `<Code code={\`\`\`${lang} ${options}\n${code}\`\`\`} />`;
     }
   );
 
