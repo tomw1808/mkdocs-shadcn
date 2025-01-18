@@ -9,6 +9,27 @@ function preprocessHtmlInMarkdown(content: string): string {
     (match, alt, src) => `<LightboxImage alt="${alt}" src="${src}" />`
   );
 
+  // Handle markdown links with attributes
+  processedContent = processedContent.replace(
+    /\[([^\]]+)\]\(([^)]+)\){([^}]+)}/g,
+    (match, text, url, attrs) => {
+      const attributes = attrs.split(/\s+/).reduce((acc: Record<string, string>, attr: string) => {
+        const [key, value] = attr.split('=');
+        if (key && value) {
+          acc[key] = value;
+        }
+        return acc;
+      }, {});
+
+      // Convert target="_blank" to proper HTML attributes
+      if (attributes.target === '_blank') {
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+      }
+      
+      return `[${text}](${url})`;
+    }
+  );
+
   // Then convert MkDocs-style links to markdown links
   processedContent = processedContent.replace(
     /<(https?:\/\/[^>]+)>/g,
