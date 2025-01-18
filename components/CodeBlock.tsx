@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { CheckIcon, CopyIcon } from '@radix-ui/react-icons'
-import { getHighlighter } from 'shiki'
-import { useTheme } from 'next-themes'
+import { codeToHast } from 'shiki'
+import { toJsxRuntime } from 'hast-util-to-jsx-runtime'
+import { Fragment, JSX } from 'react'
+import { jsx, jsxs } from 'react/jsx-runtime'
 
 interface CodeBlockProps {
   code: string
@@ -19,26 +21,37 @@ export function CodeBlock({
   showLineNumbers = true,
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false)
-  const [highlightedCode, setHighlightedCode] = useState('')
+  const [nodes, setNodes] = useState<JSX.Element | null>(null)
   const preRef = useRef<HTMLPreElement>(null)
-  const { theme } = useTheme()
 
   useEffect(() => {
     async function highlight() {
-      const highlighter = await getHighlighter({
-        theme: 'github-dark',
-        langs: [language],
-      })
-
-      const highlighted = await highlighter.codeToHtml(code, {
+      const hast = await codeToHast(code, {
         lang: language,
+        theme: 'github-dark'
       })
 
-      setHighlightedCode(highlighted)
+      const rendered = toJsxRuntime(hast, {
+        Fragment,
+        jsx,
+        jsxs,
+        components: {
+          pre: (props) => (
+            <pre
+              ref={preRef}
+              className={`overflow-x-auto p-4 text-sm ${showLineNumbers ? 'pl-12' : ''}`}
+              style={{ counterReset: 'line' }}
+              {...props}
+            />
+          )
+        }
+      }) as JSX.Element
+
+      setNodes(rendered)
     }
 
     highlight()
-  }, [code, language])
+  }, [code, language, showLineNumbers])
 
   useEffect(() => {
     if (copied) {
@@ -52,6 +65,10 @@ export function CodeBlock({
       await navigator.clipboard.writeText(preRef.current.textContent)
       setCopied(true)
     }
+  }
+
+  if (!nodes) {
+    return <div>Loading...</div>
   }
 
   return (
@@ -73,16 +90,7 @@ export function CodeBlock({
             <CopyIcon className="h-4 w-4 text-zinc-400" />
           )}
         </button>
-        <div
-          ref={preRef}
-          className={`overflow-x-auto p-4 text-sm ${
-            showLineNumbers ? 'pl-12' : ''
-          }`}
-          style={{
-            counterReset: 'line',
-          }}
-          dangerouslySetInnerHTML={{ __html: highlightedCode }}
-        />
+        {nodes}
       </div>
     </div>
   )
