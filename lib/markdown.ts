@@ -51,6 +51,18 @@ function preprocessHtmlInMarkdown(content: string): string {
     match => `<Tabs>\n${match}</Tabs>`
   )
 
+  // Convert mkdocs hl_lines to rehype-pretty-code syntax
+  processedContent = processedContent.replace(
+    /```(\w+)\s+hl_lines="([^"]+)"\n([\s\S]*?)```/g,
+    (match, lang, lines, code) => {
+      // Convert line ranges (e.g., "1-3 5" to "{1-3} {5}")
+      const highlightedLines = lines.split(/\s+/)
+        .map((range: string) => `{${range}}`)
+        .join(' ');
+      return '```' + lang + ' ' + highlightedLines + '\n' + code + '```';
+    }
+  );
+
   // Then handle gallery images (!![]())
   processedContent = processedContent.replace(
     /!!\[(.*?)\]\((.*?)\)/g,
