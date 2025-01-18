@@ -13,6 +13,7 @@ import { ensurePublicImageExists } from '@/lib/images'
 import { Admonition } from '@/components/Admonition'
 import React from 'react'
 import { ContentTabs } from '@/components/ContentTabs'
+import { Code } from '@/components/Code'
 
 
 interface PageProps {
@@ -135,11 +136,7 @@ export default async function Page({ params }: PageProps) {
                 if (code.type === 'code') {
                   const language = code.props.className?.replace('language-', '') || 'text'
                   return (
-                    <CodeBlock
-                      code={code.props.children as string}
-                      language={language}
-                      showLineNumbers={true}
-                    />
+                    <Code code={code.props.children as string} />
                   )
                 }
                 return <pre {...props}>{children}</pre>
