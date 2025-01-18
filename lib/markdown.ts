@@ -53,7 +53,7 @@ function preprocessHtmlInMarkdown(content: string): string {
 
   // Handle code blocks with highlighting
   processedContent = processedContent.replace(
-    /```(\w+)(?:\s+hl_lines="([^"]+)")?\n([\s\S]*?)```/g,
+    /```(\w+)(?:\s+hl_lines="([^"]+)")?\r?\n([\s\S]*?)```/g,
     (match, lang, lines, code) => {
       let options = 'showLineNumbers';
       
