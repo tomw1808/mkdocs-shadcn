@@ -31,6 +31,12 @@ function preprocessHtmlInMarkdown(content: string): string {
     (match, alt, src) => `<LightboxImage alt="${alt}" src="${src}" />`
   );
 
+   // Then convert MkDocs-style links to markdown links
+   processedContent = processedContent.replace(
+    /<(https?:\/\/[^>]+)>/g,
+    (match, url) => `[${url}](${url})`
+  );
+
   // Handle markdown links with attributes
   processedContent = processedContent.replace(
     /\[([^\]]+)\]\(([^)]+)\){([^}]+)}/g,
@@ -52,11 +58,7 @@ function preprocessHtmlInMarkdown(content: string): string {
     }
   );
 
-  // Then convert MkDocs-style links to markdown links
-  processedContent = processedContent.replace(
-    /<(https?:\/\/[^>]+)>/g,
-    (match, url) => `[${url}](${url})`
-  );
+ 
 
   // Then convert style attributes to valid JSX
   processedContent = processedContent.replace(
