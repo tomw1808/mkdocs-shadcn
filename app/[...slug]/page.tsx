@@ -130,6 +130,7 @@ export default async function Page({ params }: PageProps) {
               iframe: (props) => <iframe {...props} />,
               script: (props) => <Script {...props} />,
               pre: ({ children, ...props }) => {
+                console.log(children)
                 const childArray = React.Children.toArray(children)
                 const code = childArray[0] as React.ReactElement
                 
@@ -137,15 +138,16 @@ export default async function Page({ params }: PageProps) {
                   const language = code.props.className?.replace('language-', '') || 'text'
                   // Reconstruct the full markdown code block
                   const fullCodeBlock = [
-                    '```' + language,
+                    '```' + language + " showLineNumbers",
                     code.props.children,
                     '```'
                   ].join('\n')
                   return (
-                    <Code code={fullCodeBlock} />
+                    <div className='mb-4'><Code code={fullCodeBlock} />
+                    </div>
                   )
                 }
-                return <pre {...props}>{children}</pre>
+                return <pre {...props} >{children}</pre>
               }
             }}
             options={{
