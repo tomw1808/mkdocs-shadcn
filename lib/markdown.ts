@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import rehypePrettyCode from 'rehype-pretty-code'
 
 function preprocessHtmlInMarkdown(content: string): string {
   // First handle tabs
@@ -9,7 +8,6 @@ function preprocessHtmlInMarkdown(content: string): string {
     /^===\s+"([^"]+)"\r?\n((?:(?:    .*|[ \t]*)\r?\n)*(?:    .*))/gm,
     (match, label, content) => {
       // Remove the 4-space indent from content and handle empty lines
-      console.log({label, content})
       const processedContent = content.split('\n')
         .map((line: string) => {
           // Handle completely empty lines or lines with only whitespace
