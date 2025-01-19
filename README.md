@@ -115,4 +115,4 @@ Contributions are welcome! Please feel free to submit a Pull Request. Check our 
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is available under a custom license that allows free use for both personal and commercial purposes, but explicitly prohibits using the software to create commercial hosting services. See the [LICENSE](LICENSE.md) file for details.
