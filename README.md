@@ -1,6 +1,6 @@
 # Next.js MkDocs Material Alternative
 
-This project is a drop-in replacement for MkDocs Material, built with Next.js 13+, Tailwind CSS, and shadcn/ui. It aims to provide a modern, fast, and customizable documentation site generator that maintains compatibility with existing MkDocs projects.
+This project is a drop-in replacement for MkDocs Material, built with Next.js 14+, Tailwind CSS, and shadcn/ui. It aims to provide a modern, fast, and customizable documentation site generator that maintains compatibility with existing MkDocs projects.
 
 ## Features
 
@@ -67,7 +67,3 @@ This project aims to maintain compatibility with MkDocs Material features while 
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-MIT License - feel free to use this in your own projects.

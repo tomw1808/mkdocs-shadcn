@@ -103,8 +103,8 @@ export default async function Page({ params }: PageProps) {
                   return (
                     <Image 
                       src={props.src} 
-                      width={800} 
-                      height={600} 
+                      width={300} 
+                      height={300} 
                       style={{maxWidth: '100%', height: 'auto'}} 
                       alt={props.alt || 'Image'}
                     />
@@ -116,8 +116,8 @@ export default async function Page({ params }: PageProps) {
                   return (
                     <Image
                       src={publicPath}
-                      width={800}
-                      height={600}
+                      width={300}
+                      height={300}
                       style={{maxWidth: '100%', height: 'auto'}}
                       alt={props.alt || 'Image'}
                       placeholder={"blur"}
@@ -130,6 +130,7 @@ export default async function Page({ params }: PageProps) {
               iframe: (props) => <iframe {...props} />,
               script: (props) => <Script {...props} />,
               pre: ({ children, ...props }) => {
+                console.log(children)
                 // Only handle regular pre tags, Code components are already processed
                 return <pre {...props}>{children}</pre>
               },

@@ -26,7 +26,7 @@ export function ContentTabs({ items, className }: ContentTabsProps) {
         ))}
       </TabsList>
       {items.map((item) => (
-        <TabsContent key={item.label} value={item.label}>
+        <TabsContent key={item.label} value={item.label} className="pl-1">
           {item.content}
         </TabsContent>
       ))}

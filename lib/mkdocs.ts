@@ -26,7 +26,7 @@ export function getMkDocsConfig(): MkDocsConfig {
       site_name: config.site_name,
       site_description: config.site_description
     }
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(`Failed to parse mkdocs.yml: ${error.message}`)
   }
 }

@@ -55,25 +55,15 @@ function preprocessHtmlInMarkdown(content: string): string {
   processedContent = processedContent.replace(
     /```(\w+)(?:\s+hl_lines="([^"]+)")?\r?\n([\s\S]*?)```/g,
     (match, lang, lines, code) => {
-      const props = {
-        code: code.trim(),
-        lang,
-        showLineNumbers: true
-      };
+      const codeContent = code.replace(/`/g, '\\`').replace(/\$/g, '\\$');
+      let codeProps = `lang="${lang}" code={\`${codeContent}\`}`;
       
-      // Add line highlighting if specified
       if (lines) {
-        props.highlights = lines.split(/\s+/).join(' ');
+        codeProps += ` highlights="${lines}"`;
       }
+      console.log(codeProps)
 
-      return `<Code ${Object.entries(props)
-        .map(([key, value]) => {
-          if (typeof value === 'string') {
-            return `${key}="${value}"`;
-          }
-          return `${key}={${value}}`;
-        })
-        .join(' ')} />`;
+      return `<Code ${codeProps} />`;
     }
   );
 

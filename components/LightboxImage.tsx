@@ -7,9 +7,10 @@ import { useGallery } from './GalleryProvider'
 interface LightboxImageProps {
   src: string
   alt?: string
+  className?: string
 }
 
-export function LightboxImage({ src, alt }: LightboxImageProps) {
+export function LightboxImage({ src, alt, className }: LightboxImageProps) {
   const { addImage, setGalleryIndex } = useGallery()
   const [index, setIndex] = useState<number>(-1)
 
@@ -18,7 +19,7 @@ export function LightboxImage({ src, alt }: LightboxImageProps) {
     const imageIndex = addImage({
       src,
       alt,
-      width: 800,
+      width: 600,
       height: 600
     })
     setIndex(imageIndex)
@@ -30,15 +31,14 @@ export function LightboxImage({ src, alt }: LightboxImageProps) {
 
   return (
     <div 
-      className="cursor-pointer"
+      className={className + " cursor-pointer relative relative h-64 flex align-left"}
       onClick={handleClick}
     >
       <Image
         src={src}
         alt={alt || ''}
-        width={800}
-        height={600}
-        style={{ maxWidth: '100%', height: 'auto' }}
+        fill={true}
+        style={{ objectFit: 'contain', alignSelf: 'left' }}
       />
     </div>
   )
