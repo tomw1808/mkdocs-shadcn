@@ -2,6 +2,7 @@
 
 import { NavTreeItem } from '@/lib/mkdocs'
 import { ChevronDown, ChevronRight } from 'lucide-react'
+import { ScrollArea } from "@/components/ui/scroll-area"
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
@@ -73,14 +74,18 @@ export const SideNav = ({ items }: SideNavProps) => {
   const currentPath = pathname.substring(1) // Remove leading slash
   
   return (
-    <nav className="w-64 h-[calc(100vh-3.5rem)] overflow-y-auto border-r px-2 py-4 hidden md:block">
-      {items.map((item, index) => (
-        <NavItem 
-          key={index}
-          item={item}
-          currentPath={currentPath}
-        />
-      ))}
+    <nav className="w-64 fixed left-0 top-[3.5rem] h-[calc(100vh-3.5rem)] border-r hidden md:block">
+      <ScrollArea className="h-full">
+        <div className="px-2 py-4">
+          {items.map((item, index) => (
+            <NavItem 
+              key={index}
+              item={item}
+              currentPath={currentPath}
+            />
+          ))}
+        </div>
+      </ScrollArea>
     </nav>
   )
 }

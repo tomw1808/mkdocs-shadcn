@@ -31,7 +31,7 @@ export default async function Page({ params }: PageProps) {
     return (
       <main className="flex">
         <SideNav items={navItems} />
-        <div className="flex-1 px-4 py-8 max-w-4xl mx-auto">
+        <div className="flex-1 px-4 py-8 max-w-4xl mx-auto md:ml-64">
         
           <GalleryProvider>
           <MDXRemote
