@@ -1,7 +1,6 @@
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getMarkdownContent } from '@/lib/markdown'
 import { getNavigation } from '@/lib/mkdocs'
-import { CodeBlock } from '@/components/CodeBlock'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Script from 'next/script'
@@ -30,7 +29,7 @@ export default async function Page({ params }: PageProps) {
     return (
       <main className="flex">
         <div className="flex-1 px-4 py-8 max-w-5xl mx-auto">
-        <div className=''>
+        
           <GalleryProvider>
           <MDXRemote
             source={content}
@@ -167,6 +166,7 @@ export default async function Page({ params }: PageProps) {
       </main>
     )
   } catch (error) {
+    console.log(error);
     notFound()
   }
 }
