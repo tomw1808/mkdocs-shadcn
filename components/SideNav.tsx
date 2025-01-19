@@ -33,7 +33,7 @@ const NavItem = ({ item, depth = 0, currentPath }: NavItemProps) => {
     <div className="w-full">
       <div 
         className={`flex items-center py-1 px-2 rounded-md cursor-pointer
-          ${item.isSection ? 'text-lg font-bold text-primary mt-4 first:mt-0' : 
+          ${item.isSection ? 'text-sm font-bold text-primary mt-4 first:mt-0 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground' : 
             `hover:bg-accent/50 ${isActive ? 'bg-accent' : ''}`
           }
         `}

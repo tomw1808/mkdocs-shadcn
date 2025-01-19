@@ -31,7 +31,7 @@ export default async function Page({ params }: PageProps) {
     return (
       <main className="flex">
         <SideNav items={navItems} />
-        <div className="flex-1 px-4 py-8 max-w-4xl mx-auto md:ml-64">
+        <div className="flex-1 px-4 py-4 max-w-4xl mx-auto md:ml-64">
         
           <GalleryProvider>
           <MDXRemote
@@ -42,12 +42,12 @@ export default async function Page({ params }: PageProps) {
               ul: (props) => <ul className="list-disc pl-6 mb-4 space-y-2" {...props} />,
               ol: (props) => <ol className="list-decimal pl-6 mb-4 space-y-2" {...props} />,
               li: (props) => <li className="text-base leading-7" {...props} />,
-              h1: (props) => <h1 className="text-4xl font-bold mb-6 mt-8" {...props} />,
-              h2: (props) => <h2 className="text-3xl font-bold mb-4 mt-6" {...props} />,
-              h3: (props) => <h3 className="text-2xl font-bold mb-3 mt-5" {...props} />,
-              h4: (props) => <h4 className="text-xl font-bold mb-2 mt-4" {...props} />,
-              h5: (props) => <h5 className="text-lg font-bold mb-2 mt-4" {...props} />,
-              h6: (props) => <h6 className="text-base font-bold mb-2 mt-4" {...props} />,
+              h1: (props) => <h1 className="text-4xl font-bold mb-6" {...props} />,
+              h2: (props) => <h2 className="text-3xl font-bold mb-4" {...props} />,
+              h3: (props) => <h3 className="text-2xl font-bold mb-3" {...props} />,
+              h4: (props) => <h4 className="text-xl font-bold mb-2" {...props} />,
+              h5: (props) => <h5 className="text-lg font-bold mb-2" {...props} />,
+              h6: (props) => <h6 className="text-base font-bold mb-2" {...props} />,
               blockquote: (props) => <blockquote className="pl-4 border-l-4 border-gray-300 italic my-4" {...props} />,
               Tab: ({ label, children }) => {
                 // Individual tab content - this won't be rendered directly
