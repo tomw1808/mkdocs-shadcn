@@ -29,9 +29,9 @@ export default async function Page({ params }: PageProps) {
     const navItems = getFullNavigation()
     
     return (
-      <main className="flex">
+      <main>
         <SideNav items={navItems} />
-        <div className="flex-1 px-4 py-4 max-w-4xl mx-auto md:ml-64">
+        <div className="flex-1 px-4 py-4 max-w-4xl mx-auto md:ml-[16rem]">
         
           <GalleryProvider>
           <MDXRemote
