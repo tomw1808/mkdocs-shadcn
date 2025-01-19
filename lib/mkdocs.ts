@@ -35,6 +35,7 @@ export interface NavTreeItem {
   title: string
   path?: string
   children?: NavTreeItem[]
+  isSection?: boolean
 }
 
 export function buildNavTree(nav: any[]): NavTreeItem[] {
@@ -46,12 +47,20 @@ export function buildNavTree(nav: any[]): NavTreeItem[] {
     }
     
     Object.entries(item).forEach(([key, value]) => {
+      if (key === 'Home') {
+        return // Skip the home entry
+      }
+      
       if (Array.isArray(value)) {
         // This is a section with children
-        items.push({
-          title: key,
-          children: buildNavTree(value)
-        })
+        const children = buildNavTree(value)
+        if (children.length > 0) {
+          items.push({
+            title: key,
+            isSection: true, // Mark as section header
+            children: children
+          })
+        }
       } else if (typeof value === 'string') {
         // This is a page
         items.push({

@@ -32,8 +32,10 @@ const NavItem = ({ item, depth = 0, currentPath }: NavItemProps) => {
   return (
     <div className="w-full">
       <div 
-        className={`flex items-center py-1 px-2 rounded-md hover:bg-accent/50 cursor-pointer
-          ${isActive ? 'bg-accent' : ''}
+        className={`flex items-center py-1 px-2 rounded-md cursor-pointer
+          ${item.isSection ? 'text-lg font-bold text-primary mt-4 first:mt-0' : 
+            `hover:bg-accent/50 ${isActive ? 'bg-accent' : ''}`
+          }
         `}
         style={{ paddingLeft: `${depth * 12 + 8}px` }}
         onClick={() => hasChildren && setIsOpen(!isOpen)}
