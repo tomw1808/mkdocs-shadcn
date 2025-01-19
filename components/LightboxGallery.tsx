@@ -27,7 +27,7 @@ export function LightboxGallery({ images, initialIndex = -1 }: LightboxGalleryPr
 
   return (
     <Lightbox
-      index={initialIndex}
+      index={index}
       slides={images}
       open={index >= 0}
       close={() => setIndex(-1)}
