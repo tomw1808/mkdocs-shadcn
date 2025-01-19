@@ -75,6 +75,31 @@ export function getFullNavigation() {
   return buildNavTree(config.nav)
 }
 
+function flattenNav(nav: any[]): { title: string; path: string }[] {
+  const items: { title: string; path: string }[] = []
+  
+  nav.forEach(item => {
+    if (typeof item === 'string') {
+      return // Skip string items
+    }
+    
+    Object.entries(item).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        // This is a section with children
+        items.push(...flattenNav(value))
+      } else if (typeof value === 'string') {
+        // This is a page
+        items.push({
+          title: key,
+          path: value
+        })
+      }
+    })
+  })
+  
+  return items
+}
+
 export function getNavigation(currentPath: string) {
   const mkdocsPath = path.join(process.cwd(), 'mkdocs', 'mkdocs.yml')
   const fileContents = fs.readFileSync(mkdocsPath, 'utf8')
@@ -83,7 +108,7 @@ export function getNavigation(currentPath: string) {
   if (!config.nav) return { prev: null, next: null }
   
   const flatNav = flattenNav(config.nav)
-  const currentIndex = flatNav.findIndex(item => item.path === currentPath + '.md')
+  const currentIndex = flatNav.findIndex(item => item.path.replace('.md', '') === currentPath)
   
   return {
     prev: currentIndex > 0 ? flatNav[currentIndex - 1] : null,
