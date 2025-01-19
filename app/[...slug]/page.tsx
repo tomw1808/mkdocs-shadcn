@@ -1,6 +1,7 @@
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getMarkdownContent } from '@/lib/markdown'
-import { getNavigation } from '@/lib/mkdocs'
+import { getNavigation, getFullNavigation } from '@/lib/mkdocs'
+import { SideNav } from '@/components/SideNav'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Script from 'next/script'
@@ -25,10 +26,12 @@ export default async function Page({ params }: PageProps) {
   try {
     const { content, imagesPath } = await getMarkdownContent(params.slug)
     const { prev, next } = getNavigation(params.slug.join('/'))
+    const navItems = getFullNavigation()
     
     return (
       <main className="flex">
-        <div className="flex-1 px-4 py-8 max-w-5xl mx-auto">
+        <SideNav items={navItems} />
+        <div className="flex-1 px-4 py-8 max-w-4xl mx-auto">
         
           <GalleryProvider>
           <MDXRemote
