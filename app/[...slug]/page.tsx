@@ -78,11 +78,13 @@ export default async function Page({ params }: PageProps) {
                   
                   // Return the client component
                   return (
-                    <LightboxImage
-                      src={publicPath}
-                      alt={props.alt}
-                      className="mb-4"
-                    />
+                    <div className="my-4">
+                      <LightboxImage
+                        src={publicPath}
+                        alt={props.alt}
+                        className="max-w-full"
+                      />
+                    </div>
                   )
                 }
                 // Fall back to regular image for remote URLs

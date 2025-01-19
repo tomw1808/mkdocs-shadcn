@@ -8,8 +8,6 @@ import Image from 'next/image'
 export interface GalleryImage {
   src: string
   alt?: string
-  width: number
-  height: number
 }
 
 interface LightboxGalleryProps {

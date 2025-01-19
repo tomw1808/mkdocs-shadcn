@@ -18,9 +18,7 @@ export function LightboxImage({ src, alt, className }: LightboxImageProps) {
     // Add image to gallery and get its index
     const imageIndex = addImage({
       src,
-      alt,
-      width: 600,
-      height: 600
+      alt
     })
     setIndex(imageIndex)
   }, [addImage, src, alt]) // Include dependencies to ensure proper updates
