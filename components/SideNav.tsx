@@ -54,7 +54,7 @@ const NavItem = ({ item, depth = 0, currentPath }: NavItemProps) => {
 
       {hasChildren && isOpen && (
         <div className="mt-1">
-          {item.children.map((child, index) => (
+          {item.children?.map((child, index) => (
             <NavItem 
               key={index}
               item={child}
