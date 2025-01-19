@@ -28,7 +28,8 @@ export default async function Page({ params }: PageProps) {
     const { prev, next } = getNavigation(params.slug.join('/'))
     
     return (
-      <main className="container mx-auto px-4 py-8">
+      <main className="flex">
+        <div className="flex-1 px-4 py-8 max-w-5xl mx-auto">
         <div className=''>
           <GalleryProvider>
           <MDXRemote

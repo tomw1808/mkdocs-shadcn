@@ -31,8 +31,14 @@ export function getMkDocsConfig(): MkDocsConfig {
   }
 }
 
-function flattenNav(nav: any[], parentTitle = ''): NavItem[] {
-  const items: NavItem[] = []
+export interface NavTreeItem {
+  title: string
+  path?: string
+  children?: NavTreeItem[]
+}
+
+export function buildNavTree(nav: any[]): NavTreeItem[] {
+  const items: NavTreeItem[] = []
   
   nav.forEach(item => {
     if (typeof item === 'string') {
@@ -42,18 +48,31 @@ function flattenNav(nav: any[], parentTitle = ''): NavItem[] {
     Object.entries(item).forEach(([key, value]) => {
       if (Array.isArray(value)) {
         // This is a section with children
-        items.push(...flattenNav(value, key))
+        items.push({
+          title: key,
+          children: buildNavTree(value)
+        })
       } else if (typeof value === 'string') {
         // This is a page
         items.push({
           title: key,
-          path: value
+          path: value.replace('.md', '')
         })
       }
     })
   })
   
   return items
+}
+
+export function getFullNavigation() {
+  const mkdocsPath = path.join(process.cwd(), 'mkdocs', 'mkdocs.yml')
+  const fileContents = fs.readFileSync(mkdocsPath, 'utf8')
+  const config = yaml.load(fileContents) as any
+  
+  if (!config.nav) return []
+  
+  return buildNavTree(config.nav)
 }
 
 export function getNavigation(currentPath: string) {
