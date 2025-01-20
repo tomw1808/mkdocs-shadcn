@@ -61,8 +61,7 @@ function preprocessHtmlInMarkdown(content: string): string {
       if (lines) {
         codeProps += ` highlights="${lines}"`;
       }
-      console.log(codeProps)
-
+      
       return `<Code ${codeProps} />`;
     }
   );

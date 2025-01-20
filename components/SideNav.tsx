@@ -83,7 +83,7 @@ export const SideNav = ({ items }: SideNavProps) => {
   
   return (
     <SidebarProvider defaultOpen={true}>
-      <Sidebar>
+      <Sidebar className='mt-14'>
         <SidebarHeader className="border-b px-2">
           <div className="font-semibold">Documentation</div>
         </SidebarHeader>

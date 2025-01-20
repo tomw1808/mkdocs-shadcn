@@ -29,26 +29,27 @@ export default async function Page({ params }: PageProps) {
     const navItems = getFullNavigation()
     
     return (
-      <main>
+      <main className='mt-2'>
         <SideNav items={navItems} />
-        <div className="flex-1 px-4 py-4 max-w-4xl mx-auto md:ml-[16rem]">
+        <div className="mx-auto w-full min-w-0 max-w-2xl">
         
           <GalleryProvider>
           <MDXRemote
             source={content}
             components={{
               // Add typography classes directly to HTML elements
-              p: (props) => <p className="mb-4 text-base leading-7" {...props} />,
+              a: (props) => <a className="leading-7 [&:not(:first-child)]:mt-6 underline" {...props} />,
+              p: (props) => <p className="leading-7 [&:not(:first-child)]:mt-6" {...props} />,
               ul: (props) => <ul className="list-disc pl-6 mb-4 space-y-2" {...props} />,
               ol: (props) => <ol className="list-decimal pl-6 mb-4 space-y-2" {...props} />,
               li: (props) => <li className="text-base leading-7" {...props} />,
-              h1: (props) => <h1 className="text-4xl font-bold mb-6" {...props} />,
-              h2: (props) => <h2 className="text-3xl font-bold mb-4" {...props} />,
-              h3: (props) => <h3 className="text-2xl font-bold mb-3" {...props} />,
-              h4: (props) => <h4 className="text-xl font-bold mb-2" {...props} />,
-              h5: (props) => <h5 className="text-lg font-bold mb-2" {...props} />,
+              h1: (props) => <h1 className="scroll-m-20 text-3xl font-bold tracking-tight" {...props} />,
+              h2: (props) => <h2 className="font-heading mt-12 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-0" {...props} />,
+              h3: (props) => <h3 className="font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight" {...props} />,
+              h4: (props) => <h4 className="text-xl font-bold mt-2" {...props} />,
+              h5: (props) => <h5 className="text-lg font-bold mt-2" {...props} />,
               h6: (props) => <h6 className="text-base font-bold mb-2" {...props} />,
-              blockquote: (props) => <blockquote className="pl-4 border-l-4 border-gray-300 italic my-4" {...props} />,
+              blockquote: (props) => <blockquote className="mt-6 border-l-2 pl-6 italic" {...props} />,
               Tab: ({ label, children }) => {
                 // Individual tab content - this won't be rendered directly
                 return children
@@ -63,7 +64,7 @@ export default async function Page({ params }: PageProps) {
                   content: child.props.children
                 }))
                 
-                return <ContentTabs items={items} className='mb-4' />
+                return <ContentTabs items={items} className='mt-6 first:mt-0 ' />
               },
               Admonition: (props) => {
                 const { type, title, children } = props
@@ -81,7 +82,7 @@ export default async function Page({ params }: PageProps) {
                   
                   // Return the client component
                   return (
-                    <div className="my-4">
+                    <div className="mt-6 first:mt-0">
                       <LightboxImage
                         src={publicPath}
                         alt={props.alt}
@@ -135,7 +136,6 @@ export default async function Page({ params }: PageProps) {
               iframe: (props) => <iframe {...props} />,
               script: (props) => <Script {...props} />,
               pre: ({ children, ...props }) => {
-                console.log(children)
                 // Only handle regular pre tags, Code components are already processed
                 return <pre {...props}>{children}</pre>
               },
@@ -169,7 +169,7 @@ export default async function Page({ params }: PageProps) {
       </main>
     )
   } catch (error) {
-    console.log(error);
+    console.error(error);
     notFound()
   }
 }

@@ -16,6 +16,9 @@ interface CodeProps {
     highlights?: string;
 }
 
+let highlighterInstance: any = null;
+
+
 export async function Code({ code, lang, showLineNumbers = true, highlights }: CodeProps) {
     // Construct the markdown code block
     const codeBlock = [
@@ -52,14 +55,19 @@ const rehypePrettyCodeOptions: Options = {
   ]
 };
 
-async function highlightCode(code: string) {
-    
-    const file = await unified()
+async function getHighlighter() {
+    if (!highlighterInstance) {
+      highlighterInstance = await unified()
         .use(remarkParse)
         .use(remarkRehype)
         .use(rehypePrettyCode, rehypePrettyCodeOptions)
-        .use(rehypeStringify)
-        .process(code);
+        .use(rehypeStringify);
+    }
+    return highlighterInstance;
+  }
 
+  async function highlightCode(code: string) {
+    const highlighter = await getHighlighter();
+    const file = await highlighter.process(code);
     return String(file);
-}
+  }
