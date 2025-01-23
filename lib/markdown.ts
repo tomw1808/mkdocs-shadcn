@@ -13,9 +13,10 @@ function preprocessHtmlInMarkdown(content: string): string {
       return id
     }
   )
+  console.log(processedContent);
 
   // Handle tabs
-  let processedContent = content.replace(
+  processedContent = processedContent.replace(
     /^===\s+"([^"]+)"\r?\n((?:(?:    .*|[ \t]*)\r?\n)*(?:    .*))/gm,
     (match, label, content) => {
       // Remove the 4-space indent from content and handle empty lines
@@ -122,7 +123,7 @@ function preprocessHtmlInMarkdown(content: string): string {
   );
 
   // Handle other HTML attribute conversions
-  return processedContent
+  processedContent = processedContent
     .replace(/frameborder=/g, "frameBorder=")
     .replace(/allowfullscreen/g, "allowFullScreen");
     
@@ -143,6 +144,8 @@ function preprocessHtmlInMarkdown(content: string): string {
       return `<Code ${codeProps} />`
     }
   )
+
+  return processedContent;
 }
 
 export async function getMarkdownContent(slug: string[]) {
