@@ -24,6 +24,21 @@ function preprocessHtmlInMarkdown(content: string): string {
     }
   )
 
+  // Handle code blocks with highlighting
+  processedContent = processedContent.replace(
+    /```(\w+)(?:\s+hl_lines="([^"]+)")?\r?\n([\s\S]*?)```/g,
+    (match, lang, lines, code) => {
+      const codeContent = code.replace(/`/g, '\\`').replace(/\$/g, '\\$');
+      let codeProps = `lang="${lang}" code={\`${codeContent}\`}`;
+      
+      if (lines) {
+        codeProps += ` highlights="${lines}"`;
+      }
+      
+      return `<Code ${codeProps} />`;
+    }
+  );
+
   // Then handle admonitions
   processedContent = processedContent.replace(
     /!!!\s*(\w+)(?:\s+"([^"]*)")?\r?\n((?:(?:    .*|[ \t]*)\r?\n)*(?:    .*))/gm,
@@ -51,20 +66,7 @@ function preprocessHtmlInMarkdown(content: string): string {
     match => `<Tabs>\n${match}</Tabs>`
   )
 
-  // Handle code blocks with highlighting
-  processedContent = processedContent.replace(
-    /```(\w+)(?:\s+hl_lines="([^"]+)")?\r?\n([\s\S]*?)```/g,
-    (match, lang, lines, code) => {
-      const codeContent = code.replace(/`/g, '\\`').replace(/\$/g, '\\$');
-      let codeProps = `lang="${lang}" code={\`${codeContent}\`}`;
-      
-      if (lines) {
-        codeProps += ` highlights="${lines}"`;
-      }
-      
-      return `<Code ${codeProps} />`;
-    }
-  );
+  
 
   // Then handle gallery images (!![]())
   processedContent = processedContent.replace(
