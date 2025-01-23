@@ -4,12 +4,12 @@ import matter from 'gray-matter'
 
 function preprocessHtmlInMarkdown(content: string): string {
   // Store code blocks with unique identifiers
-  const codeBlocks: Map<string, {lang: string, lines?: string, code: string}> = new Map()
+  const codeBlocks: Map<string, {lang: string, lines?: string, title?: string, code: string}> = new Map()
   let processedContent = content.replace(
-    /```(\w+)(?:\s+hl_lines="([^"]+)")?\r?\n([\s\S]*?)```/g,
-    (match, lang, lines, code) => {
+    /```(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)```/g,
+    (match, lang, lines, title, code) => {
       const id = `CODE_BLOCK_${Math.random().toString(36).substr(2, 9)}`
-      codeBlocks.set(id, {lang, lines, code: code.trim()})
+      codeBlocks.set(id, {lang, lines, title, code: code.trim()})
       return id
     }
   )
@@ -139,6 +139,10 @@ function preprocessHtmlInMarkdown(content: string): string {
       
       if (block.lines) {
         codeProps += ` highlights="${block.lines}"`
+      }
+      
+      if (block.title) {
+        codeProps += ` title="${block.title}"`
       }
       
       return `<Code ${codeProps} />`
