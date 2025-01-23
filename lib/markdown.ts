@@ -6,14 +6,14 @@ function preprocessHtmlInMarkdown(content: string): string {
   // Store code blocks with unique identifiers
   const codeBlocks: Map<string, {lang: string, lines?: string, title?: string, code: string}> = new Map()
   let processedContent = content.replace(
-    /```(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)```/g,
+    /```\s?(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)```/g,
     (match, lang, lines, title, code) => {
+      console.log(code);
       const id = `CODE_BLOCK_${Math.random().toString(36).substr(2, 9)}`
       codeBlocks.set(id, {lang, lines, title, code: code.trim()})
       return id
     }
   )
-  console.log(processedContent);
 
   // Handle tabs
   processedContent = processedContent.replace(

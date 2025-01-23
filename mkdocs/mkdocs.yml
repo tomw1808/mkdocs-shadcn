@@ -88,12 +88,9 @@ markdown_extensions:
 
 nav:
   - "Home": "index.md"
-  - "Learn Ethereum":
-      - "Introduction":
-          - "Overview": "000-learn-ethereum.md"
-          - "Why Yet Another Bootcamp": "001-why-this-guide.md"
-          - "Target Audience": "002-audience.md"
-          - "Double Spending Problem": "000-introduction/00-blockchain-double-spending.md"
+  - "Reference":
+      - "Admonitions": "reference/admonitions.md"
+      
       - "Your First Transaction":
           - "Overview": "001-metamask-install/00-overview.md"
           - "Lab Video": "001-metamask-install/00-lab-video.md"
