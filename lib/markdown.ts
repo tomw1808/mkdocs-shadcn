@@ -3,7 +3,18 @@ import path from 'path'
 import matter from 'gray-matter'
 
 function preprocessHtmlInMarkdown(content: string): string {
-  // First handle tabs
+  // Store code blocks with unique identifiers
+  const codeBlocks: Map<string, {lang: string, lines?: string, code: string}> = new Map()
+  let processedContent = content.replace(
+    /```(\w+)(?:\s+hl_lines="([^"]+)")?\r?\n([\s\S]*?)```/g,
+    (match, lang, lines, code) => {
+      const id = `CODE_BLOCK_${Math.random().toString(36).substr(2, 9)}`
+      codeBlocks.set(id, {lang, lines, code: code.trim()})
+      return id
+    }
+  )
+
+  // Handle tabs
   let processedContent = content.replace(
     /^===\s+"([^"]+)"\r?\n((?:(?:    .*|[ \t]*)\r?\n)*(?:    .*))/gm,
     (match, label, content) => {
@@ -24,20 +35,6 @@ function preprocessHtmlInMarkdown(content: string): string {
     }
   )
 
-  // Handle code blocks with highlighting
-  processedContent = processedContent.replace(
-    /```(\w+)(?:\s+hl_lines="([^"]+)")?\r?\n([\s\S]*?)```/g,
-    (match, lang, lines, code) => {
-      const codeContent = code.replace(/`/g, '\\`').replace(/\$/g, '\\$');
-      let codeProps = `lang="${lang}" code={\`${codeContent}\`}`;
-      
-      if (lines) {
-        codeProps += ` highlights="${lines}"`;
-      }
-      
-      return `<Code ${codeProps} />`;
-    }
-  );
 
   // Then handle admonitions
   processedContent = processedContent.replace(
@@ -128,6 +125,24 @@ function preprocessHtmlInMarkdown(content: string): string {
   return processedContent
     .replace(/frameborder=/g, "frameBorder=")
     .replace(/allowfullscreen/g, "allowFullScreen");
+    
+  // Finally restore code blocks
+  processedContent = processedContent.replace(
+    /CODE_BLOCK_[a-z0-9]{9}/g,
+    (id) => {
+      const block = codeBlocks.get(id)
+      if (!block) return id
+      
+      const codeContent = block.code.replace(/`/g, '\\`').replace(/\$/g, '\\$')
+      let codeProps = `lang="${block.lang}" code={\`${codeContent}\`}`
+      
+      if (block.lines) {
+        codeProps += ` highlights="${block.lines}"`
+      }
+      
+      return `<Code ${codeProps} />`
+    }
+  )
 }
 
 export async function getMarkdownContent(slug: string[]) {
