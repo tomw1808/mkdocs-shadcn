@@ -5,10 +5,6 @@ import rehypeStringify from 'rehype-stringify';
 import rehypePrettyCode from 'rehype-pretty-code';
 import { transformerCopyButton } from '@rehype-pretty/transformers';
 
-/**
- * Server Component example
- */
-
 interface CodeProps {
   code: string;
   lang: string;
@@ -17,10 +13,22 @@ interface CodeProps {
   theme?: string;
 }
 
-let highlighterInstance: any = null;
+interface HighlightedCodeProps {
+  highlightedCode: string;
+}
 
+export function Code(props: HighlightedCodeProps) {
+  return (
+    <section 
+      className=' [&:not(:first-child)]:mt-6 '
+      dangerouslySetInnerHTML={{
+        __html: props.highlightedCode,
+      }}
+    />
+  );
+}
 
-export async function Code({ code, lang, showLineNumbers = true, highlights, theme = 'light' }: CodeProps) {
+export async function highlightCode({ code, lang, showLineNumbers = true, highlights, theme = 'light' }: CodeProps) {
   // Construct the markdown code block
   const codeBlock = [
     '```' + lang + (showLineNumbers ? ' showLineNumbers' : '') + (highlights ? ' {' + highlights + '}' : ''),
@@ -28,15 +36,9 @@ export async function Code({ code, lang, showLineNumbers = true, highlights, the
     '```'
   ].join('\n');
 
-  const highlightedCode = await highlightCode(codeBlock, theme);
-
-  return (
-    <section className=' [&:not(:first-child)]:mt-6 '
-      dangerouslySetInnerHTML={{
-        __html: highlightedCode,
-      }}
-    />
-  );
+  const highlighter = await getHighlighter(theme);
+  const file = await highlighter.process(codeBlock);
+  return String(file);
 }
 
 import { Options } from 'rehype-pretty-code';
