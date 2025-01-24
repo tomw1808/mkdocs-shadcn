@@ -82,8 +82,7 @@ export const SideNav = ({ items }: SideNavProps) => {
   const currentPath = pathname.substring(1) // Remove leading slash
   
   return (
-    <SidebarProvider defaultOpen={true}>
-      <Sidebar className='mt-14'>
+      <Sidebar className='mt-14' variant='sidebar'>
         <SidebarHeader className="border-b px-2">
           <div className="font-semibold">Documentation</div>
         </SidebarHeader>
@@ -99,6 +98,5 @@ export const SideNav = ({ items }: SideNavProps) => {
           </SidebarMenu>
         </SidebarContent>
       </Sidebar>
-    </SidebarProvider>
   )
 }

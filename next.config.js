@@ -15,14 +15,14 @@ const nextConfig = {
       ignored: ['node_modules/**', '.next/**'],
       poll: 1000, // Check for changes every second
     }
-    // Add additional files to watch
-    if (!Array.isArray(config.watchOptions.paths)) {
-      config.watchOptions.paths = []
-    }
-    config.watchOptions.paths.push(
-      'mkdocs/**/*.md',
-      'mkdocs/mkdocs.yml'
-    )
+    // // Add additional files to watch
+    // if (!Array.isArray(config.watchOptions.paths)) {
+    //   config.watchOptions.paths = []
+    // }
+    // config.watchOptions.paths.push(
+    //   'mkdocs/**/*.md',
+    //   'mkdocs/mkdocs.yml'
+    // )
     return config
   }
 }

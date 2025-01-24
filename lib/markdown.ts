@@ -8,7 +8,6 @@ function preprocessHtmlInMarkdown(content: string): string {
   let processedContent = content.replace(
     /```\s?(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)```/g,
     (match, lang, lines, title, code) => {
-      console.log(code);
       const id = `CODE_BLOCK_${Math.random().toString(36).substr(2, 9)}`
       codeBlocks.set(id, {lang, lines, title, code: code.trim()})
       return id

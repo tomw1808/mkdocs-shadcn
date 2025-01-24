@@ -157,6 +157,10 @@ code[data-theme*=' '] span {
 
 }
 
+code {
+  overflow-x: scroll;
+}
+
 code[data-line-numbers] {
   counter-reset: line;
 }
@@ -170,6 +174,7 @@ code[data-line-numbers]>[data-line]::before {
 
 pre [data-line] {
   @apply px-4 border-l-2 border-l-transparent;
+  
 }
 
 

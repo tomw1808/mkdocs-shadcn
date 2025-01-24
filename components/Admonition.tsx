@@ -39,7 +39,7 @@ export function Admonition({
   const Icon = icons[type]
 
   return (
-    <Alert className={cn("my-4", className)}>
+    <Alert className={cn(" [&:not(:first-child)]:mt-6 ", className)}>
       {Icon && <Icon className="h-4 w-4" />}
       {title && <AlertTitle>{title}</AlertTitle>}
       <AlertDescription>{children}</AlertDescription>

@@ -1,3 +1,4 @@
+
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -42,28 +43,23 @@ const routeList: RouteProps[] = [
 ];
 
 export const Navbar = () => {
+
     return (
-        <header className="sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background">
-            <NavigationMenu className="mx-auto">
-                <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between ">
-                    <NavigationMenuItem className="font-bold flex">
-                        <a
+        <header className="sticky border-b-[1px] top-0 z-40 bg-white dark:border-b-slate-700 dark:bg-background py-2 px-2">
+            
+            <div className="flex justify-between align-center items-center">
+            <a
                             rel="noreferrer noopener"
                             href="/"
                             className="ml-2 font-bold text-xl flex"
                         >
                             MkDocs Shadcn
                         </a>
-                    </NavigationMenuItem>
-
-                    {/* mobile */}
-                    <div className="flex md:hidden">
+                        <div className="flex lg:hidden">
                         <ModeToggle />
                         <ClientOnlySheet />
                     </div>
-
-                    {/* desktop */}
-                    <nav className="hidden md:flex gap-2">
+                    <nav className="hidden lg:flex gap-2">
                         {routeList.map((route: RouteProps, i) => (
                             <a
                                 rel="noreferrer noopener"
@@ -77,8 +73,7 @@ export const Navbar = () => {
                             </a>
                         ))}
                     </nav>
-
-                    <div className="hidden md:flex gap-2">
+                    <div className="hidden lg:flex gap-2">
                         <a
                             rel="noreferrer noopener"
                             href="https://github.com/leoMirandaa/shadcn-landing-page.git"
@@ -91,8 +86,11 @@ export const Navbar = () => {
 
                         <ModeToggle />
                     </div>
-                </NavigationMenuList>
-            </NavigationMenu>
+
+            </div>
+               
+
+                 
         </header>
     );
 };
@@ -105,8 +103,8 @@ const ClientOnlySheet = () => {
         <div>
             
         <Sheet>
-            <SheetTrigger className="px-2 md:hidden h-full">
-                <Menu className="flex md:hidden h-5 w-5" aria-label="Menu Icon" />
+            <SheetTrigger className="px-2 lg:hidden h-full">
+                <Menu className="flex lg:hidden h-5 w-5" aria-label="Menu Icon" />
             </SheetTrigger>
 
             <SheetContent side={"left"}>

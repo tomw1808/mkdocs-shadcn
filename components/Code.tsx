@@ -20,7 +20,7 @@ interface HighlightedCodeProps {
 export function Code(props: HighlightedCodeProps) {
   return (
     <section 
-      className=' [&:not(:first-child)]:mt-6 '
+      className=' [&:not(:first-child)]:mt-6'
       dangerouslySetInnerHTML={{
         __html: props.highlightedCode,
       }}
@@ -63,10 +63,4 @@ async function getHighlighter(theme: string) {
     .use(rehypePrettyCode, getRehypePrettyCodeOptions(theme))
     .use(rehypeStringify);
   return highlighter;
-}
-
-async function highlightCode(code: string, theme: string) {
-  const highlighter = await getHighlighter(theme);
-  const file = await highlighter.process(code);
-  return String(file);
 }
