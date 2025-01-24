@@ -11,10 +11,18 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     // Add mkdocs directory to webpack watch list
     config.watchOptions = {
-      "mkdocs/**/*.md",
       ...config.watchOptions,
       ignored: ['node_modules/**', '.next/**'],
+      poll: 1000, // Check for changes every second
     }
+    // Add additional files to watch
+    if (!Array.isArray(config.watchOptions.paths)) {
+      config.watchOptions.paths = []
+    }
+    config.watchOptions.paths.push(
+      'mkdocs/**/*.md',
+      'mkdocs/mkdocs.yml'
+    )
     return config
   }
 }
