@@ -90,6 +90,7 @@ nav:
   - "Home": "/"
   - "Reference":
       - "Admonitions": "reference/admonitions.md"
+      - "Navigation": "reference/navigation.md"
       
       - "Your First Transaction":
           - "Overview": "001-metamask-install/00-overview.md"
