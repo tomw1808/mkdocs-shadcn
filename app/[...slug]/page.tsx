@@ -29,7 +29,7 @@ export default async function Page({ params }: PageProps) {
     const navItems = getFullNavigation()
     
     return (
-      <main className='mt-2'>
+      <main className='mt-6'>
         <SideNav items={navItems} />
         <div className="mx-auto w-full min-w-0 max-w-2xl">
         
@@ -40,8 +40,8 @@ export default async function Page({ params }: PageProps) {
               // Add typography classes directly to HTML elements
               a: (props) => <a className="leading-7 [&:not(:first-child)]:mt-6 underline" {...props} />,
               p: (props) => <p className="leading-7 [&:not(:first-child)]:mt-6" {...props} />,
-              ul: (props) => <ul className="list-disc pl-6 mb-4 space-y-2" {...props} />,
-              ol: (props) => <ol className="list-decimal pl-6 mb-4 space-y-2" {...props} />,
+              ul: (props) => <ul className="list-disc pl-6  [&:not(:first-child)]:mt-6 space-y-2" {...props} />,
+              ol: (props) => <ol className="list-decimal pl-6  [&:not(:first-child)]:mt-6 space-y-2" {...props} />,
               li: (props) => <li className="text-base leading-7" {...props} />,
               h1: (props) => <h1 className="scroll-m-20 text-3xl font-bold tracking-tight" {...props} />,
               h2: (props) => <h2 className="font-heading mt-12 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-0" {...props} />,

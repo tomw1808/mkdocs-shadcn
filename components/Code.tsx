@@ -30,7 +30,7 @@ export async function Code({ code, lang, showLineNumbers = true, highlights }: C
     const highlightedCode = await highlightCode(codeBlock);
 
     return (
-        <section className='mb-4'
+        <section className=' [&:not(:first-child)]:mt-6 '
             dangerouslySetInnerHTML={{
                 __html: highlightedCode,
             }}
