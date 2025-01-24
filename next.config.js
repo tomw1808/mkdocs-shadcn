@@ -11,6 +11,7 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     // Add mkdocs directory to webpack watch list
     config.watchOptions = {
+      "mkdocs/**/*.md",
       ...config.watchOptions,
       ignored: ['node_modules/**', '.next/**'],
     }
