@@ -84,6 +84,27 @@ export function getFullNavigation() {
   return buildNavTree(config.nav)
 }
 
+function findFirstPath(value: any): string | undefined {
+  if (typeof value === 'string') {
+    return value.replace('.md', '')
+  }
+  
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      if (typeof item === 'string') {
+        return item.replace('.md', '')
+      }
+      const [_, childValue] = Object.entries(item)[0]
+      const path = findFirstPath(childValue)
+      if (path) {
+        return path
+      }
+    }
+  }
+  
+  return undefined
+}
+
 export function getRootNavigation() {
   const mkdocsPath = path.join(process.cwd(), 'mkdocs', 'mkdocs.yml')
   const fileContents = fs.readFileSync(mkdocsPath, 'utf8')
@@ -91,15 +112,13 @@ export function getRootNavigation() {
   
   if (!config.nav) return []
 
-
   return config.nav.map((item: any) => {
-
     if (typeof item === 'string') return null
     const [title, value] = Object.entries(item)[0]
-
+    
     return {
       title,
-      path: typeof value === 'string' ? value.replace('.md', '') : undefined
+      path: findFirstPath(value)
     }
   }).filter(Boolean)
 }
