@@ -14,12 +14,13 @@ interface CodeProps {
     lang: string;
     showLineNumbers?: boolean;
     highlights?: string;
+    theme?: string;
 }
 
 let highlighterInstance: any = null;
 
 
-export async function Code({ code, lang, showLineNumbers = true, highlights }: CodeProps) {
+export async function Code({ code, lang, showLineNumbers = true, highlights, theme = 'light' }: CodeProps) {
     // Construct the markdown code block
     const codeBlock = [
         '```' + lang + (showLineNumbers ? ' showLineNumbers' : '') + (highlights ? ' {' + highlights + '}' : ''),
@@ -27,7 +28,7 @@ export async function Code({ code, lang, showLineNumbers = true, highlights }: C
         '```'
     ].join('\n');
 
-    const highlightedCode = await highlightCode(codeBlock);
+    const highlightedCode = await highlightCode(codeBlock, theme);
 
     return (
         <section className=' [&:not(:first-child)]:mt-6 '
@@ -40,11 +41,8 @@ export async function Code({ code, lang, showLineNumbers = true, highlights }: C
 
 import { Options } from 'rehype-pretty-code';
 
-const rehypePrettyCodeOptions: Options = {
-  theme: {
-    dark: 'github-dark-dimmed',
-    light: 'github-light',
-  },
+const getRehypePrettyCodeOptions = (theme: string): Options => ({
+  theme: theme === 'dark' ? 'github-dark-dimmed' : 'github-light',
   keepBackground: true,
   defaultLang: 'plaintext',
   transformers: [
@@ -55,19 +53,18 @@ const rehypePrettyCodeOptions: Options = {
   ]
 };
 
-async function getHighlighter() {
-    if (!highlighterInstance) {
-      highlighterInstance = await unified()
-        .use(remarkParse)
-        .use(remarkRehype)
-        .use(rehypePrettyCode, rehypePrettyCodeOptions)
-        .use(rehypeStringify);
-    }
-    return highlighterInstance;
+async function getHighlighter(theme: string) {
+    // Create new highlighter for each theme to prevent caching
+    const highlighter = await unified()
+      .use(remarkParse)
+      .use(remarkRehype)
+      .use(rehypePrettyCode, getRehypePrettyCodeOptions(theme))
+      .use(rehypeStringify);
+    return highlighter;
   }
 
-  async function highlightCode(code: string) {
-    const highlighter = await getHighlighter();
+  async function highlightCode(code: string, theme: string) {
+    const highlighter = await getHighlighter(theme);
     const file = await highlighter.process(code);
     return String(file);
   }

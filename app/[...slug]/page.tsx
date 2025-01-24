@@ -12,6 +12,7 @@ import path from 'path'
 import { ensurePublicImageExists } from '@/lib/images'
 import { Admonition } from '@/components/Admonition'
 import React from 'react'
+import { useTheme } from 'next-themes'
 import { ContentTabs } from '@/components/ContentTabs'
 import { Code } from '@/components/Code'
 
@@ -139,7 +140,11 @@ export default async function Page({ params }: PageProps) {
                 // Only handle regular pre tags, Code components are already processed
                 return <pre {...props}>{children}</pre>
               },
-              Code: Code
+              Code: (props) => {
+                'use client'
+                const { resolvedTheme } = useTheme()
+                return <Code {...props} theme={resolvedTheme} />
+              }
             }}
             options={{
               parseFrontmatter: true,
