@@ -91,9 +91,12 @@ export function getRootNavigation() {
   
   if (!config.nav) return []
 
+
   return config.nav.map((item: any) => {
+
     if (typeof item === 'string') return null
     const [title, value] = Object.entries(item)[0]
+
     return {
       title,
       path: typeof value === 'string' ? value.replace('.md', '') : undefined
