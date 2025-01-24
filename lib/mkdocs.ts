@@ -84,6 +84,23 @@ export function getFullNavigation() {
   return buildNavTree(config.nav)
 }
 
+export function getRootNavigation() {
+  const mkdocsPath = path.join(process.cwd(), 'mkdocs', 'mkdocs.yml')
+  const fileContents = fs.readFileSync(mkdocsPath, 'utf8')
+  const config = yaml.load(fileContents) as any
+  
+  if (!config.nav) return []
+
+  return config.nav.map((item: any) => {
+    if (typeof item === 'string') return null
+    const [title, value] = Object.entries(item)[0]
+    return {
+      title,
+      path: typeof value === 'string' ? value.replace('.md', '') : undefined
+    }
+  }).filter(Boolean)
+}
+
 function flattenNav(nav: any[]): { title: string; path: string }[] {
   const items: { title: string; path: string }[] = []
   
