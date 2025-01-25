@@ -8,11 +8,11 @@ import { useState } from 'react'
 import { cn } from '@/lib/utils'
 
 interface MobileNavProps {
-    items: NavTreeItem[]
-    rootItems: Array<{
-        title: string
-        path?: string
-    }>
+  items: Array<{
+    title: string
+    path?: string
+  }>
+  fullNavigation?: NavTreeItem[]
 }
 
 interface NavItemProps {
@@ -88,7 +88,7 @@ export function MobileNav({ items, rootItems }:
                 ))}
             </div>
             <div className="flex flex-col">
-                {items.map((item, index) => (
+                {fullNavigation.map((item, index) => (
                     <NavItem
                         key={index}
                         item={item}

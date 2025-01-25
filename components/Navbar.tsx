@@ -13,16 +13,16 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { MobileNav } from './MobileNav'
-import { getFullNavigation } from '@/lib/mkdocs'
 
-interface NavbarProps {                               
-    items: Array<{                                      
-      title: string                                     
-      path?: string                                     
-    }>                                                  
-  }                                                     
-                                                        
-  export const Navbar = ({ items }: NavbarProps) => {   
+interface NavbarProps {
+  items: Array<{
+    title: string
+    path?: string
+  }>
+  fullNavigation: NavTreeItem[]
+}
+
+export const Navbar = ({ items, fullNavigation }: NavbarProps) => {
     const pathname = usePathname()    
 
   return (
@@ -39,7 +39,7 @@ interface NavbarProps {
               <Menu className="h-5 w-5" aria-label="Menu Icon" />
             </SheetTrigger>
             <SheetContent side="left" className="w-[300px] sm:w-[400px] overflow-y-auto">
-              <MobileNav items={getFullNavigation()} rootItems={items} />
+              <MobileNav items={items} />
             </SheetContent>
           </Sheet>
         </div>

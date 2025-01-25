@@ -1,8 +1,8 @@
-import { getRootNavigation } from '@/lib/mkdocs'
+import { getRootNavigation, getFullNavigation } from '@/lib/mkdocs'
 import { Navbar } from '@/components/Navbar'
 
 export default function NavWrapper() {
-  const navItems = getRootNavigation()
-  console.log(navItems)
-  return <Navbar items={navItems} />
+  const rootNavItems = getRootNavigation()
+  const fullNavItems = getFullNavigation()
+  return <Navbar items={rootNavItems} fullNavigation={fullNavItems} />
 }
