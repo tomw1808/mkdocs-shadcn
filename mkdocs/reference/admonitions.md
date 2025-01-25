@@ -70,6 +70,24 @@ links, formatting, ...) after the type qualifier:
     nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
     massa, nec semper lorem quam in massa.
 
+### Collapsible blocks
+
+Any admonition can be made collapsible by using `???` instead of `!!!`:
+
+``` markdown title="Collapsible admonition"
+??? note
+
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+    nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+    massa, nec semper lorem quam in massa.
+```
+
+??? note
+
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+    nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+    massa, nec semper lorem quam in massa.
+
 ### Supported types
 
 Following is a list of type qualifiers provided by Material for MkDocs, whereas
