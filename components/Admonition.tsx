@@ -41,7 +41,8 @@ export function Admonition({
   type = "note",
   title,
   children,
-  className
+  className,
+  isCollapsible = false
 }: AdmonitionProps) {
   const Icon = icons[type]
 
@@ -59,7 +60,7 @@ export function Admonition({
           "border-cyan-200 dark:border-cyan-750": type === "info",
           "border-violet-200 dark:border-violet-750": type === "question",
         })}>
-          <AccordionTrigger className={cn("flex flex-row gap-3 p-3 hover:no-underline", {
+          <AccordionTrigger className={cn("flex flex-row gap-3 p-3 hover:no-underline border-none", {
             "bg-blue-50 dark:bg-blue-950": type === "note",
             "bg-red-50 dark:bg-red-950": type === "failure" || type === "danger",
             "bg-yellow-50 dark:bg-yellow-950": type === "warning",
@@ -70,8 +71,10 @@ export function Admonition({
             "bg-cyan-50 dark:bg-cyan-950": type === "info",
             "bg-violet-50 dark:bg-violet-950": type === "question",
           })}>
-            {Icon && <Icon className="h-4 w-4" />}
-            {title ? <span>{title}</span> : <span>{type.charAt(0).toUpperCase()}{type.slice(1)}</span>}
+            <div className="flex flex-row gap-3">
+              {Icon && <Icon className="h-4 w-4" />}
+              {title ? <span>{title}</span> : <span>{type.charAt(0).toUpperCase()}{type.slice(1)}</span>}
+            </div>
           </AccordionTrigger>
           <AccordionContent className="p-4">
             {children}
@@ -94,16 +97,16 @@ export function Admonition({
       "border-violet-200 dark:border-violet-750": type === "question",
     }, className)}>
       <div className={cn("flex flex-row gap-3 p-3 items-center", {
-      "bg-blue-50 dark:bg-blue-950": type === "note",
-      "bg-red-50 dark:bg-red-950": type === "failure" || type === "danger",
-      "bg-yellow-50 dark:bg-yellow-950": type === "warning",
-      "bg-green-50 dark:bg-green-950": type === "success" || type === "tip",
-      "bg-purple-50 dark:bg-purple-950": type === "abstract",
-      "bg-orange-50 dark:bg-orange-950": type === "bug",
-      "bg-gray-50 dark:bg-gray-950": type === "example" || type === "quote",
-      "bg-cyan-50 dark:bg-cyan-950": type === "info",
-      "bg-violet-50 dark:bg-violet-950": type === "question",
-    })}>
+        "bg-blue-50 dark:bg-blue-950": type === "note",
+        "bg-red-50 dark:bg-red-950": type === "failure" || type === "danger",
+        "bg-yellow-50 dark:bg-yellow-950": type === "warning",
+        "bg-green-50 dark:bg-green-950": type === "success" || type === "tip",
+        "bg-purple-50 dark:bg-purple-950": type === "abstract",
+        "bg-orange-50 dark:bg-orange-950": type === "bug",
+        "bg-gray-50 dark:bg-gray-950": type === "example" || type === "quote",
+        "bg-cyan-50 dark:bg-cyan-950": type === "info",
+        "bg-violet-50 dark:bg-violet-950": type === "question",
+      })}>
         {Icon && <Icon className="h-4 w-4 mb-1" />}
         {title ? <AlertTitle className={cn("")}>{title}</AlertTitle> : <AlertTitle>{type.charAt(0).toUpperCase()}{type.slice(1)}</AlertTitle>}
       </div>

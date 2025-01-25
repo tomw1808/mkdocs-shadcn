@@ -16,6 +16,7 @@ import { ClientCode } from '@/components/ClientCode'
 import { ContentTabs } from '@/components/ContentTabs'
 import { Code } from '@/components/Code'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
+import { CaretLeftIcon, CaretRightIcon } from '@radix-ui/react-icons'
 
 
 interface PageProps {
@@ -36,7 +37,7 @@ export default async function Page({ params }: PageProps) {
         <SidebarProvider defaultOpen={true}>
           <SideNav items={navItems} />
           <SidebarInset>
-              <div className="mx-auto w-full min-w-0 max-w-2xl">
+              <div className="mx-auto w-full min-w-0 max-w-2xl min-h-full">
 
                 <GalleryProvider>
                   <MDXRemote
@@ -72,9 +73,9 @@ export default async function Page({ params }: PageProps) {
                         return <ContentTabs items={items} className='mt-6 first:mt-0 ' />
                       },
                       Admonition: (props) => {
-                        const { type, title, children } = props
+                        const { type, title, children, isCollapsible } = props
                         return (
-                          <Admonition type={type} title={title}>
+                          <Admonition type={type} title={title} isCollapsible={isCollapsible}>
                             {children}
                           </Admonition>
                         )
@@ -157,20 +158,23 @@ export default async function Page({ params }: PageProps) {
                     }}
                   />
 
-                  <div className="mt-8 flex justify-between">
+</GalleryProvider>
+              </div>
+                  <div className="mt-8 flex justify-between py-10 border-t-2 border-gray-200 ">
+                  <div className="flex justify-between mx-auto w-full min-w-0 max-w-2xl">
+
                     {prev && (
-                      <Link href={`/${prev.path.replace('.md', '')}`} className="text-blue-500">
-                        ← {prev.title}
+                      <Link href={`/${prev.path.replace('.md', '')}`} className="flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground px-4 py-2">
+                        <CaretLeftIcon /> {prev.title}
                       </Link>
                     )}
                     {next && (
-                      <Link href={`/${next.path.replace('.md', '')}`} className="text-blue-500 ml-auto">
-                        {next.title} →
+                      <Link href={`/${next.path.replace('.md', '')}`} className="flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground px-4 py-2">
+                        {next.title} <CaretRightIcon />
                       </Link>
                     )}
+                    </div>
                   </div>
-                </GalleryProvider>
-              </div>
           </SidebarInset>
         </SidebarProvider>
       </div>

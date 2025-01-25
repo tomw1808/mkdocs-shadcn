@@ -1,4 +1,4 @@
-# Documentation Versioning
+# Documentation Versioning (in planning)
 
 This documentation system supports versioning through a directory-based approach, allowing multiple versions of documentation to coexist and be easily accessible.
 
@@ -84,8 +84,6 @@ The following features are still needed:
    - Content synchronization between versions
 
 ## Implementation Tasks
-
-For Claude/Aider:
 
 1. Add version persistence using localStorage
 2. Implement URL structure changes:

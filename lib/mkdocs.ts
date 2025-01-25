@@ -19,7 +19,7 @@ interface VersionInfo {
   config: MkDocsConfig
 }
 
-function getVersions(): VersionInfo[] {
+export function getVersions(): VersionInfo[] {
   const versions: VersionInfo[] = []
   const mkdocsDir = path.join(process.cwd(), 'mkdocs')
   
