@@ -4,6 +4,7 @@ import './globals.css'
 import { Navbar } from '@/components/Navbar'
 import { ThemeProvider } from './theme-provider'
 import { getMkDocsConfig } from '@/lib/mkdocs'
+import NavWrapper from './nav-wrapper'
 
 const inter = Inter({ subsets: ['latin'] })
 
