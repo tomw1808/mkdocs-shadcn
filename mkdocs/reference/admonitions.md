@@ -15,17 +15,7 @@ Admonitions are enabled by default.
 
 ### Admonition icons
 
-
-Each of the supported admonition types has a distinct icon, which can be changed
-to any icon bundled with the theme, or even a [custom icon]. Add the following
-lines to `mkdocs.yml`:
-
-``` yaml
-theme:
-  icon:
-    admonition:
-      <type>: <icon> # (1)!
-```
+Each of the Icons which are supported by Mkdocs Material is also supported by the Mkdocs-Nextjs-Dropin. If you want to change icons, open `components/Admonitions.tsx` and edit the icons directly.
 
 
 ## Usage
@@ -90,7 +80,7 @@ Any admonition can be made collapsible by using `???` instead of `!!!`:
 
 ### Supported types
 
-Following is a list of type qualifiers provided by Material for MkDocs, whereas
+Following is a list of type qualifiers provided by MkDocs-Nextjs, whereas
 the default type, and thus fallback for unknown type qualifiers, is `note`:
 
 
