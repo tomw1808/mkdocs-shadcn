@@ -10,11 +10,10 @@ import { Menu } from 'lucide-react'
 import {
   Sheet,
   SheetContent,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
-  SheetClose,
 } from "@/components/ui/sheet"
+import { MobileNav } from './MobileNav'
+import { getFullNavigation } from '@/lib/mkdocs'
 
 interface NavbarProps {                               
     items: Array<{                                      
@@ -39,25 +38,8 @@ interface NavbarProps {
             <SheetTrigger className="px-2 lg:hidden h-full">
               <Menu className="h-5 w-5" aria-label="Menu Icon" />
             </SheetTrigger>
-            <SheetContent side="left">
-              <SheetHeader>
-                <SheetTitle className="font-bold text-xl">
-                  Navigation
-                </SheetTitle>
-              </SheetHeader>
-              <SheetClose>
-                <nav className="flex flex-col justify-center items-center gap-2 mt-4">
-                  {items.map((item) => (
-                    <Link
-                      key={item.title}
-                      href={item.path ? `/${item.path}` : '#'}
-                      className={buttonVariants({ variant: "ghost" })}
-                    >
-                      {item.title}
-                    </Link>
-                  ))}
-                </nav>
-              </SheetClose>
+            <SheetContent side="left" className="w-[300px] sm:w-[400px] overflow-y-auto">
+              <MobileNav items={getFullNavigation()} rootItems={items} />
             </SheetContent>
           </Sheet>
         </div>
