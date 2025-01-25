@@ -8,11 +8,11 @@ import { useState } from 'react'
 import { cn } from '@/lib/utils'
 
 interface MobileNavProps {
-  items: Array<{
-    title: string
-    path?: string
-  }>
-  fullNavigation?: NavTreeItem[]
+    items: Array<{
+        title: string
+        path?: string
+    }>
+    fullNavigation?: NavTreeItem[]
 }
 
 interface NavItemProps {
@@ -70,15 +70,16 @@ const NavItem = ({ item, currentPath, depth = 0 }:
     )
 }
 
-export function MobileNav({ items, rootItems }:
+export function MobileNav({ items, fullNavigation = [] }:
     MobileNavProps) {
+        console.log({items, fullNavigation});
     const pathname = usePathname()
     const currentPath = pathname.substring(1)
 
     return (
         <div className="flex flex-col gap-2">
             <div className="border-b pb-2">
-                {rootItems.map((item) => (
+                {items.map((item) => (
                     <Link
                         key={item.title}
                         href={item.path ? `/${item.path}` : '#'}

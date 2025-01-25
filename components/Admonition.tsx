@@ -30,7 +30,7 @@ interface AdmonitionProps {
   className?: string
 }
 
-export function Admonition({ 
+export function Admonition({
   type = "note",
   title,
   children,
@@ -39,7 +39,18 @@ export function Admonition({
   const Icon = icons[type]
 
   return (
-    <Alert className={cn(" [&:not(:first-child)]:mt-6 ", {
+    <Alert className={cn("p-0 [&:not(:first-child)]:mt-6 ", {
+      "border-blue-200 dark:border-blue-750": type === "note",
+      "border-red-200 dark:border-red-750": type === "failure" || type === "danger",
+      "border-yellow-200 dark:border-yellow-750": type === "warning",
+      "border-green-200 dark:border-green-750": type === "success" || type === "tip",
+      "border-purple-200 dark:border-purple-750": type === "abstract",
+      "border-orange-200 dark:border-orange-750": type === "bug",
+      "border-gray-200 dark:border-gray-750": type === "example" || type === "quote",
+      "border-cyan-200 dark:border-cyan-750": type === "info",
+      "border-violet-200 dark:border-violet-750": type === "question",
+    }, className)}>
+      <div className={cn("flex flex-row gap-3 p-3 items-center", {
       "bg-blue-50 dark:bg-blue-950": type === "note",
       "bg-red-50 dark:bg-red-950": type === "failure" || type === "danger",
       "bg-yellow-50 dark:bg-yellow-950": type === "warning",
@@ -49,10 +60,11 @@ export function Admonition({
       "bg-gray-50 dark:bg-gray-950": type === "example" || type === "quote",
       "bg-cyan-50 dark:bg-cyan-950": type === "info",
       "bg-violet-50 dark:bg-violet-950": type === "question",
-    }, className)}>
-      {Icon && <Icon className="h-4 w-4" />}
-      {title && <AlertTitle>{title}</AlertTitle>}
-      <AlertDescription>{children}</AlertDescription>
+    })}>
+        {Icon && <Icon className="h-4 w-4 mb-1" />}
+        {title ? <AlertTitle className={cn("")}>{title}</AlertTitle> : <AlertTitle>{type.charAt(0).toUpperCase()}{type.slice(1)}</AlertTitle>}
+      </div>
+      <AlertDescription className="p-2">{children}</AlertDescription>
     </Alert>
   )
 }

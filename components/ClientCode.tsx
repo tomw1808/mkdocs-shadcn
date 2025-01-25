@@ -1,10 +1,10 @@
 'use client'
 
 import { useTheme } from 'next-themes'
-import { Code, highlightCode } from './Code'
 import { Suspense } from 'react'
+import { ServerCode } from './ServerCode'
 
-interface ClientCodeProps {
+export interface ClientCodeProps {
   code: string
   lang: string
   showLineNumbers?: boolean
@@ -12,10 +12,7 @@ interface ClientCodeProps {
   title?: string
 }
 
-async function ServerCode(props: ClientCodeProps & { theme: string }) {
-  const highlightedCode = await highlightCode(props)
-  return <Code highlightedCode={highlightedCode} />
-}
+
 
 export function ClientCode(props: ClientCodeProps) {
   const { resolvedTheme } = useTheme()
