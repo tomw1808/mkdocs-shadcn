@@ -36,10 +36,11 @@ function preprocessHtmlInMarkdown(content: string): string {
   )
 
 
-  // Then handle admonitions
+  // Handle admonitions (both regular and collapsible)
   processedContent = processedContent.replace(
-    /!!!\s*(\w+)(?:\s+"([^"]*)")?\r?\n((?:(?:    .*|[ \t]*)\r?\n)*(?:    .*))/gm,
+    /(?:!!!|\?{3})\s*(\w+)(?:\s+"([^"]*)")?\r?\n((?:(?:    .*|[ \t]*)\r?\n)*(?:    .*))/gm,
     (match, type, title, content) => {
+      const isCollapsible = match.startsWith('???')
       // Remove the 4-space indent from content and handle empty lines
       const processedContent = content.split('\n')
         .map((line: string) => {
@@ -53,7 +54,7 @@ function preprocessHtmlInMarkdown(content: string): string {
         .join('\n')
         .trim()
       
-      return `<Admonition type="${type}" title="${title || ''}">\n\n${processedContent}\n\n</Admonition>`
+      return `<Admonition type="${type}" title="${title || ''}" isCollapsible={${isCollapsible}}>\n\n${processedContent}\n\n</Admonition>`
     }
   )
 

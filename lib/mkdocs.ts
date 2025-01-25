@@ -12,26 +12,6 @@ interface NavItem {
   path: string
 }
 
-export interface AdmonitionData {
-  type: string
-  title?: string
-  content: string
-  isCollapsible: boolean
-}
-
-export function parseAdmonition(markdown: string): AdmonitionData | null {
-  const regex = /^(!{3}|\?{3})\s*(\w+)(?:\s*"([^"]*)")?\n\n([\s\S]*?)(?=^!{3}|\?{3}|\Z)/gm
-  const match = regex.exec(markdown)
-  
-  if (!match) return null
-  
-  return {
-    type: match[2],
-    title: match[3],
-    content: match[4].trim(),
-    isCollapsible: match[1] === '???'
-  }
-}
 
 export function getMkDocsConfig(): MkDocsConfig {
   try {
