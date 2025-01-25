@@ -88,7 +88,7 @@ export function MobileNav({ items, rootItems }:
                 ))}
             </div>
             <div className="flex flex-col">
-                {fullNavigation.map((item, index) => (
+                {fullNavigation?.map((item, index) => (
                     <NavItem
                         key={index}
                         item={item}
