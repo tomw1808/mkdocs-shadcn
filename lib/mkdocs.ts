@@ -13,7 +13,48 @@ interface NavItem {
 }
 
 
-export function getMkDocsConfig(): MkDocsConfig {
+interface VersionInfo {
+  version: string
+  path: string
+  config: MkDocsConfig
+}
+
+function getVersions(): VersionInfo[] {
+  const versions: VersionInfo[] = []
+  const mkdocsDir = path.join(process.cwd(), 'mkdocs')
+  
+  // Check if unversioned variant exists
+  const unversionedPath = path.join(mkdocsDir, 'mkdocs.yml')
+  if (fs.existsSync(unversionedPath)) {
+    const config = yaml.load(fs.readFileSync(unversionedPath, 'utf8')) as MkDocsConfig
+    versions.push({
+      version: 'current',
+      path: '',
+      config
+    })
+    return versions
+  }
+
+  // Look for versioned directories
+  const entries = fs.readdirSync(mkdocsDir, { withFileTypes: true })
+  for (const entry of entries) {
+    if (entry.isDirectory()) {
+      const versionPath = path.join(mkdocsDir, entry.name, 'mkdocs.yml')
+      if (fs.existsSync(versionPath)) {
+        const config = yaml.load(fs.readFileSync(versionPath, 'utf8')) as MkDocsConfig
+        versions.push({
+          version: entry.name,
+          path: entry.name,
+          config
+        })
+      }
+    }
+  }
+
+  return versions.sort((a, b) => b.version.localeCompare(a.version))
+}
+
+export function getMkDocsConfig(version?: string): MkDocsConfig {
   try {
     const mkdocsPath = path.join(process.cwd(), 'mkdocs', 'mkdocs.yml')
     const fileContents = fs.readFileSync(mkdocsPath, 'utf8')
