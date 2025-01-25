@@ -91,6 +91,7 @@ nav:
   - "Reference":
       - "Admonitions": "reference/admonitions.md"
       - "Navigation": "reference/navigation.md"
+      - "Versioning": "reference/versioning.md"
       
       - "Your First Transaction":
           - "Overview": "001-metamask-install/00-overview.md"
