@@ -41,7 +41,7 @@ export function Search() {
           );
         } catch (e) {
           console.error("Error loading Pagefind:", e);
-          window.pagefind = { debouncedSearch: () => ({ results: [] }) };
+          window.pagefind = { debouncedSearch: () => Promise.resolve({ results: [] }) };
         }
       }
     }
