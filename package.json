@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build-search-index": "node scripts/build-search-index.js",
+    "build-search-index": "tsx scripts/build-search-index.ts",
     "start": "next start",
     "lint": "next lint"
   },
