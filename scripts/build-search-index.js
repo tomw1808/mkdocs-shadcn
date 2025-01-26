@@ -70,6 +70,7 @@ async function buildSearchIndex() {
   console.log('Search index built successfully')
 }
 
+console.log("test")
 // Execute the build
 buildSearchIndex().catch(err => {
   console.error('Failed to build search index:', err)
