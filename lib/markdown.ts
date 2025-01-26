@@ -6,10 +6,15 @@ function preprocessHtmlInMarkdown(content: string): string {
   // Store code blocks with unique identifiers
   const codeBlocks: Map<string, {lang: string, lines?: string, title?: string, code: string}> = new Map()
   let processedContent = content.replace(
-    /```\s?(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)```/g,
-    (match, lang, lines, title, code) => {
+    /````\s?(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)````|```\s?(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)```/g,
+    (match, lang4, lines4, title4, code4, lang3, lines3, title3, code3) => {
       const id = `CODE_BLOCK_${Math.random().toString(36).substr(2, 9)}`
-      codeBlocks.set(id, {lang, lines, title, code: code.trim()})
+      // Use the 4-backtick match if it exists, otherwise use the 3-backtick match
+      const lang = lang4 || lang3
+      const lines = lines4 || lines3
+      const title = title4 || title3
+      const code = (code4 || code3).trim()
+      codeBlocks.set(id, {lang, lines, title, code})
       return id
     }
   )
