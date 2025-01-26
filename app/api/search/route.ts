@@ -2,20 +2,32 @@ import { getFullNavigation } from '@/lib/mkdocs'
 import { getMarkdownContent } from '@/lib/markdown'
 import { NextResponse } from 'next/server'
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const query = searchParams.get('q')?.toLowerCase()
+
+  if (!query) {
+    return NextResponse.json([])
+  }
+
   const navItems = getFullNavigation()
-  const searchIndex = []
+  const searchResults = []
 
   async function processNavItem(item: any) {
     if (item.path) {
       const slug = item.path.replace('.md', '').split('/')
       try {
         const { content } = await getMarkdownContent(slug)
-        searchIndex.push({
-          url: `/${item.path.replace('.md', '')}`,
-          title: item.title,
-          content: content
-        })
+        if (
+          item.title.toLowerCase().includes(query) ||
+          content.toLowerCase().includes(query)
+        ) {
+          searchResults.push({
+            url: `/${item.path.replace('.md', '')}`,
+            title: item.title,
+            content: content
+          })
+        }
       } catch (error) {
         console.error(`Error processing ${item.path}:`, error)
       }
@@ -32,5 +44,5 @@ export async function GET() {
     await processNavItem(item)
   }
 
-  return NextResponse.json(searchIndex)
+  return NextResponse.json(searchResults)
 }

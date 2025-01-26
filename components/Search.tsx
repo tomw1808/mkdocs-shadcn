@@ -22,26 +22,25 @@ export function Search() {
   const router = useRouter()
 
   useEffect(() => {
-    // Load the search index
-    fetch('/search/search-index.json')
-      .then(res => res.json())
-      .then(setSearchIndex)
-      .catch(err => console.error('Error loading search index:', err))
-  }, [])
-
-  useEffect(() => {
     if (!query.trim()) {
       setResults([])
       return
     }
 
-    const searchResults = searchIndex.filter(item => 
-      item.title.toLowerCase().includes(query.toLowerCase()) ||
-      item.content.toLowerCase().includes(query.toLowerCase())
-    ).slice(0, 10) // Limit to 10 results
+    // Debounce the API call
+    const timeoutId = setTimeout(async () => {
+      try {
+        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+        const data = await response.json()
+        setResults(data.slice(0, 10)) // Limit to 10 results
+      } catch (err) {
+        console.error('Error searching:', err)
+        setResults([])
+      }
+    }, 300) // Wait 300ms after typing stops
 
-    setResults(searchResults)
-  }, [query, searchIndex])
+    return () => clearTimeout(timeoutId)
+  }, [query])
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
