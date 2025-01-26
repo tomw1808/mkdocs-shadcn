@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import yaml from 'js-yaml'
 import matter from 'gray-matter'
-import {createIndex} from "pagefind";
+import pagefind from "pagefind";
 
 async function buildSearchIndex() {
   console.log('Building search index...')
