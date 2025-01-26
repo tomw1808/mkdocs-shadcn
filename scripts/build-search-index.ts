@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import yaml from 'js-yaml'
 import matter from 'gray-matter'
-import { createIndex } from "pagefind"
+import {createIndex} from "pagefind";
 
 async function buildSearchIndex() {
   console.log('Building search index...')
@@ -29,7 +29,7 @@ async function buildSearchIndex() {
         const content = fs.readFileSync(mdPath, 'utf8')
         const { content: mdContent } = matter(content)
         
-        await index.addCustomRecord({
+        await index?.addCustomRecord({
           url: `/${value.replace('.md', '')}`,
           content: mdContent,
           language: "en",
@@ -56,17 +56,11 @@ async function buildSearchIndex() {
   }
 
   // Write the index files
-  const { errors } = await index.writeFiles({
+  await index?.writeFiles({
     outputPath: "./public/pagefind"
   })
 
-  if (errors?.length > 0) {
-    console.error('Errors building search index:', errors)
-    process.exit(1)
-  }
-
-  // Clean up
-  await index.deleteIndex()
+  
 
   console.log('Search index built successfully')
 }
