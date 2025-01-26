@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import { ModeToggle } from './mode-toggle'
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
 import { Menu } from 'lucide-react'
+import { Search } from './Search'
 import {
     Sheet,
     SheetContent,
@@ -35,6 +36,10 @@ export const Navbar = ({ items, fullNavigation }: NavbarProps) => {
                 <Link href="/" className="ml-2 font-bold text-xl flex">
                     MkDocs Shadcn
                 </Link>
+
+                <div className="hidden lg:flex flex-1 mx-4">
+                    <Search />
+                </div>
 
                 <div className="flex lg:hidden items-center">
                     <ModeToggle />
