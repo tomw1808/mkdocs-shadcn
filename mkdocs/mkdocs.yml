@@ -53,6 +53,7 @@ nav:
       - "Getting Started": "setup/gettingstarted.md"
   - "Reference":
       - "Admonitions": "reference/admonitions.md"
+      - "Code": "reference/code.md"
       - "Images": "reference/images.md"
       - "Navigation": "reference/navigation.md"
       - "Search": "reference/search.md"
