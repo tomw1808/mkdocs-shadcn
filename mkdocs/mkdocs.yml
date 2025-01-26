@@ -54,5 +54,6 @@ nav:
   - "Reference":
       - "Admonitions": "reference/admonitions.md"
       - "Navigation": "reference/navigation.md"
+      - "Search": "reference/search.md"
       - "Versioning": "reference/versioning.md"
       
