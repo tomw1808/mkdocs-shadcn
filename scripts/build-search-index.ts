@@ -12,7 +12,7 @@ async function buildSearchIndex() {
   const config = yaml.load(fs.readFileSync(mkdocsPath, 'utf8')) as any
   
   // Create a Pagefind index
-  const { index } = await createIndex({
+  const { index } = await pagefind.createIndex({
     forceLanguage: "en",
     verbose: true
   })
