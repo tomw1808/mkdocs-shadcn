@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && pagefind --site .next/server/app --output-path public/pagefind",
     "start": "next start",
     "lint": "next lint"
   },

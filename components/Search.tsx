@@ -9,38 +9,83 @@ import { SearchIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface SearchResult {
-  url: string
-  title: string
-  content: string
+  id: string;
+  data: () => Promise<{
+    url: string;
+    meta: {
+      title: string;
+    };
+    excerpt: string;
+  }>;
 }
 
 export function Search() {
   const [isOpen, setIsOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SearchResult[]>([])
-  const [searchIndex, setSearchIndex] = useState<SearchResult[]>([])
+  const [loadedResults, setLoadedResults] = useState<Array<{
+    url: string;
+    title: string;
+    excerpt: string;
+  }>>([])
   const router = useRouter()
 
+  // Load Pagefind when component mounts
   useEffect(() => {
-    if (!query.trim()) {
-      setResults([])
-      return
+    async function loadPagefind() {
+      if (typeof window.pagefind === "undefined") {
+        try {
+          window.pagefind = await import(
+            /* webpackIgnore: true */ "/pagefind/pagefind.js"
+          );
+        } catch (e) {
+          console.error("Error loading Pagefind:", e);
+          window.pagefind = { debouncedSearch: () => ({ results: [] }) };
+        }
+      }
+    }
+    loadPagefind();
+  }, []);
+
+  // Search when query changes
+  useEffect(() => {
+    async function performSearch() {
+      if (!query.trim() || !window.pagefind) {
+        setResults([]);
+        setLoadedResults([]);
+        return;
+      }
+
+      try {
+        const search = await window.pagefind.debouncedSearch(query);
+        setResults(search.results);
+      } catch (err) {
+        console.error('Error searching:', err);
+        setResults([]);
+      }
     }
 
-    // Debounce the API call
-    const timeoutId = setTimeout(async () => {
-      try {
-        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
-        const data = await response.json()
-        setResults(data.slice(0, 10)) // Limit to 10 results
-      } catch (err) {
-        console.error('Error searching:', err)
-        setResults([])
-      }
-    }, 300) // Wait 300ms after typing stops
+    performSearch();
+  }, [query]);
 
-    return () => clearTimeout(timeoutId)
-  }, [query])
+  // Load result data when results change
+  useEffect(() => {
+    async function loadResultData() {
+      const loadedData = await Promise.all(
+        results.map(async (result) => {
+          const data = await result.data();
+          return {
+            url: data.url,
+            title: data.meta.title,
+            excerpt: data.excerpt
+          };
+        })
+      );
+      setLoadedResults(loadedData);
+    }
+
+    loadResultData();
+  }, [results]);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -79,7 +124,7 @@ export function Search() {
           />
         </div>
         <div className="max-h-[300px] overflow-y-auto p-4 pt-0">
-          {results.map((result, i) => (
+          {loadedResults.map((result, i) => (
             <button
               key={i}
               onClick={() => {
@@ -93,7 +138,7 @@ export function Search() {
             >
               <h3 className="font-semibold">{result.title}</h3>
               <p className="text-sm text-muted-foreground">
-                {result.content.substring(0, 150)}...
+                {result.excerpt}
               </p>
             </button>
           ))}
