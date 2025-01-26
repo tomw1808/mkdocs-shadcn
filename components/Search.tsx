@@ -1,71 +1,59 @@
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
-import { Input } from "./ui/input";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
-import { Button } from "./ui/button";
-import { SearchIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Dialog, DialogContent, DialogTrigger } from './ui/dialog'
+import { Input } from './ui/input'
+import { Button } from './ui/button'
+import { SearchIcon } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 interface SearchResult {
-  id: string;
-  url: string;
-  title: string;
-  excerpt: string;
+  url: string
+  title: string
+  content: string
 }
 
 export function Search() {
-  const [search, setSearch] = useState("");
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [pagefind, setPagefind] = useState<any>(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState<SearchResult[]>([])
+  const [searchIndex, setSearchIndex] = useState<SearchResult[]>([])
+  const router = useRouter()
 
   useEffect(() => {
-    const loadPagefind = async () => {
-      if (typeof window !== 'undefined') {
-        try {
-          const pagefind = await import("/public/pagefind/pagefind.js");
-          setPagefind(pagefind);
-        } catch (e) {
-          console.warn("Pagefind not loaded - run build first");
-        }
-      }
-    };
-    loadPagefind();
+    // Load the search index
+    fetch('/search/search-index.json')
+      .then(res => res.json())
+      .then(setSearchIndex)
+      .catch(err => console.error('Error loading search index:', err))
+  }, [])
 
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setIsOpen((open) => !open);
-      }
-    };
-
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, []);
-
-  const performSearch = async (query: string) => {
-    if (!pagefind || !query) {
-      setResults([]);
-      return;
+  useEffect(() => {
+    if (!query.trim()) {
+      setResults([])
+      return
     }
 
-    const search = await pagefind.search(query);
-    const results = await Promise.all(
-      search.results.map(async (result: any) => {
-        const data = await result.data();
-        return {
-          id: result.id,
-          url: data.url,
-          title: data.meta.title,
-          excerpt: data.excerpt,
-        };
-      })
-    );
-    setResults(results);
-  };
+    const searchResults = searchIndex.filter(item => 
+      item.title.toLowerCase().includes(query.toLowerCase()) ||
+      item.content.toLowerCase().includes(query.toLowerCase())
+    ).slice(0, 10) // Limit to 10 results
+
+    setResults(searchResults)
+  }, [query, searchIndex])
+
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        setIsOpen(open => !open)
+      }
+    }
+
+    document.addEventListener('keydown', down)
+    return () => document.removeEventListener('keydown', down)
+  }, [])
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -85,36 +73,33 @@ export function Search() {
         <div className="p-4">
           <Input
             placeholder="Type to search documentation..."
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              performSearch(e.target.value);
-            }}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             className="h-10"
             autoFocus
           />
         </div>
-        {results.length > 0 && (
-          <div className="max-h-[300px] overflow-y-auto p-4 pt-0">
-            {results.map((result) => (
-              <button
-                key={result.id}
-                onClick={() => {
-                  router.push(result.url);
-                  setIsOpen(false);
-                }}
-                className={cn(
-                  "w-full rounded-lg px-4 py-3 text-left hover:bg-accent",
-                  "cursor-pointer"
-                )}
-              >
-                <h3 className="font-semibold">{result.title}</h3>
-                <p className="text-sm text-muted-foreground">{result.excerpt}</p>
-              </button>
-            ))}
-          </div>
-        )}
+        <div className="max-h-[300px] overflow-y-auto p-4 pt-0">
+          {results.map((result, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                router.push(result.url)
+                setIsOpen(false)
+              }}
+              className={cn(
+                "w-full rounded-lg px-4 py-3 text-left hover:bg-accent",
+                "cursor-pointer"
+              )}
+            >
+              <h3 className="font-semibold">{result.title}</h3>
+              <p className="text-sm text-muted-foreground">
+                {result.content.substring(0, 150)}...
+              </p>
+            </button>
+          ))}
+        </div>
       </DialogContent>
     </Dialog>
-  );
+  )
 }
