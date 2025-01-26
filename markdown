@@ -1,67 +1,70 @@
-# Code
+# Updating Your Installation
 
-MkDocs-Shadcn provides syntax highlighting and code block enhancements using [rehype-pretty-code](https://rehype-pretty-code.netlify.app/).
+If you've forked the MkDocs-Nextjs-Dropin repository and want to keep it up to date with the latest changes, follow these steps.
 
-## Basic Usage
+## Prerequisites
 
-Code blocks are created using standard markdown code fence syntax:
+Ensure you have the upstream repository configured:
 
-````markdown
-```python
-def hello_world():
-    print("Hello, World!")
+```bash
+git remote -v
 ```
-````
 
-## Features
+If you don't see the upstream repository listed, add it:
 
-### Syntax Highlighting
-
-The code blocks automatically support syntax highlighting for a wide range of programming languages. The highlighting uses GitHub's light and dark themes:
-
-- Light theme: github-light
-- Dark theme: github-dark-dimmed
-
-### Copy to Clipboard
-
-Every code block includes a "Copy" button that appears when hovering over the code. When clicked, it copies the code content to the clipboard and shows a brief confirmation message.
-
-### Line Numbers
-
-Line numbers are automatically added to code blocks. They appear on the left side of the code and are styled to be visually distinct from the code itself.
-
-### Line Highlighting
-
-You can highlight specific lines by adding a `hl_lines` attribute:
-
-````markdown
-```python hl_lines="2 3"
-def example():
-    # This line is highlighted
-    print("This line too")
-    # This line is not
+```bash
+git remote add upstream https://github.com/weisser-dev/mkdocs-nextjs-dropin.git
 ```
-````
 
-### Code Block Titles
+## Update Process
 
-You can add a title to your code blocks:
+1. Fetch the latest changes from the upstream repository:
+   ```bash
+   git fetch upstream
+   ```
 
-````markdown
-```python title="example.py"
-def hello():
-    print("Hello!")
-```
-````
+2. Ensure you're on your main branch:
+   ```bash
+   git checkout main
+   ```
 
-## Implementation Details
+3. Merge the upstream changes:
+   ```bash
+   git merge upstream/main
+   ```
 
-The code highlighting is implemented using:
+4. If there are any conflicts, resolve them in your preferred code editor.
 
-1. rehype-pretty-code for syntax highlighting
-2. GitHub's light and dark themes for consistent styling
-3. Custom copy-to-clipboard functionality
-4. Automatic line number generation
-5. Support for line highlighting and block titles
+5. Test that everything still works as expected:
+   ```bash
+   npm run dev
+   ```
 
-The code blocks are processed during build time, ensuring fast page loads and consistent rendering across all browsers.
+6. Push the updated main branch to your fork:
+   ```bash
+   git push origin main
+   ```
+
+## Handling Breaking Changes
+
+Sometimes updates might include breaking changes. In these cases:
+
+1. Check the release notes on GitHub for any migration steps
+2. Back up your `mkdocs` folder before updating
+3. Review the changes in the `mkdocs.yml` configuration file
+4. Test your documentation thoroughly after updating
+
+## Troubleshooting
+
+If you encounter issues after updating:
+
+1. Check that your `mkdocs.yml` configuration is compatible with the new version
+2. Ensure all dependencies are up to date:
+   ```bash
+   npm install
+   ```
+3. Clear your build cache:
+   ```bash
+   npm run clean
+   ```
+4. If problems persist, open an issue on GitHub with details about the error

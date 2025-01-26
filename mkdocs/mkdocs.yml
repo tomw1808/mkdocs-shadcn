@@ -51,6 +51,7 @@ nav:
   - "Home": "/"
   - "Setup":
       - "Getting Started": "setup/gettingstarted.md"
+      - "Updating": "setup/updating.md"
   - "Reference":
       - "Admonitions": "reference/admonitions.md"
       - "Code": "reference/code.md"
