@@ -19,7 +19,45 @@ If you find MkDocs-Nextjs-Dropin useful, please consider showing your support by
    git remote add upstream https://github.com/weisser-dev/mkdocs-nextjs-dropin.git
    ```
 
+## Starting from Scratch
+
+If you don't have an existing MkDocs installation, you can start with this basic configuration. Create a `mkdocs.yml` file in the `mkdocs` folder with this content:
+
+```yaml
+site_name: Your Site Name
+site_description: Your site description
+site_author: Your Name
+
+nav:
+  - "Home": "/"
+  - "Getting Started": "getting-started.md"
+```
+
+This minimal configuration includes:
+- Basic site information
+- A simple navigation structure
+- A home page and a getting started page
+
+You can then create your markdown files in the `mkdocs` folder:
+1. Create `index.md` for your home page
+2. Create `getting-started.md` for your getting started guide
+
+As your documentation grows, you can expand the `nav` section to organize your content into sections:
+
+```yaml
+nav:
+  - "Home": "/"
+  - "Guide":
+      - "Getting Started": "guide/getting-started.md"
+      - "Configuration": "guide/configuration.md"
+  - "Reference":
+      - "API": "reference/api.md"
+      - "Components": "reference/components.md"
+```
+
 ## Adding Your Documentation
+
+If you already have an existing MkDocs installation:
 
 1. Copy your existing `mkdocs.yml` configuration file to the `mkdocs` folder of this project.
 2. Copy all your documentation Markdown (.md) files from your docs folder to the `mkdocs` folder.
