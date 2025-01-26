@@ -14,13 +14,16 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { MobileNav } from './MobileNav'
+import { NavTreeItem, VersionInfo } from '@/lib/mkdocs'
 
 interface NavbarProps {
     items: Array<{
         title: string
         path?: string
     }>
-    fullNavigation: NavTreeItem[]
+    fullNavigation: NavTreeItem[],
+    versions?: VersionInfo[],
+    currentVersion?: string
 }
 
 export const Navbar = ({ items, fullNavigation }: NavbarProps) => {
