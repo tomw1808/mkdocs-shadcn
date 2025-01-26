@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Dialog, DialogContent, DialogTrigger } from './ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { SearchIcon } from 'lucide-react'
@@ -41,7 +41,7 @@ export function Search() {
           );
         } catch (e) {
           console.error("Error loading Pagefind:", e);
-          window.pagefind = { 
+          window.pagefind = {
             search: () => Promise.resolve({ results: [] }),
             debouncedSearch: () => Promise.resolve({ results: [] })
           };
@@ -108,17 +108,22 @@ export function Search() {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="relative h-9 w-9 p-0 xl:h-10 xl:w-60 xl:justify-start xl:px-3 xl:py-2"
+          className="xl:w-60 xl:px-3 xl:py-2 flex justify-between"
         >
+          <div className='flex'>
           <SearchIcon className="h-4 w-4 xl:mr-2" />
-          <span className="hidden xl:inline-flex">Search documentation...</span>
-          <kbd className="pointer-events-none absolute right-1.5 top-2 hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 xl:flex">
+          <span className="hidden xl:block">Search...</span>
+          </div>
+          <kbd className="pointer-events-none hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 xl:flex">
             ⌘K
           </kbd>
         </Button>
       </DialogTrigger>
-      <DialogContent className="top-[20%] p-0">
-        <div className="p-4">
+      <DialogContent className="top-[20%]">
+        <DialogHeader>
+          <DialogTitle>Search</DialogTitle>
+        </DialogHeader>
+        <div className="py-4 flex items-center align-center">
           <Input
             placeholder="Type to search documentation..."
             value={query}
@@ -127,7 +132,7 @@ export function Search() {
             autoFocus
           />
         </div>
-        <div className="max-h-[300px] overflow-y-auto p-4 pt-0">
+        <div className="max-h-[300px] overflow-y-auto py-4 pt-0">
           {loadedResults.map((result, i) => (
             <button
               key={i}
@@ -141,7 +146,7 @@ export function Search() {
               )}
             >
               <h3 className="font-semibold">{result.title}</h3>
-              <p className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{ __html: result.excerpt}} />
+              <p className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{ __html: result.excerpt }} />
             </button>
           ))}
         </div>

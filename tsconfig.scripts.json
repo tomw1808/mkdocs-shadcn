@@ -3,11 +3,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "target": "ES2017",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "esModuleInterop": true,
-    "isolatedModules": false,
-    "allowImportingTsExtensions": true
+    "module": "Node16",
+    "moduleResolution": "node16"
   },
   "include": ["scripts/**/*.{ts,mts}"],
   "exclude": ["node_modules"]

@@ -37,3 +37,4 @@ next-env.d.ts
 .aider*
 
 public/content-images
+public/pagefind

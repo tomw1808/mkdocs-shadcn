@@ -32,7 +32,7 @@ const originalBuild = nextConfig.webpack || ((config) => config)
 nextConfig.webpack = (config, options) => {
   if (options.isServer && !options.dev) {
     // Run image processing script during production build
-    require('./scripts/process-images.js')
+    require('./scripts/process-images.cjs')
   }
   return originalBuild(config, options)
 }

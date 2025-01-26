@@ -7,13 +7,13 @@ interface MkDocsConfig {
   site_description?: string
 }
 
-interface NavItem {
+export interface NavItem {
   title: string
   path: string
 }
 
 
-interface VersionInfo {
+export interface VersionInfo {
   version: string
   path: string
   config: MkDocsConfig
@@ -116,7 +116,7 @@ export function buildNavTree(nav: any[]): NavTreeItem[] {
   return items
 }
 
-export function getFullNavigation() {
+export function getFullNavigation(version?: string) {
   const mkdocsPath = path.join(process.cwd(), 'mkdocs', 'mkdocs.yml')
   const fileContents = fs.readFileSync(mkdocsPath, 'utf8')
   const config = yaml.load(fileContents) as any
@@ -147,7 +147,7 @@ function findFirstPath(value: any): string | undefined {
   return undefined
 }
 
-export function getRootNavigation() {
+export function getRootNavigation(version?: string) {
   const mkdocsPath = path.join(process.cwd(), 'mkdocs', 'mkdocs.yml')
   const fileContents = fs.readFileSync(mkdocsPath, 'utf8')
   const config = yaml.load(fileContents) as any

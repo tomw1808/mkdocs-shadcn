@@ -2,6 +2,12 @@ import { getFullNavigation } from '@/lib/mkdocs'
 import { getMarkdownContent } from '@/lib/markdown'
 import { NextResponse } from 'next/server'
 
+interface SearchResult {
+  url: string;
+  title: string;
+  content: string;
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const query = searchParams.get('q')?.toLowerCase()
@@ -11,7 +17,7 @@ export async function GET(request: Request) {
   }
 
   const navItems = getFullNavigation()
-  const searchResults = []
+  const searchResults: SearchResult[] = []
 
   async function processNavItem(item: any) {
     if (item.path) {
@@ -19,8 +25,10 @@ export async function GET(request: Request) {
       try {
         const { content } = await getMarkdownContent(slug)
         if (
-          item.title.toLowerCase().includes(query) ||
-          content.toLowerCase().includes(query)
+          query && (item.title.toLowerCase().includes(query) ||
+            content.toLowerCase().includes(query)
+          )
+
         ) {
           searchResults.push({
             url: `/${item.path.replace('.md', '')}`,

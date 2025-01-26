@@ -50,7 +50,7 @@ const NavItem = ({ item, currentPath }: NavItemProps) => {
         </SidebarMenuButton>
         {isOpen && (
           <SidebarMenuSub>
-            {item.children.map((child, index) => (
+            {item.children?.map((child, index) => (
               <NavItem
                 key={index}
                 item={child}

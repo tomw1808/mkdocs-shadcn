@@ -31,9 +31,9 @@ export function Code(props: HighlightedCodeProps) {
 export async function highlightCode({ code, lang, showLineNumbers = true, highlights, theme = 'light' }: CodeProps) {
   // Construct the markdown code block
   const codeBlock = [
-    '```' + lang + (showLineNumbers ? ' showLineNumbers' : '') + (highlights ? ' {' + highlights + '}' : ''),
+    '````' + lang + (showLineNumbers ? ' showLineNumbers' : '') + (highlights ? ' {' + highlights + '}' : ''),
     code,
-    '```'
+    '````'
   ].join('\n');
 
   const highlighter = await getHighlighter(theme);

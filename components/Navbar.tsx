@@ -37,9 +37,6 @@ export const Navbar = ({ items, fullNavigation }: NavbarProps) => {
                     MkDocs Shadcn
                 </Link>
 
-                <div className="hidden lg:flex flex-1 mx-4">
-                    <Search />
-                </div>
 
                 <div className="flex lg:hidden items-center">
                     <ModeToggle />
@@ -70,6 +67,7 @@ export const Navbar = ({ items, fullNavigation }: NavbarProps) => {
                 </nav>
 
                 <div className="hidden lg:flex gap-2">
+                <Search />
                     <a
                         rel="noreferrer noopener"
                         href="https://github.com/leoMirandaa/shadcn-landing-page.git"

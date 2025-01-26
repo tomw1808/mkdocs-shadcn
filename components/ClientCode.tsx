@@ -19,7 +19,6 @@ export function ClientCode(props: ClientCodeProps) {
   
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      {/* @ts-expect-error Async Server Component */}
       <ServerCode {...props} theme={resolvedTheme || 'light'} />
     </Suspense>
   )

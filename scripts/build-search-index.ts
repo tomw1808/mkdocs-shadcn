@@ -22,7 +22,7 @@ async function buildSearchIndex() {
     
     const [title, value] = Object.entries(item)[0]
     
-    if (typeof value === 'string') {
+    if (typeof value === 'string' && value.endsWith(".md")) {
       // This is a page
       const mdPath = path.join(process.cwd(), 'mkdocs', value)
       try {

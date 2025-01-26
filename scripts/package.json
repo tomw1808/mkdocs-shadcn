@@ -1,0 +1,14 @@
+{
+    "name": "mkdocs-dropin",
+    "version": "0.1.0",
+    "private": true,
+    "type":"module",
+    "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "build-search-index": "tsx --tsconfig ./tsconfig.scripts.json scripts/build-search-index.ts",
+      "start": "next start",
+      "lint": "next lint"
+    }
+  }
+  
