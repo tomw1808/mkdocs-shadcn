@@ -36,6 +36,7 @@ export function Search() {
       if (typeof window.pagefind === "undefined") {
         try {
           window.pagefind = await import(
+            /* @ts-ignore */
             /* webpackIgnore: true */ "/pagefind/pagefind.js"
           );
         } catch (e) {
@@ -137,9 +138,7 @@ export function Search() {
               )}
             >
               <h3 className="font-semibold">{result.title}</h3>
-              <p className="text-sm text-muted-foreground">
-                {result.excerpt}
-              </p>
+              <p className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{ __html: result.excerpt}} />
             </button>
           ))}
         </div>
