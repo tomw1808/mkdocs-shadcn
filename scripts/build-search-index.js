@@ -2,16 +2,20 @@ const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
 const matter = require('gray-matter')
+const pagefind = require("pagefind")
 
-function buildSearchIndex() {
+async function buildSearchIndex() {
   console.log('Building search index...')
-  const searchIndex = []
   const mkdocsPath = path.join(process.cwd(), 'mkdocs', 'mkdocs.yml')
-  
-  // Read and parse mkdocs.yml
   const config = yaml.load(fs.readFileSync(mkdocsPath, 'utf8'))
   
-  function processNavItem(item) {
+  // Create a Pagefind index
+  const { index } = await pagefind.createIndex({
+    forceLanguage: "en",
+    verbose: true
+  })
+
+  async function processNavItem(item) {
     if (typeof item === 'string') return
     
     const [title, value] = Object.entries(item)[0]
@@ -23,37 +27,51 @@ function buildSearchIndex() {
         const content = fs.readFileSync(mdPath, 'utf8')
         const { content: mdContent } = matter(content)
         
-        searchIndex.push({
+        await index.addCustomRecord({
           url: `/${value.replace('.md', '')}`,
-          title: title,
-          content: mdContent
+          content: mdContent,
+          language: "en",
+          meta: {
+            title: title
+          }
         })
       } catch (error) {
         console.error(`Error processing ${value}:`, error)
       }
     } else if (Array.isArray(value)) {
       // This is a section with children
-      value.forEach(child => processNavItem(child))
+      for (const child of value) {
+        await processNavItem(child)
+      }
     }
   }
 
   // Process all navigation items
   if (config.nav) {
-    config.nav.forEach(processNavItem)
+    for (const item of config.nav) {
+      await processNavItem(item)
+    }
   }
 
-  // Ensure the public/search directory exists
-  const searchDir = path.join(process.cwd(), 'public', 'search')
-  fs.mkdirSync(searchDir, { recursive: true })
+  // Write the index files
+  const { errors } = await index.writeFiles({
+    outputPath: "./public/pagefind"
+  })
 
-  // Write the search index
-  fs.writeFileSync(
-    path.join(searchDir, 'search-index.json'),
-    JSON.stringify(searchIndex, null, 2)
-  )
+  if (errors?.length > 0) {
+    console.error('Errors building search index:', errors)
+    process.exit(1)
+  }
+
+  // Clean up
+  await index.deleteIndex()
+  await pagefind.close()
 
   console.log('Search index built successfully')
 }
 
 // Execute the build
-buildSearchIndex()
+buildSearchIndex().catch(err => {
+  console.error('Failed to build search index:', err)
+  process.exit(1)
+})
