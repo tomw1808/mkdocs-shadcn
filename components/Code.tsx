@@ -57,9 +57,9 @@ const getRehypePrettyCodeOptions = (theme: string): Options => ({
 
 async function getHighlighter(theme: string) {
   // Create new highlighter for each theme to prevent caching
-  const highlighter = await unified()
-    .use(remarkParse)
-    .use(remarkRehype)
+  const highlighter = unified()
+    .use(remarkParse as any)
+    .use(remarkRehype as any)
     .use(rehypePrettyCode, getRehypePrettyCodeOptions(theme))
     .use(rehypeStringify);
   return highlighter;
