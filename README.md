@@ -10,35 +10,36 @@ This project is a drop-in replacement for MkDocs Material, built with Next.js 14
 - ⚡ Fast page loads with Next.js 14+ and App Router
 - 🎨 Customizable with Tailwind CSS
 - 📊 Beautiful UI components from shadcn/ui
-- 🔍 Full-text search (coming soon)
+- 🔍 Full-text search with Pagefind integration
 
 ### Navigation
 - 📚 Dynamic sidebar navigation with collapsible sections
 - 🗺️ Automatic navigation structure from mkdocs.yml
 - 🔗 Previous/Next page navigation
-- 📱 Mobile-friendly navigation drawer
+- 📱 Mobile-friendly navigation drawer with keyboard shortcuts (⌘K / Ctrl+K)
 - 🏷️ Section headers and improved navigation highlighting
+- 🔄 Version switching support (in development)
 
 ### Image Handling
 - 🖼️ Advanced image optimization with Next.js Image component
-- 📸 Lightbox gallery support for images
-- 🎯 Automatic image processing and caching
+- 📸 Lightbox gallery support using double exclamation syntax (!![])
+- 🎯 Automatic image processing and path handling
 - 🔄 Support for both local and remote images
 - 📁 Automatic public directory management for assets
 
 ### Code Features
-- 🎨 Syntax highlighting with Rehype Pretty Code
-- 📝 Line highlighting and line numbers
-- 📋 Copy code button
-- 🎭 Multiple language tabs support
-- 🎯 Inline code highlighting
+- 🎨 Syntax highlighting with rehype-pretty-code
+- 📝 Line highlighting and automatic line numbers
+- 📋 Copy-to-clipboard button on all code blocks
+- 🎭 Code block titles and language detection
+- 🎯 GitHub-themed light and dark syntax themes
 
 ### Documentation Features
-- ⚠️ Admonitions (note, warning, danger, etc.)
-- 📑 Content tabs for alternative content
-- 🔲 Code blocks with titles and highlighting
-- 📝 Rich markdown support with MDX
-- 🎯 Custom components for enhanced content
+- ⚠️ Admonitions with 12+ types (note, warning, danger, etc.)
+- 📑 Collapsible admonition blocks using ???
+- 🔲 Custom titles for admonition blocks
+- 📝 Rich markdown support
+- 🎯 Fully compatible with existing MkDocs content
 
 ## Project Structure
 
