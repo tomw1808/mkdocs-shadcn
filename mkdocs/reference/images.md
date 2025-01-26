@@ -44,6 +44,40 @@ Local images referenced in markdown files are:
 3. Served with proper caching headers
 4. Rendered with proper width and height attributes
 
+Images can be placed in the same directory as your markdown files or in subdirectories. The paths are always relative to the markdown file's location. For example, if your documentation structure looks like this:
+
+```
+mkdocs/
+  ├── getting-started.md
+  ├── images/
+  │   ├── diagram.png
+  │   └── screenshots/
+  │       └── interface.png
+  └── advanced/
+      ├── feature.md
+      └── images/
+          └── workflow.png
+```
+
+You can reference these images in your markdown files like this:
+
+```markdown
+# getting-started.md
+![Diagram](images/diagram.png)
+!![Screenshot](images/screenshots/interface.png)
+
+# advanced/feature.md
+![Workflow](images/workflow.png)
+```
+
+MkDocs-Shadcn automatically:
+1. Detects all referenced images
+2. Copies them to the appropriate location in the public directory
+3. Processes them using Next.js Image optimization
+4. Updates all references to use the correct public paths
+
+This happens both during development (when running the dev server) and at build time.
+
 ## Example
 
 Here's an example using both regular and lightbox images:
@@ -56,7 +90,7 @@ Regular image:
 
 Lightbox enabled image:
 !![Click me to open in lightbox](lightbox.png)
-!![Another gallery image](gallery.png)
+!![Another gallery image](images/gallery.png)
 ```
 
-The lightbox-enabled images will be part of the same gallery and can be navigated through when opened.
+The lightbox-enabled images will be part of the same gallery and can be navigated through when opened, regardless of their original location in the documentation structure.
