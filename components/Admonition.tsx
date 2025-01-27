@@ -60,7 +60,7 @@ export function Admonition({
           "border-cyan-200 dark:border-cyan-750": type === "info",
           "border-violet-200 dark:border-violet-750": type === "question",
         })}>
-          <AccordionTrigger className={cn("flex flex-row gap-3 p-3 hover:no-underline border-none", {
+          <AccordionTrigger className={cn("flex flex-row gap-3 p-3 hover:no-underline border-none rounded-lg", {
             "bg-blue-50 dark:bg-blue-950": type === "note",
             "bg-red-50 dark:bg-red-950": type === "failure" || type === "danger",
             "bg-yellow-50 dark:bg-yellow-950": type === "warning",
@@ -96,7 +96,7 @@ export function Admonition({
       "border-cyan-200 dark:border-cyan-750": type === "info",
       "border-violet-200 dark:border-violet-750": type === "question",
     }, className)}>
-      <div className={cn("flex flex-row gap-3 p-3 items-center", {
+      <div className={cn("flex flex-row gap-3 p-3 items-center rounded-lg", {
         "bg-blue-50 dark:bg-blue-950": type === "note",
         "bg-red-50 dark:bg-red-950": type === "failure" || type === "danger",
         "bg-yellow-50 dark:bg-yellow-950": type === "warning",

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run build-search-index && next build",
     "build-search-index": "tsx scripts/build-search-index.ts",
     "start": "next start",
     "lint": "next lint"

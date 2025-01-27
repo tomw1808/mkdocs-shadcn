@@ -32,7 +32,7 @@ export default async function Page({ params }: PageProps) {
     const navItems = getFullNavigation()
 
     return (
-      <div className='mt-6 px-6 lg:px-0'>
+      <div className='mt-6 px-6 lg:px-0 container'>
 
         <SidebarProvider defaultOpen={true}>
           <SideNav items={navItems} />

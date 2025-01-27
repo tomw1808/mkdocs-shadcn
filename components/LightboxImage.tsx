@@ -29,7 +29,7 @@ export function LightboxImage({ src, alt, className }: LightboxImageProps) {
 
   return (
     <div 
-      className={className + " cursor-pointer relative relative h-64 flex align-left"}
+      className={className + " cursor-pointer relative relative h-96 flex align-left"}
       onClick={handleClick}
     >
       <Image

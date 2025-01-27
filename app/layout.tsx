@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { Navbar } from '@/components/Navbar'
 import { ThemeProvider } from './theme-provider'
 import { getMkDocsConfig } from '@/lib/mkdocs'
 import NavWrapper from './nav-wrapper'
@@ -12,7 +11,7 @@ const mkdocsConfig = getMkDocsConfig()
 
 export const metadata: Metadata = {
   title: mkdocsConfig.site_name,
-  description: mkdocsConfig.site_description || 'Documentation site built with Next.js',
+  description: mkdocsConfig.site_description || 'Documentation built with MkDocs-Shadcn',
 }
 
 export default function RootLayout({
@@ -22,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className+ ' overscroll-y-none'}>
+      <body className={inter.className + ' overscroll-y-none'}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -30,7 +29,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NavWrapper />
-          {children}
+          
+              {children}
         </ThemeProvider>
       </body>
 

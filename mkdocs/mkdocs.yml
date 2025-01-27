@@ -59,6 +59,8 @@ nav:
       - "Navigation": "reference/navigation.md"
       - "Search": "reference/search.md"
       - "Versioning": "reference/versioning.md"
-  - "About": "about.md"
+  - "About": 
+      - "Mkdocs-Shadcn": "about/mkdocs-shadcn.md"
+      - "Todo List": "about/todo.md"
 
       
