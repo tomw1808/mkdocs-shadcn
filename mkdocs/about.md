@@ -1,8 +1,10 @@
 # About MkDocs-Shadcn
 
-Hi, my name is Thomas and I'm a sucker for fast, developer friendly, great looking docs. 
+Hi, my name is Thomas, I'm the author of MkDocs-Shadcn and I'm a sucker for fast, developer friendly, great looking docs. 👋🏻
 
 Great looking docs are the reason I got lured into Web3 Development. Great looking docs are responsible for me learning tailwind. Great looking docs are essential for me to start on something new.
+
+Awful looking, incomplete and slow docs are the reason so many great projects died.
 
 ## Why MkDocs-Shadcn
 
