@@ -61,6 +61,6 @@ async function getHighlighter(theme: string) {
     .use(remarkParse as any)
     .use(remarkRehype as any)
     .use(rehypePrettyCode, getRehypePrettyCodeOptions(theme))
-    .use(rehypeStringify);
+    .use(rehypeStringify as any);
   return highlighter;
 }

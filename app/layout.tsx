@@ -12,6 +12,7 @@ const mkdocsConfig = getMkDocsConfig()
 export const metadata: Metadata = {
   title: mkdocsConfig.site_name,
   description: mkdocsConfig.site_description || 'Documentation built with MkDocs-Shadcn',
+  
 }
 
 export default function RootLayout({
@@ -21,6 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      
       <body className={inter.className + ' overscroll-y-none'}>
         <ThemeProvider
           attribute="class"
