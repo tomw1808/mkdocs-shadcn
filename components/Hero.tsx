@@ -10,7 +10,7 @@ export function Hero() {
         MkDocs-Shadcn
       </h1>
       <p className="max-w-lg text-center text-lg text-muted-foreground sm:text-xl">
-        Drop-In Replacement for Material for MkDocs using NextJS, Tailwind and Shadcn.
+        Beautiful Markdown based documentation, Drop-In Replacement for Material for MkDocs, with the power of NextJS, Tailwind and Shadcn.
       </p>
       <div>
         <Button size="lg" asChild className="cursor-pointer">
@@ -20,7 +20,7 @@ export function Hero() {
       <div className="relative">
         <Image
           src="/images/710_1x_shots_so.png"
-          alt="SaaS Dashboard"
+          alt="Mkdocs-Shadcn Hero Image"
           width={1000}
           height={698}
           priority

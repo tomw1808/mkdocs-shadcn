@@ -16,6 +16,7 @@ import {
   SidebarMenuSubButton,
   SidebarProvider,
 } from '@/components/ui/sidebar'
+import { Search } from './Search'
 
 interface SideNavProps {
   items: NavTreeItem[]
@@ -29,8 +30,8 @@ interface NavItemProps {
 const NavItem = ({ item, currentPath }: NavItemProps) => {
   const [isOpen, setIsOpen] = useState(
     // Open if this section contains the current page
-    item.children?.some(child => 
-      currentPath === child.path || 
+    item.children?.some(child =>
+      currentPath === child.path ||
       child.children?.some(grandchild => currentPath === grandchild.path)
     ) ?? false
   )
@@ -80,23 +81,23 @@ const NavItem = ({ item, currentPath }: NavItemProps) => {
 export const SideNav = ({ items }: SideNavProps) => {
   const pathname = usePathname()
   const currentPath = pathname.substring(1) // Remove leading slash
-  
+
   return (
-      <Sidebar className='mt-14' variant='sidebar'>
-        <SidebarHeader className="border-b px-2">
-          <div className="font-semibold">Documentation</div>
-        </SidebarHeader>
-        <SidebarContent>
-          <SidebarMenu>
-            {items.map((item, index) => (
-              <NavItem 
-                key={index}
-                item={item}
-                currentPath={currentPath}
-              />
-            ))}
-          </SidebarMenu>
-        </SidebarContent>
-      </Sidebar>
+    <Sidebar className='mt-12' variant='sidebar'>
+      <SidebarHeader className="py-6">
+        <Search />
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarMenu>
+          {items.map((item, index) => (
+            <NavItem
+              key={index}
+              item={item}
+              currentPath={currentPath}
+            />
+          ))}
+        </SidebarMenu>
+      </SidebarContent>
+    </Sidebar>
   )
 }

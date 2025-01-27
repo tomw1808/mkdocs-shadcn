@@ -59,4 +59,6 @@ nav:
       - "Navigation": "reference/navigation.md"
       - "Search": "reference/search.md"
       - "Versioning": "reference/versioning.md"
+  - "About": "about.md"
+
       

@@ -6,12 +6,21 @@ MkDocs-Shadcn provides syntax highlighting and code block enhancements using [re
 
 Code blocks are created using standard markdown code fence syntax:
 
-````markdown
-```python
-def hello_world():
-    print("Hello, World!")
-```
-````
+=== "code"
+    ````markdown
+    ```python
+    def hello_world():
+        print("Hello, World!")
+    ```
+    ````
+
+=== "result"
+    ```python
+    def hello_world():
+        print("Hello, World!")
+    ```
+
+
 
 ## Features
 
@@ -34,25 +43,42 @@ Line numbers are automatically added to code blocks. They appear on the left sid
 
 You can highlight specific lines by adding a `hl_lines` attribute:
 
-````markdown
-```python hl_lines="2 3"
-def example():
-    # This line is highlighted
-    print("This line too")
-    # This line is not
-```
-````
+=== "Code"
+
+    ````markdown
+    ```python hl_lines="2 3"
+    def example():
+        # This line is highlighted
+        print("This line too")
+        # This line is not
+    ```
+    ````
+=== "Result"
+    ```python hl_lines="2 3"
+    def example():
+        # This line is highlighted
+        print("This line too")
+        # This line is not
+    ```
 
 ### Code Block Titles
 
 You can add a title to your code blocks:
 
-````markdown
-```python title="example.py"
-def hello():
-    print("Hello!")
-```
-````
+=== "Code"
+
+    ````markdown
+    ```python title="example.py"
+    def hello():
+        print("Hello!")
+    ```
+    ````
+=== "Result"
+
+    ```python title="example.py"
+    def hello():
+        print("Hello!")
+    ```
 
 ## Implementation Details
 
@@ -60,7 +86,7 @@ The code highlighting is implemented using:
 
 1. rehype-pretty-code for syntax highlighting
 2. GitHub's light and dark themes for consistent styling
-3. Custom copy-to-clipboard functionality
+3. Copy-to-clipboard functionality
 4. Automatic line number generation
 5. Support for line highlighting and block titles
 

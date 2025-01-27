@@ -34,7 +34,7 @@ export const Navbar = ({ items, fullNavigation }: NavbarProps) => {
         <header className="sticky border-b-[1px] top-0 z-40 bg-white dark:border-b-slate-700 dark:bg-background py-2 px-2">
             <div className="flex justify-between align-center items-center">
                 <Link href="/" className="ml-2 font-bold text-xl flex">
-                    MkDocs Shadcn
+                    MkDocs-Shadcn
                 </Link>
 
 
@@ -67,10 +67,10 @@ export const Navbar = ({ items, fullNavigation }: NavbarProps) => {
                 </nav>
 
                 <div className="hidden lg:flex gap-2">
-                <Search />
+                
                     <a
                         rel="noreferrer noopener"
-                        href="https://github.com/leoMirandaa/shadcn-landing-page.git"
+                        href="https://github.com/tomw1808/mkdocs-shadcn.git"
                         target="_blank"
                         className={cn("border", buttonVariants({ variant: "secondary" }))}
                     >

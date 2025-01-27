@@ -4,10 +4,15 @@ icon: material/alert-outline
 
 # Admonitions
 
-Admonitions, also known as _call-outs_, are an excellent choice for including
-side content without significantly interrupting the document flow. Material for
-MkDocs provides several different types of admonitions and allows for the
-inclusion and nesting of arbitrary content.
+Admonitions are backwards compatible to the MkDocs Markdown Admonitions. There its defined as:
+
+!!! quote "What are Admonitions?"
+        Admonitions, also known as _call-outs_, are an excellent choice for including
+        side content without significantly interrupting the document flow. Material for
+        MkDocs provides several different types of admonitions and allows for the
+        inclusion and nesting of arbitrary content.
+
+In MkDocs-Shadcn they are georgeous looking call outs, which can be used from within Markdown itself by using a specific syntax.
 
 ## Configuration
 
@@ -15,7 +20,7 @@ Admonitions are enabled by default.
 
 ### Admonition icons
 
-Each of the Icons which are supported by Mkdocs Material is also supported by the Mkdocs-Nextjs-Dropin. If you want to change icons, open `components/Admonitions.tsx` and edit the icons directly.
+Each of the Icons which are supported by Mkdocs Material is also supported by the Mkdocs-Shadcn and are forward compatible as a drop-in replacement. If you want to change icons, or add more, open `components/Admonitions.tsx` and edit the icons directly.
 
 
 ## Usage

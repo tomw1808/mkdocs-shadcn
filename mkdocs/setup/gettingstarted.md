@@ -1,23 +1,33 @@
 # Getting Started
 
-## Supporting the Project
-
-If you find MkDocs-Nextjs-Dropin useful, please consider showing your support by starring the repository on GitHub. This helps make the project more visible to other developers who might benefit from it.
-
 ## Initial Setup
 
 1. First, fork the repository on GitHub. This creates your own copy of the project that you can modify and use as needed.
 
 2. Clone your forked repository:
    ```bash
-   git clone https://github.com/YOUR-USERNAME/mkdocs-nextjs-dropin.git
+   git clone https://github.com/YOUR-USERNAME/mkdocs-shadcn.git
    cd mkdocs-nextjs-dropin
    ```
 
 3. Add the original repository as an upstream remote to keep your fork up to date:
    ```bash
-   git remote add upstream https://github.com/weisser-dev/mkdocs-nextjs-dropin.git
+   git remote add upstream https://github.com/tomw1808/mkdocs-shadcn.git
    ```
+
+
+!!! tip "Star the Repository"
+    Help spread the word, star the Github-Repo. This helps make the project more visible to other developers who might benefit from it.
+
+## Adding Your Documentation
+
+If you already have an existing MkDocs installation:
+
+1. Copy your existing `mkdocs.yml` configuration file to the `mkdocs` folder of this project.
+2. Copy all your documentation Markdown (.md) files from your docs folder to the `mkdocs` folder.
+
+!!! note "Forward Drop-In"
+    The initial idea of mkdocs-shadcn is a forward drop-in compatibility. The project was created because a large MkDocs Material site needed additional features, which couldn't be accomplished with a static page. This is where mkdocs-shadcn shines, but of course, you can also use it to start a completely fresh documentation, ebook, blog, or whatever you you want.
 
 ## Starting from Scratch
 
@@ -55,12 +65,7 @@ nav:
       - "Components": "reference/components.md"
 ```
 
-## Adding Your Documentation
 
-If you already have an existing MkDocs installation:
-
-1. Copy your existing `mkdocs.yml` configuration file to the `mkdocs` folder of this project.
-2. Copy all your documentation Markdown (.md) files from your docs folder to the `mkdocs` folder.
 
 ## Staying Up to Date
 

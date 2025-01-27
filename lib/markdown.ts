@@ -3,31 +3,9 @@ import path from 'path'
 import matter from 'gray-matter'
 
 function preprocessHtmlInMarkdown(content: string): string {
-  // Store code blocks with unique identifiers
-  const codeBlocks: Map<string, {lang: string, lines?: string, title?: string, code: string}> = new Map()
-  
-  // First process 4-backtick blocks (nested code blocks)
-  let processedContent = content.replace(
-    /````\s?(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)````/g,
-    (match, lang, lines, title, code) => {
-      const id = `CODE_BLOCK_${Math.random().toString(36).substr(2, 9)}`
-      codeBlocks.set(id, {lang, lines, title, code: code.trim()})
-      return id
-    }
-  )
-
-  // Then process remaining 3-backtick blocks
-  processedContent = processedContent.replace(
-    /```\s?(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)```/g,
-    (match, lang, lines, title, code) => {
-      const id = `CODE_BLOCK_${Math.random().toString(36).substr(2, 9)}`
-      codeBlocks.set(id, {lang, lines, title, code: code.trim()})
-      return id
-    }
-  )
 
   // Handle tabs
-  processedContent = processedContent.replace(
+  let processedContent = content.replace(
     /^===\s+"([^"]+)"\r?\n((?:(?:    .*|[ \t]*)\r?\n)*(?:    .*))/gm,
     (match, label, content) => {
       // Remove the 4-space indent from content and handle empty lines
@@ -46,6 +24,37 @@ function preprocessHtmlInMarkdown(content: string): string {
       return `<Tab label="${label}">\n\n${processedContent}\n\n</Tab>`
     }
   )
+
+   // Wrap adjacent tabs in a Tabs component
+   processedContent = processedContent.replace(
+    /(?:<Tab[^>]*>[\s\S]*?<\/Tab>\s*)+/g,
+    match => `<Tabs>\n${match}</Tabs>\n`
+  )
+
+  // Store code blocks with unique identifiers
+  const codeBlocks: Map<string, {lang: string, lines?: string, title?: string, code: string}> = new Map()
+  
+  // First process 4-backtick blocks (nested code blocks)
+  processedContent = processedContent.replace(
+    /````\s?(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)````/g,
+    (match, lang, lines, title, code) => {
+      const id = `CODE_BLOCK_${Math.random().toString(36).substr(2, 9)}`
+      codeBlocks.set(id, {lang, lines, title, code: code.trim()})
+      return id
+    }
+  )
+
+  // Then process remaining 3-backtick blocks
+  processedContent = processedContent.replace(
+    /```\s?(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)```/g,
+    (match, lang, lines, title, code) => {
+      const id = `CODE_BLOCK_${Math.random().toString(36).substr(2, 9)}`
+      codeBlocks.set(id, {lang, lines, title, code: code.trim()})
+      return id
+    }
+  )
+
+  
 
 
   // Handle admonitions (both regular and collapsible)
@@ -70,11 +79,7 @@ function preprocessHtmlInMarkdown(content: string): string {
     }
   )
 
-  // Wrap adjacent tabs in a Tabs component
-  processedContent = processedContent.replace(
-    /(?:<Tab[^>]*>[\s\S]*?<\/Tab>\s*)+/g,
-    match => `<Tabs>\n${match}</Tabs>`
-  )
+ 
 
   
 

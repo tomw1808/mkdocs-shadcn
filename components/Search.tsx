@@ -108,13 +108,13 @@ export function Search() {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="xl:w-60 xl:px-3 xl:py-2 flex justify-between"
+          className="lg:w-60 lg:px-3 lg:py-2 flex justify-between"
         >
           <div className='flex'>
-          <SearchIcon className="h-4 w-4 xl:mr-2" />
-          <span className="hidden xl:block">Search...</span>
+          <SearchIcon className="h-4 w-4 lg:mr-2" />
+          <span className="hidden lg:block">Search...</span>
           </div>
-          <kbd className="pointer-events-none hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 xl:flex">
+          <kbd className="pointer-events-none hidden h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 lg:flex">
             ⌘K
           </kbd>
         </Button>

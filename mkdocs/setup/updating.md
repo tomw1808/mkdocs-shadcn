@@ -13,7 +13,7 @@ git remote -v
 If you don't see the upstream repository listed, add it:
 
 ```bash
-git remote add upstream https://github.com/weisser-dev/mkdocs-nextjs-dropin.git
+git remote add upstream https://github.com/tomw1808/mkdocs-shadcn.git
 ```
 
 ## Update Process

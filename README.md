@@ -39,7 +39,7 @@ This project is a drop-in replacement for MkDocs Material, built with Next.js 14
 - 📑 Collapsible admonition blocks using ???
 - 🔲 Custom titles for admonition blocks
 - 📝 Rich markdown support
-- 🎯 Fully compatible with existing MkDocs content
+- 🎯 Drop-In compatible with existing MkDocs content
 
 ## Project Structure
 
@@ -106,7 +106,6 @@ This project maintains full compatibility with MkDocs Material features while pr
 - ✨ Modern development experience
 
 ### Coming Soon
-- 🔄 Full-text search
 - 🔄 Table of contents
 - 🔄 More MkDocs Material extensions
 
@@ -116,4 +115,4 @@ Contributions are welcome! Please feel free to submit a Pull Request. Check our 
 
 ## License
 
-This project is available under a custom license that allows free use for both personal and commercial purposes, but explicitly prohibits using the software to create commercial hosting services. See the [LICENSE](LICENSE.md) file for details.
+This project is available under a custom license that allows free use for both personal and commercial purposes, but explicitly prohibits using the software to create commercial hosting services based on this project. See the [LICENSE](LICENSE.md) file for details.
