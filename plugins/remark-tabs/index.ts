@@ -19,35 +19,44 @@ export const remarkTabs: Plugin = function() {
   return function transformer(tree) {
     const tabGroups: TabNode[][] = []
     let currentGroup: TabNode[] = []
-console.log(tree);
-    visit(tree, 'code', (node: any, index: number, parent: any) => {
-      // Check if previous node is our tab marker
-      const prevNode = index > 0 ? parent.children[index - 1] : null
-      if (prevNode?.type !== 'paragraph') return
-      const match = prevNode.children[0].value.match(tabRegex)
+    
+    console.log('Initial tree:', JSON.stringify(tree, null, 2))
+    visit(tree, 'paragraph', (node: any, index: number, parent: any) => {
+      if (!node.children?.[0]?.value) return
+      
+      const match = node.children[0].value.match(tabRegex)
       if (!match) return
+
+      // Get the next node which should be our content
+      const contentNode = parent.children[index + 1]
+      if (!contentNode) return
 
       // Create tab node
       const tabNode: TabNode = {
         type: 'tab',
         label: match[1],
-        children: [node],
+        children: [contentNode],
       }
 
-      // Remove the marker node
-      parent.children.splice(index - 1, 1)
+      // Remove both the marker node and content node
+      parent.children.splice(index, 2)
 
       // Add to current group
       currentGroup.push(tabNode)
 
-      // If next node isn't a tab, close the group
+      // If next remaining node isn't a tab marker, close the group
       const nextNode = parent.children[index]
       const nextMatch = nextNode?.type === 'paragraph' && 
-                       nextNode.children[0].value.match(tabRegex)
+                       nextNode.children?.[0]?.value?.match(tabRegex)
       
       if (!nextMatch) {
         if (currentGroup.length > 0) {
-          tabGroups.push([...currentGroup])
+          const tabsNode: TabsNode = {
+            type: 'tabs',
+            children: currentGroup,
+          }
+          // Insert the tabs node where we removed the first tab
+          parent.children.splice(index, 0, tabsNode)
           currentGroup = []
         }
       }
