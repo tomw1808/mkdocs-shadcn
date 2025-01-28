@@ -19,12 +19,11 @@ export const remarkTabs: Plugin = function() {
   return function transformer(tree) {
     const tabGroups: TabNode[][] = []
     let currentGroup: TabNode[] = []
-
+console.log(tree);
     visit(tree, 'code', (node: any, index: number, parent: any) => {
       // Check if previous node is our tab marker
       const prevNode = index > 0 ? parent.children[index - 1] : null
       if (prevNode?.type !== 'paragraph') return
-      
       const match = prevNode.children[0].value.match(tabRegex)
       if (!match) return
 
