@@ -25,9 +25,33 @@ interface PageProps {
   }
 }
 
+export async function generateStaticParams() {
+  const paths = getAllPaths()
+  return paths.map((path) => ({
+    slug: path.split('/')
+  }))
+}
+
+export const dynamicParams = false // Prevent dynamic paths
+
+export async function generateMetadata({ params }: PageProps) {
+  try {
+    const { content, frontmatter } = await getMarkdownContent(params.slug)
+    return {
+      title: frontmatter.title || params.slug[params.slug.length - 1],
+      description: frontmatter.description || '',
+    }
+  } catch (error) {
+    return {
+      title: 'Not Found',
+      description: 'The page you are looking for does not exist.',
+    }
+  }
+}
+
 export default async function Page({ params }: PageProps) {
   try {
-    const { content, imagesPath } = await getMarkdownContent(params.slug)
+    const { content, imagesPath, frontmatter } = await getMarkdownContent(params.slug)
     const { prev, next } = getNavigation(params.slug.join('/'))
     const navItems = getFullNavigation()
 

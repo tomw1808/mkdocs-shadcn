@@ -190,6 +190,31 @@ function flattenNav(nav: any[]): { title: string; path: string }[] {
   return items
 }
 
+export function getAllPaths() {
+  const mkdocsPath = path.join(process.cwd(), 'mkdocs', 'mkdocs.yml')
+  const fileContents = fs.readFileSync(mkdocsPath, 'utf8')
+  const config = yaml.load(fileContents) as any
+  
+  if (!config.nav) return []
+
+  const paths: string[] = []
+  
+  function processNavItem(item: any) {
+    if (typeof item === 'string') return
+    
+    Object.entries(item).forEach(([_, value]) => {
+      if (typeof value === 'string' && value.endsWith('.md')) {
+        paths.push(value.replace('.md', ''))
+      } else if (Array.isArray(value)) {
+        value.forEach(processNavItem)
+      }
+    })
+  }
+
+  config.nav.forEach(processNavItem)
+  return paths
+}
+
 export function getNavigation(currentPath: string) {
   const mkdocsPath = path.join(process.cwd(), 'mkdocs', 'mkdocs.yml')
   const fileContents = fs.readFileSync(mkdocsPath, 'utf8')
