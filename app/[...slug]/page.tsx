@@ -1,6 +1,6 @@
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getMarkdownContent } from '@/lib/markdown'
-import { getNavigation, getFullNavigation } from '@/lib/mkdocs'
+import { getNavigation, getFullNavigation, getAllPaths } from '@/lib/mkdocs'
 import { SideNav } from '@/components/SideNav'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
