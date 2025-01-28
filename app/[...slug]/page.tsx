@@ -36,7 +36,7 @@ export default async function Page({ params }: PageProps) {
 
         <SidebarProvider defaultOpen={true}>
           <SideNav items={navItems} />
-          <SidebarInset>
+          <SidebarInset className='w-full'>
               <div className="mx-auto w-full min-w-0 max-w-2xl min-h-full">
 
                 <GalleryProvider>
