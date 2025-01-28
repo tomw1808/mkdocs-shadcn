@@ -17,6 +17,7 @@ import { ContentTabs } from '@/components/ContentTabs'
 import { Code } from '@/components/Code'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { CaretLeftIcon, CaretRightIcon } from '@radix-ui/react-icons'
+import { remarkTabs } from '@/plugins/remark-tabs'
 
 
 interface PageProps {
