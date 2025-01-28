@@ -42,7 +42,10 @@ export const remarkTabs: Plugin = function() {
         label: match[1],
         children: [contentNode],
         data: {
-          hName: 'tab'
+          hName: 'tab',
+          hProperties: {
+            label: match[1]
+          }
         }
       }
 

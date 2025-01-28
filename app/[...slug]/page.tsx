@@ -72,19 +72,18 @@ export default async function Page({ params }: PageProps) {
                       a: (props) => <a className="leading-7 [&:not(:first-child)]:mt-6 underline" {...props} />,
                       p: (props) => <p className="leading-7 [&:not(:first-child)]:mt-6" {...props} />,
                       // Custom components for our remark plugin nodes
-                      tabs: ({ children }) => {
+                      tabs: ({ children, ...props }) => {
                         // Convert children to array if it isn't already
                         const childrenArray = React.Children.toArray(children)
                         // Extract tab items from children
                         const items = childrenArray.map((child: any) => ({
-                          label: child.props.label,
-                          content: child.props.children
+                          label: child.props?.label || 'Untitled',
+                          content: child.props?.children || child
                         }))
                         return <ContentTabs items={items} className='mt-6 first:mt-0' />
                       },
                       tab: ({ label, children }) => {
-                        // Individual tab content - this won't be rendered directly
-                        return children
+                        return React.createElement('div', { label }, children)
                       },
                       ul: (props) => <ul className="list-disc pl-6  [&:not(:first-child)]:mt-6 space-y-2" {...props} />,
                       ol: (props) => <ol className="list-decimal pl-6  [&:not(:first-child)]:mt-6 space-y-2" {...props} />,
