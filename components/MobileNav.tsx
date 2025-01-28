@@ -83,9 +83,8 @@ export function MobileNav({ items, fullNavigation = [] }:
         <div className="flex flex-col gap-2">
             <div className="border-b pb-2">
                 {items.map((item) => (
-                    <SheetClose asChild>
+                    <SheetClose key={item.title} asChild>
                         <Link
-                            key={item.title}
                             href={item.path ? `/${item.path}` : '#'}
                             className="flex w-full items-center rounded-md px-2 py-1.5 text-sm font-medium">
                             {item.title}
