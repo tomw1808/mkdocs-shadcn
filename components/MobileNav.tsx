@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
+import { SheetClose } from './ui/sheet'
 
 interface MobileNavProps {
     items: Array<{
@@ -61,18 +62,20 @@ const NavItem = ({ item, currentPath, depth = 0 }:
     }
 
     return (
-        <Link
-            href={`/${item.path}`}
-            className={cn(
-                "flex w-full items-center rounded-md px-2 py-1.5 text-sm font-medium", isActive && "bg-accent", depth === 0 && "mt-2")}>
-            <span>{item.title}</span>
-        </Link>
+        <SheetClose asChild>
+
+            <Link
+                href={`/${item.path}`}
+                className={cn(
+                    "flex w-full items-center rounded-md px-2 py-1.5 text-sm font-medium", isActive && "bg-accent", depth === 0 && "mt-2")}>
+                <span>{item.title}</span>
+            </Link>
+        </SheetClose>
     )
 }
 
 export function MobileNav({ items, fullNavigation = [] }:
     MobileNavProps) {
-        console.log({items, fullNavigation});
     const pathname = usePathname()
     const currentPath = pathname.substring(1)
 
@@ -80,12 +83,14 @@ export function MobileNav({ items, fullNavigation = [] }:
         <div className="flex flex-col gap-2">
             <div className="border-b pb-2">
                 {items.map((item) => (
-                    <Link
-                        key={item.title}
-                        href={item.path ? `/${item.path}` : '#'}
-                        className="flex w-full items-center rounded-md px-2 py-1.5 text-sm font-medium">
-                        {item.title}
-                    </Link>
+                    <SheetClose asChild>
+                        <Link
+                            key={item.title}
+                            href={item.path ? `/${item.path}` : '#'}
+                            className="flex w-full items-center rounded-md px-2 py-1.5 text-sm font-medium">
+                            {item.title}
+                        </Link>
+                    </SheetClose>
                 ))}
             </div>
             <div className="flex flex-col">
