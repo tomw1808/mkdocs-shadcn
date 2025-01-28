@@ -1,35 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-
-function preprocessHtmlInMarkdown(content: string): string {
-
-  // Handle tabs
-  let processedContent = content.replace(
-    /^===\s+"([^"]+)"\r?\n((?:(?:    .*|[ \t]*)\r?\n)*(?:    .*))/gm,
-    (match, label, content) => {
-      // Remove the 4-space indent from content and handle empty lines
-      const processedContent = content.split('\n')
-        .map((line: string) => {
-          // Handle completely empty lines or lines with only whitespace
-          if (!line.trim()) return ''
-          // Handle indented empty lines
-          if (line.match(/^    $/)) return ''
-          // Handle regular indented content
-          return line.replace(/^    /, '')
-        })
-        .join('\n')
-        .trim()
-      
-      return `<Tab label="${label}">\n\n${processedContent}\n\n</Tab>`
-    }
-  )
-
-   // Wrap adjacent tabs in a Tabs component
-   processedContent = processedContent.replace(
-    /(?:<Tab[^>]*>[\s\S]*?<\/Tab>\s*)+/g,
-    match => `<Tabs>\n${match}</Tabs>\n`
-  )
+import { remarkTabs } from '../plugins/remark-tabs'
 
   // Store code blocks with unique identifiers
   const codeBlocks: Map<string, {lang: string, lines?: string, title?: string, code: string}> = new Map()

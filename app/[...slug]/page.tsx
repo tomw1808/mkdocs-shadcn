@@ -175,7 +175,7 @@ export default async function Page({ params }: PageProps) {
                       parseFrontmatter: true,
                       mdxOptions: {
                         development: process.env.NODE_ENV === 'development',
-                        remarkPlugins: [],
+                        remarkPlugins: [remarkTabs],
                         rehypePlugins: [],
                         format: 'mdx'
                       }
