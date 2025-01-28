@@ -35,6 +35,9 @@ export const remarkTabs: Plugin = function() {
         type: 'tab',
         label: match[1],
         children: [contentNode],
+        data: {
+          hName: 'tab'
+        }
       }
 
       // If this is the first tab in a potential group
@@ -59,6 +62,9 @@ export const remarkTabs: Plugin = function() {
         const tabsNode: TabsNode = {
           type: 'tabs',
           children: currentGroup,
+          data: {
+            hName: 'tabs'
+          }
         }
         
         // Insert the tabs node where we removed the first tab
