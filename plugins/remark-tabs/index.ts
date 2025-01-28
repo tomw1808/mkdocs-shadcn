@@ -17,16 +17,14 @@ const tabRegex = /^===\s+"([^"]+)"\s*$/
 
 export const remarkTabs: Plugin = function() {
   return function transformer(tree) {
-    const tabGroups: TabNode[][] = []
     let currentGroup: TabNode[] = []
+    let lastTabIndex: number | null = null
     
     visit(tree, 'paragraph', (node: any, index: number, parent: any) => {
       if (!node.children?.[0]?.value) return
-
+      
       const match = node.children[0].value.match(tabRegex)
       if (!match) return
-
-
 
       // Get the next node which should be our content
       const contentNode = parent.children[index + 1]
@@ -39,44 +37,41 @@ export const remarkTabs: Plugin = function() {
         children: [contentNode],
       }
 
-      // Remove both the marker node and content node
-      parent.children.splice(index, 2)
+      // If this is the first tab in a potential group
+      if (currentGroup.length === 0) {
+        lastTabIndex = index
+      }
 
       // Add to current group
       currentGroup.push(tabNode)
 
-      // If next remaining node isn't a tab marker, close the group
-      const nextNode = parent.children[index]
+      // Remove both the marker node and content node
+      parent.children.splice(index, 2)
+      index -= 2 // Adjust index after removal
+
+      // Check if next node would be a new tab
+      const nextNode = parent.children[index + 1]
       const nextMatch = nextNode?.type === 'paragraph' && 
                        nextNode.children?.[0]?.value?.match(tabRegex)
       
-      if (!nextMatch) {
-        if (currentGroup.length > 0) {
-          const tabsNode: TabsNode = {
-            type: 'tabs',
-            children: currentGroup,
-          }
-          // Insert the tabs node where we removed the first tab
-          parent.children.splice(index, 0, tabsNode)
-          currentGroup = []
+      // If no next tab, close the group
+      if (!nextMatch && currentGroup.length > 0) {
+        const tabsNode: TabsNode = {
+          type: 'tabs',
+          children: currentGroup,
         }
+        
+        // Insert the tabs node where we removed the first tab
+        if (lastTabIndex !== null) {
+          parent.children.splice(lastTabIndex, 0, tabsNode)
+        }
+        
+        // Reset for next group
+        currentGroup = []
+        lastTabIndex = null
       }
-    })
-    console.log(currentGroup)
 
-    // Convert tab groups to tabs nodes
-    tabGroups.forEach(group => {
-      const tabsNode: TabsNode = {
-        type: 'tabs',
-        children: group,
-      }
-
-      // Replace first tab's position with tabs node
-      const firstTab = group[0]
-      const firstIndex = tree.children.indexOf(firstTab)
-      if (firstIndex !== -1) {
-        tree.children.splice(firstIndex, group.length, tabsNode)
-      }
+      return index // Return adjusted index
     })
   }
 }
