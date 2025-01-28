@@ -20,12 +20,13 @@ export const remarkTabs: Plugin = function() {
     const tabGroups: TabNode[][] = []
     let currentGroup: TabNode[] = []
     
-    console.log('Initial tree:', JSON.stringify(tree, null, 2))
     visit(tree, 'paragraph', (node: any, index: number, parent: any) => {
       if (!node.children?.[0]?.value) return
-      
+
       const match = node.children[0].value.match(tabRegex)
       if (!match) return
+
+
 
       // Get the next node which should be our content
       const contentNode = parent.children[index + 1]
@@ -61,6 +62,7 @@ export const remarkTabs: Plugin = function() {
         }
       }
     })
+    console.log(currentGroup)
 
     // Convert tab groups to tabs nodes
     tabGroups.forEach(group => {
