@@ -5,12 +5,18 @@ import { Plugin } from 'unified'
 interface TabNode extends Node {
   type: 'tab'
   label: string
-  children: Node[]
+  children: Node[],
+  data: {
+    hName: 'tab'
+  }
 }
 
 interface TabsNode extends Node {
   type: 'tabs'
   children: TabNode[]
+  data: {
+    hName: 'tabs'
+  }
 }
 
 const tabRegex = /^===\s+"([^"]+)"\s*$/
