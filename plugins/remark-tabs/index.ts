@@ -7,7 +7,10 @@ interface TabNode extends Node {
   label: string
   children: Node[],
   data: {
-    hName: 'tab'
+    hName: 'tab',
+    hProperties: {
+      label: string
+    }
   }
 }
 
@@ -68,6 +71,7 @@ export const remarkTabs: Plugin = function() {
       
       // If no next tab, close the group
       if (!nextMatch && currentGroup.length > 0) {
+        console.log({nextMatch, nextNode, val: nextNode.children})
         const tabsNode: TabsNode = {
           type: 'tabs',
           children: currentGroup,
