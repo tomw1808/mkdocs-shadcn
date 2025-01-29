@@ -31,7 +31,7 @@ export const remarkTabs: Plugin = function() {
     
     visit(tree, 'paragraph', (node: any, index: number, parent: any) => {
       if (!node.children?.[0]?.value) return
-      
+
       const match = node.children[0].value.match(tabRegex)
       if (!match) return
 
@@ -62,30 +62,17 @@ export const remarkTabs: Plugin = function() {
 
       // Remove both the marker node and content node
       parent.children.splice(index, 2)
-      index -= 2 // Adjust index after removal
 
-      console.log('Processing node at index:', index)
-      console.log('Current group size:', currentGroup.length)
-      console.log('Last tab index:', lastTabIndex)
-      
       // Check if next node would be a new tab
-      const nextNode = parent.children[index + 1]
-      console.log('Next node:', {
-        type: nextNode?.type,
-        value: nextNode?.children?.[0]?.value,
-        index: index + 1
-      })
-      
+      const nextNode = parent.children[index]
       const nextMatch = nextNode?.type === 'paragraph' && 
                        nextNode.children?.[0]?.value?.match(tabRegex)
-      
-      console.log('Next match:', nextMatch)
-      
-      // If no next tab, close the group
-      if (!nextMatch && currentGroup.length > 0) {
+
+      // If no next tab or end of content, close the group
+      if (!nextMatch || index >= parent.children.length) {
         const tabsNode: TabsNode = {
           type: 'tabs',
-          children: currentGroup,
+          children: [...currentGroup], // Create a new array with current tabs
           data: {
             hName: 'tabs'
           }
@@ -101,7 +88,7 @@ export const remarkTabs: Plugin = function() {
         lastTabIndex = null
       }
 
-      return index // Return adjusted index
+      return index - 1 // Adjust index for the removed nodes
     })
   }
 }
