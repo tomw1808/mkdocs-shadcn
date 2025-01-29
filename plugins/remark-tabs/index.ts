@@ -64,14 +64,25 @@ export const remarkTabs: Plugin = function() {
       parent.children.splice(index, 2)
       index -= 2 // Adjust index after removal
 
+      console.log('Processing node at index:', index)
+      console.log('Current group size:', currentGroup.length)
+      console.log('Last tab index:', lastTabIndex)
+      
       // Check if next node would be a new tab
       const nextNode = parent.children[index + 1]
+      console.log('Next node:', {
+        type: nextNode?.type,
+        value: nextNode?.children?.[0]?.value,
+        index: index + 1
+      })
+      
       const nextMatch = nextNode?.type === 'paragraph' && 
                        nextNode.children?.[0]?.value?.match(tabRegex)
       
+      console.log('Next match:', nextMatch)
+      
       // If no next tab, close the group
       if (!nextMatch && currentGroup.length > 0) {
-        console.log({nextMatch, nextNode, val: nextNode.children})
         const tabsNode: TabsNode = {
           type: 'tabs',
           children: currentGroup,
