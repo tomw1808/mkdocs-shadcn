@@ -18,6 +18,7 @@ import { Code } from '@/components/Code'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { CaretLeftIcon, CaretRightIcon } from '@radix-ui/react-icons'
 import { remarkTabs } from '@/plugins/remark-tabs'
+import { remarkAdmonition } from '@/plugins/remark-admonition'
 
 
 interface PageProps {
@@ -190,7 +191,7 @@ export default async function Page({ params }: PageProps) {
                       parseFrontmatter: true,
                       mdxOptions: {
                         development: process.env.NODE_ENV === 'development',
-                        remarkPlugins: [remarkTabs],
+                        remarkPlugins: [remarkTabs, remarkAdmonition],
                         rehypePlugins: [],
                         format: 'mdx'
                       }
