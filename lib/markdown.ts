@@ -2,16 +2,16 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import { remarkTabs } from '../plugins/remark-tabs'
-
+function preprocessHtmlInMarkdown(content: string): string {
   // Store code blocks with unique identifiers
-  const codeBlocks: Map<string, {lang: string, lines?: string, title?: string, code: string}> = new Map()
-  
+  const codeBlocks: Map<string, { lang: string, lines?: string, title?: string, code: string }> = new Map()
+
   // First process 4-backtick blocks (nested code blocks)
-  processedContent = processedContent.replace(
+  let processedContent = content.replace(
     /````\s?(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)````/g,
     (match, lang, lines, title, code) => {
       const id = `CODE_BLOCK_${Math.random().toString(36).substr(2, 9)}`
-      codeBlocks.set(id, {lang, lines, title, code: code.trim()})
+      codeBlocks.set(id, { lang, lines, title, code: code.trim() })
       return id
     }
   )
@@ -21,12 +21,12 @@ import { remarkTabs } from '../plugins/remark-tabs'
     /```\s?(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)```/g,
     (match, lang, lines, title, code) => {
       const id = `CODE_BLOCK_${Math.random().toString(36).substr(2, 9)}`
-      codeBlocks.set(id, {lang, lines, title, code: code.trim()})
+      codeBlocks.set(id, { lang, lines, title, code: code.trim() })
       return id
     }
   )
 
-  
+
 
 
   // Handle admonitions (both regular and collapsible)
@@ -46,14 +46,14 @@ import { remarkTabs } from '../plugins/remark-tabs'
         })
         .join('\n')
         .trim()
-      
+
       return `<Admonition type="${type}" title="${title || ''}" isCollapsible={${isCollapsible}}>\n\n${processedContent}\n\n</Admonition>`
     }
   )
 
- 
 
-  
+
+
 
   // Then handle gallery images (!![]())
   processedContent = processedContent.replace(
@@ -83,12 +83,12 @@ import { remarkTabs } from '../plugins/remark-tabs'
       if (attributes.target === '_blank') {
         return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
       }
-      
+
       return `[${text}](${url})`;
     }
   );
 
- 
+
 
   // Then convert style attributes to valid JSX
   processedContent = processedContent.replace(
@@ -106,7 +106,7 @@ import { remarkTabs } from '../plugins/remark-tabs'
           }
           return acc;
         }, {});
-      
+
       return `style={${JSON.stringify(styleObject)}}`;
     }
   );
@@ -115,25 +115,25 @@ import { remarkTabs } from '../plugins/remark-tabs'
   processedContent = processedContent
     .replace(/frameborder=/g, "frameBorder=")
     .replace(/allowfullscreen/g, "allowFullScreen");
-    
+
   // Finally restore code blocks
   processedContent = processedContent.replace(
     /CODE_BLOCK_[a-z0-9]{9}/g,
     (id) => {
       const block = codeBlocks.get(id)
       if (!block) return id
-      
+
       const codeContent = block.code.replace(/`/g, '\\`').replace(/\$/g, '\\$')
       let codeProps = `lang="${block.lang}" code={\`${codeContent}\`}`
-      
+
       if (block.lines) {
         codeProps += ` highlights="${block.lines}"`
       }
-      
+
       if (block.title) {
         codeProps += ` title="${block.title}"`
       }
-      
+
       return `<Code ${codeProps} />`
     }
   )
@@ -145,16 +145,16 @@ export async function getMarkdownContent(slug: string[]) {
   try {
     // Construct the file path from the slug
     const filePath = path.join(process.cwd(), 'mkdocs', ...slug) + '.md'
-    
+
     // Read the markdown file
     const fileContents = fs.readFileSync(filePath, 'utf8')
-    
+
     // Use gray-matter to parse the markdown frontmatter
     const { content, data } = matter(fileContents)
-    
+
     // Preprocess HTML in markdown content
     const processedContent = preprocessHtmlInMarkdown(content)
-    
+
     return {
       content: processedContent,
       frontmatter: data,
