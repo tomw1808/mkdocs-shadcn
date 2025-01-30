@@ -28,16 +28,22 @@ export const remarkAdmonition: Plugin = function() {
       const match = node.children[0].value.match(admonitionRegex)
       if (!match) return
 
-      // Get the content nodes (everything until the next admonition or end)
+      // Get the content nodes (everything until indentation level changes)
       const contentNodes: Node[] = []
       let nextIndex = index + 1
       
+      // Get the indentation level of the admonition marker
+      const baseIndent = node.position?.indent?.[0] || 0
+      
       while (nextIndex < parent.children.length) {
         const nextNode = parent.children[nextIndex]
-        if (nextNode.type === 'paragraph' && 
-            nextNode.children?.[0]?.value?.match(admonitionRegex)) {
+        const nextIndent = nextNode.position?.indent?.[0] || 0
+        
+        // Break if we hit a node with same or less indentation
+        if (nextIndent <= baseIndent && nextNode.type === 'paragraph') {
           break
         }
+        
         contentNodes.push(nextNode)
         nextIndex++
       }
