@@ -18,7 +18,7 @@ interface AdmonitionNode extends Node {
   }
 }
 
-const admonitionRegex = /^(?:!!!|\?{3})\s*(\w+)(?:\s+"([^"]*)")?\s*$/
+const admonitionRegex = /^(?:!{3}|\?{3})\s*(\w+)(?:\s+"([^"]*)")?\s*$/
 
 export const remarkAdmonition: Plugin = function() {
   return function transformer(tree) {
@@ -33,20 +33,22 @@ export const remarkAdmonition: Plugin = function() {
       let nextIndex = index + 1
       
       // Get the indentation level of the admonition marker
-      const baseIndent = node.position?.indent?.[0] || 0
-      
+      const baseIndent = node.position?.start?.column || 0
+
       while (nextIndex < parent.children.length) {
         const nextNode = parent.children[nextIndex]
-        const nextIndent = nextNode.position?.indent?.[0] || 0
+        const nextIndent = nextNode.position?.start?.column || 0
+
         
         // Break if we hit a node with same or less indentation
-        if (nextIndent <= baseIndent && nextNode.type === 'paragraph') {
+        if (nextIndent <= baseIndent) {
           break
         }
         
         contentNodes.push(nextNode)
         nextIndex++
       }
+
 
       if (contentNodes.length === 0) return
 

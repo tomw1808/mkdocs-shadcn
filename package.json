@@ -48,6 +48,8 @@
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "tsx": "^4.19.2",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.0.0",
     "yet-another-react-lightbox": "^3.21.7"
   },
   "devDependencies": {
