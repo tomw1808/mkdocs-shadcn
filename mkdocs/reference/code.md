@@ -1,6 +1,6 @@
 # Code
 
-MkDocs-Shadcn provides syntax highlighting and code block enhancements using [rehype-pretty-code](https://rehype-pretty-code.netlify.app/).
+MkDocs-Shadcn provides syntax highlighting and code block enhancements using [Code Hike](https://codehike.org/).
 
 ## Basic Usage
 
@@ -20,61 +20,77 @@ Code blocks are created using standard markdown code fence syntax:
         print("Hello, World!")
     ```
 
-
-
 ## Features
 
 ### Syntax Highlighting
 
-The code blocks automatically support syntax highlighting for a wide range of programming languages. The highlighting uses GitHub's light and dark themes:
-
-- Light theme: github-light
-- Dark theme: github-dark-dimmed
+Code Hike uses its own syntax highlighter that supports a wide range of programming languages. The highlighting is based on GitHub themes and automatically adapts to light and dark modes.
 
 ### Copy to Clipboard
 
-Every code block includes a "Copy" button that appears when hovering over the code. When clicked, it copies the code content to the clipboard and shows a brief confirmation message.
+Every code block includes a "Copy" button in the top-right corner. When clicked, it copies the code content to the clipboard and shows a brief confirmation message.
 
 ### Line Numbers
 
-Line numbers are automatically added to code blocks. They appear on the left side of the code and are styled to be visually distinct from the code itself.
+Line numbers can be enabled for code blocks. They appear on the left side of the code and are styled to be visually distinct from the code itself.
 
-### Line Highlighting
+### Code Annotations
 
-You can highlight specific lines by adding a `hl_lines` attribute:
+Code Hike allows you to add annotations to your code using special comment syntax:
 
 === "Code"
-
     ````markdown
-    ```python hl_lines="2 3"
+    ```python
     def example():
-        # This line is highlighted
-        print("This line too")
-        # This line is not
+        # <-- This is an annotation
+        print("Hello!")  # <-- Another annotation
     ```
     ````
+
 === "Result"
-    ```python hl_lines="2 3"
+    ```python
     def example():
-        # This line is highlighted
-        print("This line too")
-        # This line is not
+        # <-- This is an annotation
+        print("Hello!")  # <-- Another annotation
+    ```
+
+### Focus and Highlighting
+
+You can focus on specific parts of your code using focus annotations:
+
+=== "Code"
+    ````markdown
+    ```python
+    def example():
+        # focus
+        print("This line is focused")
+        # focus(end)
+        print("This line is not")
+    ```
+    ````
+
+=== "Result"
+    ```python
+    def example():
+        # focus
+        print("This line is focused")
+        # focus(end)
+        print("This line is not")
     ```
 
 ### Code Block Titles
 
-You can add a title to your code blocks:
+You can add titles to your code blocks using the title attribute:
 
 === "Code"
-
     ````markdown
     ```python title="example.py"
     def hello():
         print("Hello!")
     ```
     ````
-=== "Result"
 
+=== "Result"
     ```python title="example.py"
     def hello():
         print("Hello!")
@@ -82,12 +98,14 @@ You can add a title to your code blocks:
 
 ## Implementation Details
 
-The code highlighting is implemented using:
+The code highlighting and features are implemented using:
 
-1. rehype-pretty-code for syntax highlighting
-2. GitHub's light and dark themes for consistent styling
-3. Copy-to-clipboard functionality
-4. Automatic line number generation
-5. Support for line highlighting and block titles
+1. Code Hike's built-in syntax highlighter
+2. React Server Components for optimal performance
+3. Built-in copy-to-clipboard functionality
+4. Support for annotations and focus highlighting
+5. Automatic theme switching based on system preferences
 
-The code blocks are processed during build time, ensuring fast page loads and consistent rendering across all browsers.
+Code blocks are processed during build time using Code Hike's MDX plugins (`remarkCodeHike` and `recmaCodeHike`), ensuring fast page loads and consistent rendering across all browsers.
+
+For more advanced features and customization options, refer to the [Code Hike documentation](https://codehike.org/docs).
