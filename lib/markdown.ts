@@ -6,26 +6,7 @@ function preprocessHtmlInMarkdown(content: string): string {
   // Store code blocks with unique identifiers
   const codeBlocks: Map<string, { lang: string, lines?: string, title?: string, code: string }> = new Map()
 
-  // First process 4-backtick blocks (nested code blocks)
-  let processedContent = content.replace(
-    /````\s?(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)````/g,
-    (match, lang, lines, title, code) => {
-      const id = `CODE_BLOCK_${Math.random().toString(36).substr(2, 9)}`
-      codeBlocks.set(id, { lang, lines, title, code: code.trim() })
-      return id
-    }
-  )
-
-  // Then process remaining 3-backtick blocks
-  processedContent = processedContent.replace(
-    /```\s?(\w+)(?:\s+(?:hl_lines="([^"]+)")?\s*(?:title="([^"]+)")?)?\r?\n([\s\S]*?)```/g,
-    (match, lang, lines, title, code) => {
-      const id = `CODE_BLOCK_${Math.random().toString(36).substr(2, 9)}`
-      codeBlocks.set(id, { lang, lines, title, code: code.trim() })
-      return id
-    }
-  )
-
+  let processedContent = content;
 
 
 
@@ -95,27 +76,7 @@ function preprocessHtmlInMarkdown(content: string): string {
     .replace(/frameborder=/g, "frameBorder=")
     .replace(/allowfullscreen/g, "allowFullScreen");
 
-  // Finally restore code blocks
-  processedContent = processedContent.replace(
-    /CODE_BLOCK_[a-z0-9]{9}/g,
-    (id) => {
-      const block = codeBlocks.get(id)
-      if (!block) return id
-
-      const codeContent = block.code.replace(/`/g, '\\`').replace(/\$/g, '\\$')
-      let codeProps = `lang="${block.lang}" code={\`${codeContent}\`}`
-
-      if (block.lines) {
-        codeProps += ` highlights="${block.lines}"`
-      }
-
-      if (block.title) {
-        codeProps += ` title="${block.title}"`
-      }
-
-      return `<Code ${codeProps} />`
-    }
-  )
+ 
 
   return processedContent;
 }

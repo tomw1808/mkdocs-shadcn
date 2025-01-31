@@ -32,6 +32,7 @@
     "@types/mdx": "^2.0.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "codehike": "^1.0.4",
     "gray-matter": "^4.0.3",
     "hast-util-to-jsx-runtime": "^2.3.2",
     "js-yaml": "^4.1.0",
