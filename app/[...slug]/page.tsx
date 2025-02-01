@@ -238,7 +238,19 @@ import { CopyButton } from '@/components/codehike/copy-button'
 
 export async function MyCode({ codeblock }: { codeblock: RawCode }) {
 
+  console.log(codeblock)
+  const findHlLine = /hl_line="(\d*)(?:-?(\d?))"/;
+  const match = codeblock.meta.match(findHlLine);
+  if(match) {
+    console.log(match);
+    console.log(codeblock.value.split("\n"))
+    const values = codeblock.value.split("\n");
+    values.splice(Number(match[1])-1, 0, `# !highlight(1:${match[2] == '' ? 1 : Number(match[2]) - Number(match[1])})`)
+    codeblock.value = values.join("\n")
+  }
+
   const highlighted = await highlight(codeblock, "github-from-css")
+  console.log(highlighted)
   return <div className="relative">
       <CopyButton text={highlighted.code} />
       <Pre className="m-0 px-4 bg-zinc-950" code={highlighted} />
