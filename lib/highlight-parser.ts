@@ -33,17 +33,3 @@ export function parseHighlightLines(meta: string): HighlightRange[] {
   return ranges;
 }
 
-export function insertHighlightAnnotations(code: string, ranges: HighlightRange[]): string {
-  const lines = code.split('\n');
-  
-  // Sort ranges in reverse order to insert from bottom to top
-  // This prevents line numbers from shifting as we insert
-  const sortedRanges = [...ranges].sort((a, b) => b.start - a.start);
-  
-  for (const range of sortedRanges) {
-    const annotation = `# !highlight(1:${range.end - range.start + 1})`;
-    lines.splice(range.start - 1, 0, annotation);
-  }
-  
-  return lines.join('\n');
-}
