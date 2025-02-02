@@ -36,51 +36,84 @@ Line numbers can be enabled for code blocks. They appear on the left side of the
 
 ### Code Annotations
 
-Code Hike allows you to add annotations to your code using special comment syntax:
-
-=== "Code"
-    ````markdown
-    ```python
-    def example():
-        # <-- This is an annotation
-        print("Hello!")  # <-- Another annotation
-    ```
-    ````
-
-=== "Result"
-    ```python
-    def example():
-        # <-- This is an annotation
-        print("Hello!")  # <-- Another annotation
-    ```
+Code Hike allows you to add annotations to your code using special comment syntax
 
 ### Focus and Highlighting
 
-You can focus on specific parts of your code using focus annotations:
+You can focus on specific parts of your code using a "# highlight" code annotation, it works by leveraging [CodeHike annotations](https://codehike.org/docs/concepts/annotations).
+
+But in this project you can also use the MkDocs-Material style code highlightings by adding the `hl_lines` to the code-fences. For example:
 
 === "Code"
     ````markdown
-    ```python
+    ```python hl_lines="2"
     def example():
-        # focus
         print("This line is focused")
-        # focus(end)
         print("This line is not")
     ```
     ````
 
 === "Result"
-    ```python
+    ```python hl_lines="2"
     def example():
-        # focus
         print("This line is focused")
-        # focus(end)
         print("This line is not")
     ```
 
+or mkdocs style hl_lines for multiple lines
+
+=== "Code"
+    ````markdown
+    ```solidity hl_lines="14"
+    //SPDX-License-Identifier: MIT
+
+    pragma solidity 0.6.12;
+        
+    contract ExceptionExample {
+        
+        mapping(address => uint) public balanceReceived;
+    
+        function receiveMoney() public payable {
+            balanceReceived[msg.sender] += msg.value;
+        }
+        
+        function withdrawMoney(address payable _to, uint _amount) public {
+            require(_amount <= balanceReceived[msg.sender], "Not Enough Funds, aborting");
+            
+            balanceReceived[msg.sender] -= _amount;
+            _to.transfer(_amount);
+        }
+    }
+    ```
+    ````
+=== "Result"
+    ```solidity hl_lines="14"
+    //SPDX-License-Identifier: MIT
+
+    pragma solidity 0.6.12;
+        
+    contract ExceptionExample {
+        
+        mapping(address => uint) public balanceReceived;
+    
+        function receiveMoney() public payable {
+            balanceReceived[msg.sender] += msg.value;
+        }
+        
+        function withdrawMoney(address payable _to, uint _amount) public {
+            require(_amount <= balanceReceived[msg.sender], "Not Enough Funds, aborting");
+            
+            balanceReceived[msg.sender] -= _amount;
+            _to.transfer(_amount);
+        }
+    }
+    ```
+
+
+
 ### Code Block Titles
 
-You can add titles to your code blocks using the title attribute:
+You can add titles to your code blocks using the title attribute like in mkdocs-material:
 
 === "Code"
     ````markdown

@@ -22,6 +22,7 @@ import { remarkAdmonition } from '@/plugins/remark-admonition'
 
 import { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
 import "./page.css";
+import { CodeHikeCodeblock } from '@/components/CodeHike'
 
 interface PageProps {
   params: {
@@ -190,7 +191,7 @@ export default async function Page({ params }: PageProps) {
                       return <pre {...props}>{children}</pre>
                     },
                     Code: (props) => <ClientCode {...props} />,
-                    MyCode: (props) => <MyCode {...props} />
+                    MyCode: (props) => <CodeHikeCodeblock {...props} />
                   }}
                   options={{
                     parseFrontmatter: true,
@@ -232,25 +233,3 @@ export default async function Page({ params }: PageProps) {
   }
 }
 
-import { Pre, RawCode, highlight } from "codehike/code"
-import { lineNumbers } from '@/components/codehike/line-numbers'
-import { CopyButton } from '@/components/codehike/copy-button'
-
-import { parseHighlightLines, insertHighlightAnnotations } from '@/lib/highlight-parser'
-
-export async function MyCode({ codeblock }: { codeblock: RawCode }) {
-  // Parse highlight ranges from meta
-  const ranges = parseHighlightLines(codeblock.meta);
-  
-  // Insert highlight annotations if needed
-  if (ranges.length > 0) {
-    codeblock.value = insertHighlightAnnotations(codeblock.value, ranges);
-  }
-
-  const highlighted = await highlight(codeblock, "github-from-css")
-  
-  return <div className="relative">
-    <CopyButton text={highlighted.code} />
-    <Pre className="m-0 px-4 bg-zinc-950" code={highlighted} />
-  </div>
-}
