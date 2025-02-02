@@ -5,7 +5,7 @@ interface HighlightRange {
 
 export function parseHighlightLines(meta: string): HighlightRange[] {
   // Match hl_line="..." pattern
-  const hlMatch = /hl_line="([^"]+)"/.exec(meta);
+  const hlMatch = /hl_lines="([^"]+)"/.exec(meta);
   if (!hlMatch) return [];
 
   const ranges: HighlightRange[] = [];
