@@ -19,6 +19,7 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { CaretLeftIcon, CaretRightIcon } from '@radix-ui/react-icons'
 import { remarkTabs } from '@/plugins/remark-tabs'
 import { remarkAdmonition } from '@/plugins/remark-admonition'
+import { remarkImages } from '@/plugins/remark-images'
 
 import { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
 import "./page.css";
@@ -197,7 +198,7 @@ export default async function Page({ params }: PageProps) {
                     parseFrontmatter: true,
                     mdxOptions: {
                       development: process.env.NODE_ENV === 'development',
-                      remarkPlugins: [remarkTabs, remarkAdmonition, [remarkCodeHike, chConfig]],
+                      remarkPlugins: [remarkTabs, remarkAdmonition, remarkImages, [remarkCodeHike, chConfig]],
                       rehypePlugins: [],
                       recmaPlugins: [[recmaCodeHike, chConfig]],
                       format: 'mdx'

@@ -15,11 +15,6 @@ function preprocessHtmlInMarkdown(content: string): string {
 
 
 
-  // Then handle gallery images (!![]())
-  processedContent = processedContent.replace(
-    /!!\[(.*?)\]\((.*?)\)/g,
-    (match, alt, src) => `<LightboxImage alt="${alt}" src="${src}" />`
-  );
 
   // Convert MkDocs-style links to markdown links
   processedContent = processedContent.replace(
