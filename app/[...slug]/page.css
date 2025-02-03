@@ -1,4 +1,4 @@
-:root {
+pre {
     --ch-0: dark;
     --ch-1: #8b949e;
     --ch-2: #79c0ff;
@@ -28,7 +28,7 @@
     --ch-26: #0d1117e6;
   }
   
-  [data-theme="light"] {
+.light pre {
     --ch-0: light;
     --ch-1: #6e7781;
     --ch-2: #0550ae;

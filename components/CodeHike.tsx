@@ -10,7 +10,7 @@ import { cookies } from 'next/headers'
 
 
 export async function CodeHikeCodeblock({ codeblock }: { codeblock: RawCode }) {
-  const highlighted = await highlight(codeblock, "dark-plus")
+  const highlighted = await highlight(codeblock, "github-from-css")
   
   // Parse highlight ranges from meta and add to annotations
   const ranges = parseHighlightLines(codeblock.meta);
@@ -39,7 +39,7 @@ export async function CodeHikeCodeblock({ codeblock }: { codeblock: RawCode }) {
 
     <CopyButton text={highlighted.code} />
     
-    <Pre className="p-2 bg-muted" code={highlighted} handlers={[borderHandler, lineNumbers, wordWrap]} style={highlighted.style} />
+    <Pre className="p-2 bg-muted" code={highlighted} handlers={[borderHandler, lineNumbers, wordWrap]} />
 
   </div>
   </div>
