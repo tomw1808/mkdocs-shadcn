@@ -150,46 +150,88 @@ export default async function Page({ params }: PageProps) {
                           </div>
                         )
                       }
-                      return (
-                        <Image
-                          src={props.src}
-                          width={800}
-                          height={600}
-                          style={{ maxWidth: '100%', height: 'auto' }}
-                          alt={props.alt || 'Image'}
-                        />
-                      )
-                    },
-                    img: async (props) => {
-                      if (props.src?.startsWith('http')) {
+                      // For remote images, fetch and process with plaiceholder
+                      try {
+                        const response = await fetch(props.src)
+                        const buffer = Buffer.from(await response.arrayBuffer())
+                        const { metadata, base64 } = await getPlaiceholder(buffer)
+                        
                         return (
                           <Image
                             src={props.src}
-                            width={700}
-                            height={475}
+                            alt={props.alt || ''}
+                            width={metadata.width}
+                            height={metadata.height}
+                            placeholder="blur"
+                            blurDataURL={base64}
+                            style={{ maxWidth: '100%', height: 'auto' }}
+                          />
+                        )
+                      } catch (error) {
+                        console.error('Error processing remote image:', error)
+                        // Fallback to basic image with default dimensions
+                        return (
+                          <Image
+                            src={props.src}
+                            width={800}
+                            height={600}
                             style={{ maxWidth: '100%', height: 'auto' }}
                             alt={props.alt || 'Image'}
                           />
                         )
                       }
-                      const originalPath = path.join('mkdocs', ...params.slug.slice(0, -1), props.src || '')
-                      const publicPath = ensurePublicImageExists(originalPath)
-                      
-                      // Process image dimensions at the page level
-                      const imageBuffer = fs.readFileSync(originalPath)
-                      const { metadata, base64 } = await getPlaiceholder(imageBuffer)
-                      
-                      return (
-                        <Image
-                          src={publicPath}
-                          alt={props.alt || ''}
-                          width={metadata.width}
-                          height={metadata.height}
-                          placeholder="blur"
-                          blurDataURL={base64}
-                          style={{ maxWidth: '100%', height: 'auto' }}
-                        />
-                      )
+                    },
+                    img: async (props) => {
+                      try {
+                        if (props.src?.startsWith('http')) {
+                          // For remote images, fetch and process with plaiceholder
+                          const response = await fetch(props.src)
+                          const buffer = Buffer.from(await response.arrayBuffer())
+                          const { metadata, base64 } = await getPlaiceholder(buffer)
+                          
+                          return (
+                            <Image
+                              src={props.src}
+                              alt={props.alt || ''}
+                              width={metadata.width}
+                              height={metadata.height}
+                              placeholder="blur"
+                              blurDataURL={base64}
+                              style={{ maxWidth: '100%', height: 'auto' }}
+                            />
+                          )
+                        }
+                        
+                        // For local images
+                        const originalPath = path.join('mkdocs', ...params.slug.slice(0, -1), props.src || '')
+                        const publicPath = ensurePublicImageExists(originalPath)
+                        const imageBuffer = fs.readFileSync(originalPath)
+                        const { metadata, base64 } = await getPlaiceholder(imageBuffer)
+                        
+                        return (
+                          <Image
+                            src={publicPath}
+                            alt={props.alt || ''}
+                            width={metadata.width}
+                            height={metadata.height}
+                            placeholder="blur"
+                            blurDataURL={base64}
+                            style={{ maxWidth: '100%', height: 'auto' }}
+                          />
+                        )
+                      } catch (error) {
+                        console.error('Error processing image:', error)
+                        // Fallback to basic image with default dimensions
+                        return (
+                          <Image
+                            src={props.src}
+                            width={700}
+                            height={475}
+                            alt={props.alt || ''}
+                            style={{ maxWidth: '100%', height: 'auto' }}
+                          />
+                        )
+                      }
                     },
                     // Allow HTML elements like div and iframe
                     div: (props) => <div {...props} />,
