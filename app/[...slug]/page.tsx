@@ -24,6 +24,7 @@ import { remarkImages } from '@/plugins/remark-images'
 import { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
 import "./page.css";
 import { CodeHikeCodeblock } from '@/components/CodeHike'
+import { ServerImage } from '@/components/ServerImage'
 
 interface PageProps {
   params: {
