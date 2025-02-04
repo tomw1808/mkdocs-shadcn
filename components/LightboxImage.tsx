@@ -2,15 +2,18 @@
 
 import { useEffect, useState } from 'react'
 import { useGallery } from './GalleryProvider'
-import { ServerImage } from './ServerImage'
+import Image from 'next/image'
 
 interface LightboxImageProps {
   src: string
   alt?: string
   className?: string
+  width: number
+  height: number
+  blurDataURL?: string
 }
 
-export function LightboxImage({ src, alt, className }: LightboxImageProps) {
+export function LightboxImage({ src, alt, className, width, height, blurDataURL }: LightboxImageProps) {
   const { addImage, setGalleryIndex } = useGallery()
   const [index, setIndex] = useState<number>(-1)
 
@@ -32,10 +35,14 @@ export function LightboxImage({ src, alt, className }: LightboxImageProps) {
       className={className + " cursor-pointer relative relative h-96 flex align-left"}
       onClick={handleClick}
     >
-      <ServerImage
+      <Image
         src={src}
-        alt={alt}
+        alt={alt || ''}
+        width={width}
+        height={height}
         className="object-contain self-left"
+        placeholder={blurDataURL ? "blur" : undefined}
+        blurDataURL={blurDataURL}
       />
     </div>
   )

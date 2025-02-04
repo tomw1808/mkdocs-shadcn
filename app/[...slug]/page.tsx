@@ -127,24 +127,28 @@ export default async function Page({ params }: PageProps) {
                         </Admonition>
                       )
                     },
-                    LightboxImage: (props) => {
-                      // Handle local images for lightbox gallery
+                    LightboxImage: async (props) => {
                       if (!props.src?.startsWith('http')) {
                         const originalPath = path.join('mkdocs', ...params.slug.slice(0, -1), props.src || '')
                         const publicPath = ensurePublicImageExists(originalPath)
-
-                        // Return the client component
+                        
+                        // Process image dimensions at the page level
+                        const imageBuffer = fs.readFileSync(originalPath)
+                        const { metadata, base64 } = await getPlaiceholder(imageBuffer)
+                        
                         return (
                           <div className="mt-6 first:mt-0">
                             <LightboxImage
                               src={publicPath}
                               alt={props.alt}
+                              width={metadata.width}
+                              height={metadata.height}
+                              blurDataURL={base64}
                               className="max-w-full"
                             />
                           </div>
                         )
                       }
-                      // Fall back to regular image for remote URLs
                       return (
                         <Image
                           src={props.src}
@@ -155,10 +159,8 @@ export default async function Page({ params }: PageProps) {
                         />
                       )
                     },
-                    // Regular image handling
                     img: async (props) => {
                       if (props.src?.startsWith('http')) {
-                        // Handle remote images with fallback dimensions
                         return (
                           <Image
                             src={props.src}
@@ -168,12 +170,25 @@ export default async function Page({ params }: PageProps) {
                             alt={props.alt || 'Image'}
                           />
                         )
-                      } else {
-                        // Handle local images with proper dimensions
-                        const originalPath = path.join('mkdocs', ...params.slug.slice(0, -1), props.src || '')
-                        const publicPath = ensurePublicImageExists(originalPath)
-                        return <ServerImage src={publicPath} alt={props.alt} />
                       }
+                      const originalPath = path.join('mkdocs', ...params.slug.slice(0, -1), props.src || '')
+                      const publicPath = ensurePublicImageExists(originalPath)
+                      
+                      // Process image dimensions at the page level
+                      const imageBuffer = fs.readFileSync(originalPath)
+                      const { metadata, base64 } = await getPlaiceholder(imageBuffer)
+                      
+                      return (
+                        <Image
+                          src={publicPath}
+                          alt={props.alt || ''}
+                          width={metadata.width}
+                          height={metadata.height}
+                          placeholder="blur"
+                          blurDataURL={base64}
+                          style={{ maxWidth: '100%', height: 'auto' }}
+                        />
+                      )
                     },
                     // Allow HTML elements like div and iframe
                     div: (props) => <div {...props} />,
