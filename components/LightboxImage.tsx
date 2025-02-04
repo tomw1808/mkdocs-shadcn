@@ -32,11 +32,10 @@ export function LightboxImage({ src, alt, className }: LightboxImageProps) {
       className={className + " cursor-pointer relative relative h-96 flex align-left"}
       onClick={handleClick}
     >
-      <Image
+      <ServerImage
         src={src}
-        alt={alt || ''}
-        fill={true}
-        style={{ objectFit: 'contain', alignSelf: 'left' }}
+        alt={alt}
+        className="object-contain self-left"
       />
     </div>
   )

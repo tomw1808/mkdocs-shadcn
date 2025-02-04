@@ -155,32 +155,23 @@ export default async function Page({ params }: PageProps) {
                       )
                     },
                     // Regular image handling
-                    img: (props) => {
+                    img: async (props) => {
                       if (props.src?.startsWith('http')) {
-                        // Handle remote images
+                        // Handle remote images with fallback dimensions
                         return (
                           <Image
                             src={props.src}
-                            width={300}
-                            height={300}
+                            width={700}
+                            height={475}
                             style={{ maxWidth: '100%', height: 'auto' }}
                             alt={props.alt || 'Image'}
                           />
                         )
                       } else {
-                        // Handle local images by copying them to public directory
+                        // Handle local images with proper dimensions
                         const originalPath = path.join('mkdocs', ...params.slug.slice(0, -1), props.src || '')
                         const publicPath = ensurePublicImageExists(originalPath)
-                        return (
-                          <Image
-                            src={publicPath}
-                            width={300}
-                            height={300}
-                            style={{ maxWidth: '100%', height: 'auto' }}
-                            alt={props.alt || 'Image'}
-                            placeholder={"blur"}
-                          />
-                        )
+                        return <ServerImage src={publicPath} alt={props.alt} />
                       }
                     },
                     // Allow HTML elements like div and iframe
