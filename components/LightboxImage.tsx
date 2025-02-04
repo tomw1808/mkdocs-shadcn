@@ -32,18 +32,22 @@ export function LightboxImage({ src, alt, className, width, height, blurDataURL 
 
   return (
     <div 
-      className={className + " cursor-pointer relative relative h-96 flex align-left"}
+      className={`${className} cursor-pointer relative w-full`}
       onClick={handleClick}
+      style={{
+        aspectRatio: `${width}/${height}`,
+        maxHeight: '600px'
+      }}
     >
       <Image
         src={src}
         alt={alt || ''}
         width={width}
         height={height}
-        fill={true}
-        className="object-contain"
+        className="w-full h-full object-contain"
         placeholder={blurDataURL ? "blur" : undefined}
         blurDataURL={blurDataURL}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
     </div>
   )
