@@ -40,7 +40,8 @@ export function LightboxImage({ src, alt, className, width, height, blurDataURL 
         alt={alt || ''}
         width={width}
         height={height}
-        className="object-contain self-left"
+        fill={true}
+        className="object-contain"
         placeholder={blurDataURL ? "blur" : undefined}
         blurDataURL={blurDataURL}
       />
