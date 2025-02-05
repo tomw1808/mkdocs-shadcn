@@ -136,7 +136,6 @@ export default async function Page({ params }: PageProps) {
                         // Process image dimensions at the page level
                         const imageBuffer = fs.readFileSync(originalPath)
                         const { metadata, base64 } = await getPlaiceholder(imageBuffer)
-                        
                         return (
                           <div className="mt-6 first:mt-0">
                             <LightboxImage
@@ -144,8 +143,8 @@ export default async function Page({ params }: PageProps) {
                               alt={props.alt}
                               width={metadata.width}
                               height={metadata.height}
-                              blurDataURL={base64}
-                              className="max-w-full"
+                                blurDataURL={base64}
+                                className="max-w-full"
                             />
                           </div>
                         )
@@ -223,13 +222,7 @@ export default async function Page({ params }: PageProps) {
                         console.error('Error processing image:', error)
                         // Fallback to basic image with default dimensions
                         return (
-                          <Image
-                            src={props.src}
-                            width={700}
-                            height={475}
-                            alt={props.alt || ''}
-                            style={{ maxWidth: '100%', height: 'auto' }}
-                          />
+                          <div>Image not found</div>
                         )
                       }
                     },

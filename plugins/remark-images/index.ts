@@ -23,9 +23,9 @@ export const remarkImages: Plugin = function() {
 
       // Determine if this is a lightbox image (starts with !!)
       const isLightbox = node.type === 'image' && parent.type === 'paragraph' && 
-                        parent.children.length === 1 && 
-                        parent.children[0] === node &&
-                        parent.position?.start?.column === 3 // Matches !![ pattern
+                        parent.children.length === 2 && 
+                        parent.children[1] === node &&
+                        parent.children[0].value === "!" // Matches !![ pattern
 
       // Create MDX component node
       const imageNode: ImageNode = {

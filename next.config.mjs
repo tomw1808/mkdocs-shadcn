@@ -1,3 +1,7 @@
+// @ts-check
+import withPlaiceholder from "@plaiceholder/next";
+ 
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -34,7 +38,13 @@ nextConfig.webpack = (config, options) => {
     // Run image processing script during production build
     require('./scripts/process-images.cjs')
   }
+  if (!options.isServer) {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false
+    };
+  }
   return originalBuild(config, options)
 }
 
-module.exports = nextConfig
+export default withPlaiceholder(nextConfig);

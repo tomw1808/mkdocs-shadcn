@@ -9,13 +9,6 @@ function preprocessHtmlInMarkdown(content: string): string {
   let processedContent = content;
 
 
-
-
-
-
-
-
-
   // Convert MkDocs-style links to markdown links
   processedContent = processedContent.replace(
     /<(https?:\/\/[^>]+)>/g,
