@@ -1,6 +1,6 @@
 // @ts-check
 import withPlaiceholder from "@plaiceholder/next";
-import { processAllImages } from './scripts/process-images.mjs';
+// import { processAllImages } from './scripts/process-images.mjs';
 
 
 
@@ -34,10 +34,10 @@ const nextConfig = {
 // Add build script execution
 const originalBuild = nextConfig.webpack || ((config) => config)
 nextConfig.webpack = (config, options) => {
-  if (options.isServer && !options.dev) {
-    // Run image processing script during production build
-     processAllImages();
-  }
+  // if (options.isServer && !options.dev) {
+  //   // Run image processing script during production build
+  //    processAllImages();
+  // }
   if (!options.isServer) {
     config.resolve.fallback = {
       ...config.resolve.fallback,
