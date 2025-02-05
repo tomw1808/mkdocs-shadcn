@@ -44,9 +44,10 @@ export const dynamicParams = false // Prevent dynamic paths
 
 export async function generateMetadata({ params }: PageProps) {
   try {
-    const { content, frontmatter } = await getMarkdownContent(params.slug)
+    const slugParams = await params
+    const { content, frontmatter } = await getMarkdownContent(slugParams.slug)
     return {
-      title: frontmatter.title || params.slug[params.slug.length - 1],
+      title: frontmatter.title || slugParams.slug[slugParams.slug.length - 1],
       description: frontmatter.description || '',
     }
   } catch (error) {
@@ -59,8 +60,9 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function Page({ params }: PageProps) {
   try {
-    const { content, imagesPath, frontmatter } = await getMarkdownContent(params.slug)
-    const { prev, next } = getNavigation(params.slug.join('/'))
+    const slugParams = await params
+    const { content, imagesPath, frontmatter } = await getMarkdownContent(slugParams.slug)
+    const { prev, next } = getNavigation(slugParams.slug.join('/'))
     const navItems = getFullNavigation()
     const chConfig = {
       components: { code: "MyCode" }
