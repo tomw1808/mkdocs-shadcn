@@ -10,6 +10,8 @@ Regular markdown images work as expected:
 ![Alt text](image.png)
 ```
 
+![The Image](images/image.png)
+
 These images are automatically optimized using Next.js Image component and properly served from the public directory.
 
 ## Lightbox Gallery
@@ -18,6 +20,8 @@ To enable lightbox functionality for an image, use double exclamation marks:
 
 ```markdown
 !![Alt text](image.png)
+!![Alt text](image2.png)
+!![Alt text](image3.png)
 ```
 
 All images marked with double exclamation marks on a page are automatically collected into a gallery. When you click any of these images:
@@ -25,6 +29,10 @@ All images marked with double exclamation marks on a page are automatically coll
 1. The image opens in a lightbox overlay
 2. You can navigate through all gallery images using arrow keys or buttons
 3. The lightbox can be closed by clicking outside or pressing ESC
+
+!![alt text](images/image-1.png)
+
+!![alt text](images/image-2.png)
 
 ## How It Works
 

@@ -60,7 +60,7 @@ export const remarkImages: Plugin = function() {
         parent.attributes = imageNode.attributes
         parent.children = []
       } else {
-        parent.children[parent.children.indexOf(node)] = imageNode
+        //parent.children[parent.children.indexOf(node)] = imageNode
       }
     })
   }

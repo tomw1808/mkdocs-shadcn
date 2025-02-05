@@ -22,7 +22,7 @@ function walkDir(dir) {
   return files;
 }
 
-export async function processAllImages() {
+export function processAllImages() {
   console.log('Processing all images...');
   const mkdocsDir = path.join(process.cwd(), 'mkdocs');
   const imageFiles = walkDir(mkdocsDir);
