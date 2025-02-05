@@ -1,6 +1,6 @@
 # Images
 
-MkDocs-Shadcn provides enhanced image handling with automatic lightbox functionality and gallery support.
+MkDocs-Shadcn provides enhanced image handling with automatic lightbox functionality, gallery support, and advanced image optimization.
 
 ## Basic Images
 
@@ -12,7 +12,13 @@ Regular markdown images work as expected:
 
 ![The Image](images/image.png)
 
-These images are automatically optimized using Next.js Image component and properly served from the public directory.
+Images are processed through multiple optimization steps:
+
+1. Automatic dimension detection using plaiceholder
+2. Responsive sizing for different screen sizes
+3. Blur placeholder generation for smooth loading
+4. Next.js Image optimization
+5. Proper aspect ratio preservation
 
 ## Lightbox Gallery
 
@@ -26,9 +32,10 @@ To enable lightbox functionality for an image, use double exclamation marks:
 
 All images marked with double exclamation marks on a page are automatically collected into a gallery. When you click any of these images:
 
-1. The image opens in a lightbox overlay
+1. The image opens in a lightbox overlay at full resolution
 2. You can navigate through all gallery images using arrow keys or buttons
 3. The lightbox can be closed by clicking outside or pressing ESC
+4. Images maintain their aspect ratio without letterboxing
 
 !![alt text](images/image-1.png)
 
@@ -36,21 +43,30 @@ All images marked with double exclamation marks on a page are automatically coll
 
 ## How It Works
 
-The image handling system consists of several components:
+The image handling system uses modern React and Next.js features:
 
-1. A markdown preprocessor that detects special image syntax (`!![]()`)
-2. A `LightboxImage` component that handles individual images
-3. A `GalleryProvider` that manages the collection of images
-4. A `LightboxGallery` component that displays the images in an overlay
+1. A remark plugin that transforms markdown image syntax into React components
+2. Plaiceholder for automatic image dimension detection and blur placeholders
+3. Next.js Image component for optimal delivery and caching
+4. React Server Components for efficient image processing
+5. Responsive design with dynamic sizing
+6. Client-side gallery management with React context
 
 ## Image Processing
 
-Local images referenced in markdown files are:
+Images are processed through multiple stages:
 
-1. Automatically copied to the public directory
-2. Optimized using Next.js Image component
-3. Served with proper caching headers
-4. Rendered with proper width and height attributes
+1. The remark-images plugin detects and transforms image syntax
+2. Server-side processing:
+   - Automatic dimension detection
+   - Blur placeholder generation
+   - Responsive size calculations
+   - Format optimization
+3. Client-side features:
+   - Lazy loading
+   - Progressive enhancement
+   - Smooth transitions
+   - Responsive sizing
 
 Images can be placed in the same directory as your markdown files or in subdirectories. The paths are always relative to the markdown file's location. For example, if your documentation structure looks like this:
 
