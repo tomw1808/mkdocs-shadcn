@@ -36,7 +36,8 @@ const originalBuild = nextConfig.webpack || ((config) => config)
 nextConfig.webpack = (config, options) => {
   if (options.isServer && !options.dev) {
     // Run image processing script during production build
-    require('./scripts/process-images.cjs')
+    const { processAllImages } = await import('./scripts/process-images.mjs');
+    await processAllImages();
   }
   if (!options.isServer) {
     config.resolve.fallback = {
