@@ -28,6 +28,7 @@ export const remarkAdmonition: Plugin = function() {
       const match = node.children[0].value.match(admonitionRegex)
       if (!match) return
 
+      console.log(match)
       // Get the content nodes (everything until indentation level changes)
       const contentNodes: Node[] = []
       let nextIndex = index + 1
