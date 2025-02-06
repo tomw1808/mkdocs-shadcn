@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 2025.02.06
+
+### Changed
+- Moved all markdown files into `mkdocs/docs` subdirectory for better MkDocs Material compatibility
+- Updated documentation to reflect new file structure
+- Improved drop-in replacement compatibility with existing MkDocs Material projects
 
 ## Version 2025.01.25
 

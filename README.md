@@ -45,9 +45,10 @@ This project is a drop-in replacement for MkDocs Material, built with Next.js 14
 
 ```
 your-project/
-├── mkdocs/              # Your documentation files
+├── mkdocs/              # Your documentation root
 │   ├── mkdocs.yml      # MkDocs configuration file
-│   └── **/*.md         # Markdown files in any subdirectory
+│   └── docs/           # Documentation markdown files
+│       └── **/*.md     # Markdown files in any subdirectory
 ├── components/         # React components
 ├── lib/               # Utility functions
 └── public/            # Public assets
