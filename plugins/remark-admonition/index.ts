@@ -29,17 +29,25 @@ export const remarkAdmonition: Plugin = function() {
       if (!match) return
 
       console.log(match)
-      // Get the content nodes (everything until indentation level changes)
+      // Get the content nodes
       const contentNodes: Node[] = []
-      let nextIndex = index + 1
       
-      // Get the indentation level of the admonition marker
+      // First check if there are remaining children in the current paragraph node
+      // This handles the case without newline
+      if (node.children.length > 1) {
+        contentNodes.push({
+          type: 'paragraph',
+          children: node.children.slice(1)
+        })
+      }
+      
+      // Then look for subsequent indented nodes
+      let nextIndex = index + 1
       const baseIndent = node.position?.start?.column || 0
 
       while (nextIndex < parent.children.length) {
         const nextNode = parent.children[nextIndex]
         const nextIndent = nextNode.position?.start?.column || 0
-
         
         // Break if we hit a node with same or less indentation
         if (nextIndent <= baseIndent) {
@@ -49,7 +57,6 @@ export const remarkAdmonition: Plugin = function() {
         contentNodes.push(nextNode)
         nextIndex++
       }
-
 
       if (contentNodes.length === 0) return
 
