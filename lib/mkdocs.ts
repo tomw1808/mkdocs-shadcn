@@ -204,6 +204,7 @@ export function getAllPaths() {
     
     Object.entries(item).forEach(([_, value]) => {
       if (typeof value === 'string' && value.endsWith('.md')) {
+        const mdPath = path.join(process.cwd(), 'mkdocs', 'docs', value)
         paths.push(value.replace('.md', ''))
       } else if (Array.isArray(value)) {
         value.forEach(processNavItem)
