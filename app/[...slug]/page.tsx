@@ -132,7 +132,7 @@ export default async function Page({ params }: PageProps) {
                     },
                     LightboxImage: async (props) => {
                       if (!props.src?.startsWith('http')) {
-                        const originalPath = path.join('mkdocs', ...params.slug.slice(0, -1), props.src || '')
+                        const originalPath = path.join('mkdocs', 'docs', ...params.slug.slice(0, -1), props.src || '')
                         const publicPath = ensurePublicImageExists(originalPath)
                         
                         // Process image dimensions at the page level
@@ -204,7 +204,7 @@ export default async function Page({ params }: PageProps) {
                         }
                         
                         // For local images
-                        const originalPath = path.join('mkdocs', ...params.slug.slice(0, -1), props.src || '')
+                        const originalPath = path.join('mkdocs', 'docs', ...params.slug.slice(0, -1), props.src || '')
                         const publicPath = ensurePublicImageExists(originalPath)
                         const imageBuffer = fs.readFileSync(originalPath)
                         const { metadata, base64 } = await getPlaiceholder(imageBuffer)
