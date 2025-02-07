@@ -51,8 +51,6 @@ Everything should work as expected, with the added benefits of Next.js performan
 !!! note "Forward Drop-In"
    The initial idea of mkdocs-shadcn is a forward drop-in compatibility. The project was created because a large MkDocs Material site needed additional features, which couldn't be accomplished with a static page. This is where mkdocs-shadcn shines, but of course, you can also use it to start a completely fresh documentation, ebook, blog, or whatever you you want.
 
-So if you want
-
 
 ## Starting from Scratch
 
