@@ -1,5 +1,5 @@
 import { visit } from 'unist-util-visit'
-import { Node } from 'unist'
+import { Node, Parent } from 'unist'
 import { Plugin } from 'unified'
 
 interface AdmonitionNode extends Node {
@@ -28,9 +28,10 @@ export const remarkAdmonition: Plugin = function() {
       const match = node.children[0].value.match(admonitionRegex)
       if (!match) return
 
-      console.log(match)
+      console.log(match);
+
       // Get the content nodes
-      const contentNodes: Node[] = []
+      const contentNodes: Parent[] = []
       
       // First check if there are remaining children in the current paragraph node
       // This handles the case without newline
