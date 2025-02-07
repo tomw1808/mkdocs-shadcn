@@ -18,7 +18,7 @@ interface AdmonitionNode extends Node {
   }
 }
 
-const admonitionRegex = /^(?:!{3}|\?{3})\s*(\w+)(?:\s+"([^"]*)")?\s*$/
+const admonitionRegex = /^(?:!{3}|\?{3})\s*(\w+)(?:\s+"([^"]*)")?\s*(?:\n|$)(.*)?/s
 
 export const remarkAdmonition: Plugin = function() {
   return function transformer(tree) {
@@ -28,18 +28,20 @@ export const remarkAdmonition: Plugin = function() {
       const match = node.children[0].value.match(admonitionRegex)
       if (!match) return
 
-      console.log(match);
-
       // Get the content nodes
       const contentNodes: Parent[] = []
       
-      // First check if there are remaining children in the current paragraph node
-      // This handles the case without newline
-      if (node.children.length > 1) {
+      // Handle inline content if present in the match
+      if (match[3]) {
         contentNodes.push({
           type: 'paragraph',
-          children: node.children.slice(1)
+          children: [{
+            type: 'text',
+            value: match[3].trim()
+          }]
         })
+        // Update the original node to only contain the admonition marker
+        node.children[0].value = node.children[0].value.replace(match[3], '').trim()
       }
       
       // Then look for subsequent indented nodes
