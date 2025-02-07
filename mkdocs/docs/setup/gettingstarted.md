@@ -17,17 +17,42 @@
 
 
 !!! tip "Star the Repository"
+
     Help spread the word, star the Github-Repo. This helps make the project more visible to other developers who might benefit from it.
+
+
+## Project Structure
+
+The project follows a specific structure to maintain compatibility with MkDocs Material while providing enhanced features:
+
+```bash
+your-project/
+├── mkdocs/              # Your documentation root
+│   ├── mkdocs.yml      # MkDocs configuration file
+│   └── docs/           # Documentation markdown files
+│       └── **/*.md     # Markdown files in any subdirectory
+├── components/         # React components
+├── lib/               # Utility functions
+└── public/            # Public assets
+```
 
 ## Adding Your Documentation
 
-If you already have an existing MkDocs installation:
 
-1. Copy your existing `mkdocs.yml` configuration file to the `mkdocs` folder of this project.
-2. Copy all your documentation Markdown (.md) files from your docs folder to the `mkdocs` folder.
+This project is designed as a drop-in replacement for MkDocs Material. You can take any existing MkDocs Material project and:
+
+1. Copy your existing `mkdocs.yml` into the `mkdocs` directory
+2. Copy your markdown files into the `mkdocs/docs` directory
+3. Run the development server
+
+Everything should work as expected, with the added benefits of Next.js performance and modern features.
+
 
 !!! note "Forward Drop-In"
-    The initial idea of mkdocs-shadcn is a forward drop-in compatibility. The project was created because a large MkDocs Material site needed additional features, which couldn't be accomplished with a static page. This is where mkdocs-shadcn shines, but of course, you can also use it to start a completely fresh documentation, ebook, blog, or whatever you you want.
+   The initial idea of mkdocs-shadcn is a forward drop-in compatibility. The project was created because a large MkDocs Material site needed additional features, which couldn't be accomplished with a static page. This is where mkdocs-shadcn shines, but of course, you can also use it to start a completely fresh documentation, ebook, blog, or whatever you you want.
+
+So if you want
+
 
 ## Starting from Scratch
 
@@ -64,6 +89,32 @@ nav:
       - "API": "reference/api.md"
       - "Components": "reference/components.md"
 ```
+
+
+1. Create the basic directory structure:
+
+```bash
+mkdir -p mkdocs/docs
+```
+
+2. Place your `mkdocs.yml` file in the `mkdocs` directory.
+
+3. Place all your markdown files in the `mkdocs/docs` directory, maintaining your desired structure.
+
+4. Run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) to see your documentation site.
+
+
+
 
 
 

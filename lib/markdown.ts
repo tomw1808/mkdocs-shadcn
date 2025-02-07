@@ -72,7 +72,7 @@ function preprocessHtmlInMarkdown(content: string): string {
 export async function getMarkdownContent(slug: string[]) {
   try {
     // Construct the file path from the slug
-    const filePath = path.join(process.cwd(), 'mkdocs', ...slug) + '.md'
+    const filePath = path.join(process.cwd(), 'mkdocs', "docs", ...slug) + '.md'
 
     // Read the markdown file
     const fileContents = fs.readFileSync(filePath, 'utf8')
@@ -87,7 +87,7 @@ export async function getMarkdownContent(slug: string[]) {
       content: processedContent,
       frontmatter: data,
       // Calculate the images base path for this markdown file
-      imagesPath: path.join('/mkdocs', ...slug.slice(0, -1))
+      imagesPath: path.join('/mkdocs/docs', ...slug.slice(0, -1))
     }
   } catch (error: any) {
     throw new Error(`Failed to read markdown file: ${error.message}`)

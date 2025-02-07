@@ -1,5 +1,5 @@
 import { visit } from 'unist-util-visit'
-import { Node, Parent } from 'unist'
+import { Literal, Node, Parent } from 'unist'
 import { Plugin } from 'unified'
 
 interface AdmonitionNode extends Node {
@@ -32,13 +32,15 @@ export const remarkAdmonition: Plugin = function() {
       const contentNodes: Parent[] = []
       
       // Handle inline content if present in the match
+      let additionalIndex = 0;
       if (match[3]) {
+        additionalIndex = 1;
         contentNodes.push({
           type: 'paragraph',
           children: [{
             type: 'text',
             value: match[3].trim()
-          }]
+          } as Literal]
         })
         // Update the original node to only contain the admonition marker
         node.children[0].value = node.children[0].value.replace(match[3], '').trim()
@@ -81,7 +83,7 @@ export const remarkAdmonition: Plugin = function() {
       }
 
       // Remove the original nodes
-      parent.children.splice(index, contentNodes.length + 1, admonitionNode)
+      parent.children.splice(index, contentNodes.length + 1 - additionalIndex, admonitionNode)
 
       return index // Stay at the same index for next iteration
     })

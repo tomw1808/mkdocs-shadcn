@@ -24,7 +24,7 @@ async function buildSearchIndex() {
     
     if (typeof value === 'string' && value.endsWith(".md")) {
       // This is a page
-      const mdPath = path.join(process.cwd(), 'mkdocs', value)
+      const mdPath = path.join(process.cwd(), 'mkdocs/docs', value)
       try {
         const content = fs.readFileSync(mdPath, 'utf8')
         const { content: mdContent } = matter(content)
