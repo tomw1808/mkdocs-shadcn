@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/tomw1808/mkdocs-shadcn/compare/mkdocs-dropin-v1.0.0...mkdocs-dropin-v1.0.1) (2025-02-08)
+
+
+### Bug Fixes
+
+* removed wrong wording from gettingstarted.md ([323dbf8](https://github.com/tomw1808/mkdocs-shadcn/commit/323dbf81a0288153c84d70b35beca6ecbaea646b))
+
 ## 1.0.0 (2025-02-07)
 
 
