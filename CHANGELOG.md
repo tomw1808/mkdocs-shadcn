@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.1.0](https://github.com/tomw1808/mkdocs-shadcn/compare/mkdocs-dropin-v1.0.1...mkdocs-dropin-v1.1.0) (2025-02-11)
+
+
+### Features
+
+* Add debug logging for Table component rendering ([070b0b9](https://github.com/tomw1808/mkdocs-shadcn/commit/070b0b95c4cf4c0214d74506f1fa704dd598bc90))
+* Add remark plugin for parsing markdown tables into shadcn Table components ([aa0db1c](https://github.com/tomw1808/mkdocs-shadcn/commit/aa0db1c9aa448f99f3d40f9582ebcac66702a56e))
+* Add remark-gfm table support and update documentation ([782dc3b](https://github.com/tomw1808/mkdocs-shadcn/commit/782dc3bc4479541060ea665979d55d0777fd0419))
+* Add table rendering and improve table parsing in markdown ([cdabe34](https://github.com/tomw1808/mkdocs-shadcn/commit/cdabe345b342551a7543473d42bb272dfe6fb7df))
+* Add tables reference page with MkDocs Material compatibility examples ([ee0f812](https://github.com/tomw1808/mkdocs-shadcn/commit/ee0f812a33e46ab7a01b58664b2532472e25495e))
+* added remark-gfm package to package.json ([a05eaea](https://github.com/tomw1808/mkdocs-shadcn/commit/a05eaeae882650f054da9e5539aede82d20e7625))
+
+
+### Bug Fixes
+
+* Correct table structure in remark plugin and page component ([3c1bd89](https://github.com/tomw1808/mkdocs-shadcn/commit/3c1bd89fd7f270dcfe817fc865cb44903c7c81e3))
+* Improve remark-tables plugin parsing and validation logic ([5023b17](https://github.com/tomw1808/mkdocs-shadcn/commit/5023b17fc9fb63b3a86499454c6fff95fcc223a9))
+* removed deprecated remark-tables plugin import ([819413f](https://github.com/tomw1808/mkdocs-shadcn/commit/819413f4b3416557c2eae299649dfc458f6653e7))
+
 ## [1.0.1](https://github.com/tomw1808/mkdocs-shadcn/compare/mkdocs-dropin-v1.0.0...mkdocs-dropin-v1.0.1) (2025-02-08)
 
 
