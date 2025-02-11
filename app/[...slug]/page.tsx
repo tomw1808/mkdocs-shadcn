@@ -241,9 +241,10 @@ export default async function Page({ params }: PageProps) {
                     div: (props) => <div {...props} />,
                     iframe: (props) => <iframe {...props} />,
                     script: (props) => <Script {...props} />,
-                    Table: ({ rows }) => (
-
-                      <Table className="my-6">
+                    Table: (props) => {
+                      const { rows } = props
+                      console.log(props);
+                      return (<Table className="my-6">
                         <TableHeader>
                           <TableRow>
                             {rows[0].cells.map((cell: any, i: number) => (
@@ -278,8 +279,8 @@ export default async function Page({ params }: PageProps) {
                             </TableRow>
                           ))}
                         </TableBody>
-                      </Table>
-                    ),
+                      </Table>)
+                    },
                     pre: ({ children, ...props }) => {
                       // Only handle regular pre tags, Code components are already processed
                       return <pre {...props}>{children}</pre>

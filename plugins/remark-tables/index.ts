@@ -111,7 +111,6 @@ export const remarkTables: Plugin = function() {
         }
       }
 
-      console.log(JSON.stringify(tableNode, undefined, 2))
 
       // Replace the paragraph node with our table node
       parent.children.splice(index, 1, tableNode)
