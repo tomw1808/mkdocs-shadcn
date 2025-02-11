@@ -241,46 +241,25 @@ export default async function Page({ params }: PageProps) {
                     div: (props) => <div {...props} />,
                     iframe: (props) => <iframe {...props} />,
                     script: (props) => <Script {...props} />,
-                    Table: (props) => {
-                      const { rows } = props
-                      console.log(props);
-                      return (<Table className="my-6">
-                        <TableHeader>
-                          <TableRow>
-                            {rows[0].cells.map((cell: any, i: number) => (
-                              <TableHead 
-                                key={i} 
-                                className={
-                                  cell.align === 'right' ? 'text-right' :
-                                  cell.align === 'center' ? 'text-center' : 
-                                  'text-left'
-                                }
-                              >
-                                {cell.content}
-                              </TableHead>
-                            ))}
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {rows.slice(1).map((row: any, i: number) => (
-                            <TableRow key={i}>
-                              {row.cells.map((cell: any, j: number) => (
-                                <TableCell 
-                                  key={j}
-                                  className={
-                                    cell.align === 'right' ? 'text-right' :
-                                    cell.align === 'center' ? 'text-center' : 
-                                    'text-left'
-                                  }
-                                >
-                                  {cell.content}
-                                </TableCell>
-                              ))}
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>)
-                    },
+                    Table: ({ children, className }) => (
+                      <Table className={className}>
+                        {children}
+                      </Table>
+                    ),
+                    TableHead: ({ children, className }) => (
+                      <TableHead className={className}>{children}</TableHead>
+                    ),
+                    TableCell: ({ children, className }) => (
+                      <TableCell className={className}>{children}</TableCell>
+                    ),
+                    tableHeader: ({ children }) => (
+                      <TableHeader>
+                        <TableRow>{children}</TableRow>
+                      </TableHeader>
+                    ),
+                    tableRow: ({ children }) => (
+                      <TableRow>{children}</TableRow>
+                    ),
                     pre: ({ children, ...props }) => {
                       // Only handle regular pre tags, Code components are already processed
                       return <pre {...props}>{children}</pre>

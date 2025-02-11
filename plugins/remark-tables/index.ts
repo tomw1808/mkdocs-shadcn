@@ -99,14 +99,48 @@ export const remarkTables: Plugin = function() {
       // Create table node
       const tableNode: TableNode = {
         type: 'table',
-        children: [], // We'll use hProperties for the data
+        children: [
+          {
+            type: 'tableHeader',
+            children: headerCells.map(cell => ({
+              type: 'tableCell',
+              data: {
+                hName: 'TableHead',
+                hProperties: {
+                  className: cell.align === 'right' ? 'text-right' :
+                            cell.align === 'center' ? 'text-center' : 
+                            'text-left'
+                }
+              },
+              children: [{
+                type: 'text',
+                value: cell.content
+              }]
+            }))
+          },
+          ...rows.map(row => ({
+            type: 'tableRow',
+            children: row.cells.map(cell => ({
+              type: 'tableCell',
+              data: {
+                hName: 'TableCell',
+                hProperties: {
+                  className: cell.align === 'right' ? 'text-right' :
+                            cell.align === 'center' ? 'text-center' : 
+                            'text-left'
+                }
+              },
+              children: [{
+                type: 'text',
+                value: cell.content
+              }]
+            }))
+          }))
+        ],
         data: {
           hName: 'Table',
           hProperties: {
-            rows: [
-              { cells: headerCells },
-              ...rows
-            ]
+            className: 'my-6'
           }
         }
       }
