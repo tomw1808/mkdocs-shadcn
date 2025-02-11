@@ -58,7 +58,6 @@ nav:
       - "Images": "reference/images.md"
       - "Navigation": "reference/navigation.md"
       - "Search": "reference/search.md"
-      - "Tables": "reference/tables.md"
       - "Versioning": "reference/versioning.md"
   - "Blog": 
       - "2025-02-08 Remark Plugins": "blog/20250208.md"

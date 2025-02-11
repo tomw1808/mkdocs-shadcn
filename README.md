@@ -11,7 +11,6 @@ This project is a drop-in replacement for MkDocs Material, built with Next.js 14
 - 🎨 Customizable with Tailwind CSS
 - 📊 Beautiful UI components from shadcn/ui
 - 🔍 Full-text search with Pagefind integration
-- 📑 GitHub Flavored Markdown support with tables
 
 ### Navigation
 - 📚 Dynamic sidebar navigation with collapsible sections
@@ -97,7 +96,6 @@ This project maintains full compatibility with MkDocs Material features while pr
 - ✅ Code blocks with syntax highlighting
 - ✅ Content tabs
 - ✅ Collapsible navigation sections
-- ✅ Tables with column alignment support
 
 ### Enhanced Features
 - ✨ Improved image galleries with lightbox
