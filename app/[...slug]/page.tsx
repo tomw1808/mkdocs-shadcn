@@ -20,6 +20,15 @@ import { CaretLeftIcon, CaretRightIcon } from '@radix-ui/react-icons'
 import { remarkTabs } from '@/plugins/remark-tabs'
 import { remarkAdmonition } from '@/plugins/remark-admonition'
 import { remarkImages } from '@/plugins/remark-images'
+import remarkGfm from "remark-gfm";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 import { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
 import "./page.css";
@@ -232,6 +241,26 @@ export default async function Page({ params }: PageProps) {
                     div: (props) => <div {...props} />,
                     iframe: (props) => <iframe {...props} />,
                     script: (props) => <Script {...props} />,
+                    table: ({ children, className }) => (
+                      <Table className={className}>
+                        {children}
+                      </Table>
+                    ),
+                    th: ({ children, className, style }) => (
+                      <TableHead className={className} style={style}>{children}</TableHead>
+                    ),
+                    td: ({ children, className, style }) => (
+                      <TableCell className={className} style={style}>{children}</TableCell>
+                    ),
+                    thead: ({ children }) => (
+                      <TableHeader>{children}</TableHeader>
+                    ),
+                    tbody: ({ children }) => (
+                      <TableBody>{children}</TableBody>
+                    ),
+                    tr: ({ children }) => (
+                      <TableRow>{children}</TableRow>
+                    ),
                     pre: ({ children, ...props }) => {
                       // Only handle regular pre tags, Code components are already processed
                       return <pre {...props}>{children}</pre>
@@ -243,7 +272,7 @@ export default async function Page({ params }: PageProps) {
                     parseFrontmatter: true,
                     mdxOptions: {
                       development: process.env.NODE_ENV === 'development',
-                      remarkPlugins: [remarkTabs, remarkAdmonition, remarkImages, [remarkCodeHike, chConfig]],
+                      remarkPlugins: [remarkTabs, remarkAdmonition, remarkImages, remarkGfm, [remarkCodeHike, chConfig]],
                       rehypePlugins: [],
                       recmaPlugins: [[recmaCodeHike, chConfig]],
                       format: 'mdx'
