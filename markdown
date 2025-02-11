@@ -1,6 +1,6 @@
 # Tables
 
-Tables in MkDocs-Shadcn are backwards compatible with MkDocs Material's table syntax while providing a modern look using shadcn/ui components. They support basic table formatting and column alignment.
+Tables in MkDocs-Shadcn are powered by remark-gfm (GitHub Flavored Markdown) and styled with shadcn/ui components, ensuring backwards compatibility with MkDocs Material's table syntax while providing a modern look.
 
 ## Basic Tables
 
@@ -60,4 +60,4 @@ Here's an example:
 
 ## Compatibility
 
-All table features from MkDocs Material are supported, ensuring your existing documentation will work without modifications. The main difference is the modern styling provided by shadcn/ui components.
+All table features from MkDocs Material are supported through remark-gfm, ensuring your existing documentation will work without modifications. The main difference is the modern styling provided by shadcn/ui components.
