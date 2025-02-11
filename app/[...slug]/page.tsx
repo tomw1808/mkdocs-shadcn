@@ -20,6 +20,15 @@ import { CaretLeftIcon, CaretRightIcon } from '@radix-ui/react-icons'
 import { remarkTabs } from '@/plugins/remark-tabs'
 import { remarkAdmonition } from '@/plugins/remark-admonition'
 import { remarkImages } from '@/plugins/remark-images'
+import { remarkTables } from '@/plugins/remark-tables'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 import { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
 import "./page.css";
@@ -232,6 +241,44 @@ export default async function Page({ params }: PageProps) {
                     div: (props) => <div {...props} />,
                     iframe: (props) => <iframe {...props} />,
                     script: (props) => <Script {...props} />,
+                    Table: ({ rows }) => (
+                      <Table className="my-6">
+                        <TableHeader>
+                          <TableRow>
+                            {rows[0].cells.map((cell: any, i: number) => (
+                              <TableHead 
+                                key={i} 
+                                className={
+                                  cell.align === 'right' ? 'text-right' :
+                                  cell.align === 'center' ? 'text-center' : 
+                                  'text-left'
+                                }
+                              >
+                                {cell.content}
+                              </TableHead>
+                            ))}
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {rows.slice(1).map((row: any, i: number) => (
+                            <TableRow key={i}>
+                              {row.cells.map((cell: any, j: number) => (
+                                <TableCell 
+                                  key={j}
+                                  className={
+                                    cell.align === 'right' ? 'text-right' :
+                                    cell.align === 'center' ? 'text-center' : 
+                                    'text-left'
+                                  }
+                                >
+                                  {cell.content}
+                                </TableCell>
+                              ))}
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    ),
                     pre: ({ children, ...props }) => {
                       // Only handle regular pre tags, Code components are already processed
                       return <pre {...props}>{children}</pre>
@@ -243,7 +290,7 @@ export default async function Page({ params }: PageProps) {
                     parseFrontmatter: true,
                     mdxOptions: {
                       development: process.env.NODE_ENV === 'development',
-                      remarkPlugins: [remarkTabs, remarkAdmonition, remarkImages, [remarkCodeHike, chConfig]],
+                      remarkPlugins: [remarkTabs, remarkAdmonition, remarkImages, remarkTables, [remarkCodeHike, chConfig]],
                       rehypePlugins: [],
                       recmaPlugins: [[recmaCodeHike, chConfig]],
                       format: 'mdx'
