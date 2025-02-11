@@ -74,6 +74,7 @@ export const remarkTables: Plugin = function() {
       if (!lines[0].includes('|') || !lines[1].includes('|')) return // First two lines must be table format
       if (!lines[1].match(/^\s*\|[-:\s|]*\|\s*$/)) return // Second line must be separator
 
+
       // Parse header row
       const headerCells = parseTableRow(lines[0])
       
@@ -91,6 +92,7 @@ export const remarkTables: Plugin = function() {
         cells.forEach((cell, i) => {
           cell.align = alignments[i]
         })
+
         return { cells }
       })
 
@@ -108,6 +110,8 @@ export const remarkTables: Plugin = function() {
           }
         }
       }
+
+      console.log(JSON.stringify(tableNode, undefined, 2))
 
       // Replace the paragraph node with our table node
       parent.children.splice(index, 1, tableNode)

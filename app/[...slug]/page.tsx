@@ -242,6 +242,7 @@ export default async function Page({ params }: PageProps) {
                     iframe: (props) => <iframe {...props} />,
                     script: (props) => <Script {...props} />,
                     Table: ({ rows }) => (
+
                       <Table className="my-6">
                         <TableHeader>
                           <TableRow>
