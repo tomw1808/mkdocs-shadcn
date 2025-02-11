@@ -109,45 +109,57 @@ export const remarkTables: Plugin = function() {
           {
             type: 'tableHeader',
             data: {
-              hName: "TableHeader"
+              hName: "thead"
             },
-            children: headerCells.map(cell => ({
-              type: 'tableCell',
+            children: [{
+              type: 'tableRow',
               data: {
-                hName: 'TableHead',
-                hProperties: {
-                  className: cell.align === 'right' ? 'text-right' :
-                            cell.align === 'center' ? 'text-center' : 
-                            'text-left'
-                }
+                hName: "tr"
               },
-              children: [{
-                type: 'text',
-                value: cell.content
-              }]
-            }))
+              children: headerCells.map(cell => ({
+                type: 'tableCell',
+                data: {
+                  hName: 'th',
+                  hProperties: {
+                    className: cell.align === 'right' ? 'text-right' :
+                              cell.align === 'center' ? 'text-center' : 
+                              'text-left'
+                  }
+                },
+                children: [{
+                  type: 'text',
+                  value: cell.content
+                }]
+              }))
+            }]
           },
-          ...rows.map(row => ({
-            type: 'tableRow',
+          {
+            type: 'tableBody',
             data: {
-              hName: "TableRow"
+              hName: "tbody"
             },
-            children: row.cells.map(cell => ({
-              type: 'tableCell',
+            children: rows.map(row => ({
+              type: 'tableRow',
               data: {
-                hName: 'TableCell',
-                hProperties: {
-                  className: cell.align === 'right' ? 'text-right' :
-                            cell.align === 'center' ? 'text-center' : 
-                            'text-left'
-                }
+                hName: "tr"
               },
-              children: [{
-                type: 'text',
-                value: cell.content
-              }]
-            })) as TableCell[]
-          }) as TableRow)
+              children: row.cells.map(cell => ({
+                type: 'tableCell',
+                data: {
+                  hName: 'td',
+                  hProperties: {
+                    className: cell.align === 'right' ? 'text-right' :
+                              cell.align === 'center' ? 'text-center' : 
+                              'text-left'
+                  }
+                },
+                children: [{
+                  type: 'text',
+                  value: cell.content
+                }]
+              }))
+            }))
+          }
         ],
         data: {
           hName: 'Table',
