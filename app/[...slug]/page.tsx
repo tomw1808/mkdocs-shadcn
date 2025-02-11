@@ -241,11 +241,13 @@ export default async function Page({ params }: PageProps) {
                     div: (props) => <div {...props} />,
                     iframe: (props) => <iframe {...props} />,
                     script: (props) => <Script {...props} />,
-                    table: ({ children, className }) => (
+                    table: ({ children, className }) => {
+                      console.log(JSON.stringify(children, undefined, 2))
+                      return (
                       <Table className={className}>
                         {children}
                       </Table>
-                    ),
+                    )},
                     th: ({ children, className }) => (
                       <TableHead className={className}>{children}</TableHead>
                     ),

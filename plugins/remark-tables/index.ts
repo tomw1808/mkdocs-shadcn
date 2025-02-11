@@ -21,7 +21,13 @@ interface TableBody extends Node {
 
 interface TableHeader extends Node {
   type: 'tableHeader'
-  children: TableRow[]
+  children: TableRow[],
+  data: {
+    hName: 'thead'
+    hProperties?: {
+      className: string
+    }
+  }
 }
 
 interface TableRow extends Node {
@@ -33,7 +39,7 @@ interface TableNode extends Node {
   type: 'table'
   children: (TableHeader | TableBody)[]
   data: {
-    hName: 'Table'
+    hName: 'table'
     hProperties: {
       className: string
     }
@@ -116,58 +122,11 @@ export const remarkTables: Plugin = function() {
             data: {
               hName: "thead"
             },
-            children: [{
-              type: 'tableRow',
-              data: {
-                hName: "tr"
-              },
-              children: headerCells.map(cell => ({
-                type: 'tableCell',
-                data: {
-                  hName: 'th',
-                  hProperties: {
-                    className: cell.align === 'right' ? 'text-right' :
-                              cell.align === 'center' ? 'text-center' : 
-                              'text-left'
-                  }
-                },
-                children: [{
-                  type: 'text',
-                  value: cell.content
-                }]
-              }))
-            }]
+            children: []
           },
-          {
-            type: 'tableBody',
-            data: {
-              hName: "tbody"
-            },
-            children: rows.map(row => ({
-              type: 'tableRow',
-              data: {
-                hName: "tr"
-              },
-              children: row.cells.map(cell => ({
-                type: 'tableCell',
-                data: {
-                  hName: 'td',
-                  hProperties: {
-                    className: cell.align === 'right' ? 'text-right' :
-                              cell.align === 'center' ? 'text-center' : 
-                              'text-left'
-                  }
-                },
-                children: [{
-                  type: 'text',
-                  value: cell.content
-                }]
-              }))
-            }))
-          }
         ],
         data: {
-          hName: 'Table',
+          hName: 'table',
           hProperties: {
             className: 'my-6'
           }
@@ -179,7 +138,7 @@ export const remarkTables: Plugin = function() {
 
       // Replace the paragraph node with our table node
       parent.children.splice(index, 1, tableNode)
-      console.log(JSON.stringify(parent.children, undefined, 2))
+      console.log(JSON.stringify(parent, undefined, 2))
     })
   }
 }
