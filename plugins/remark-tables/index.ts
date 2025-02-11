@@ -109,17 +109,17 @@ export const remarkTables: Plugin = function() {
           {
             type: 'tableHeader',
             data: {
-              hName: "thead"
+              hName: "TableHeader"
             },
             children: [{
               type: 'tableRow',
               data: {
-                hName: "tr"
+                hName: "TableRow"
               },
               children: headerCells.map(cell => ({
                 type: 'tableCell',
                 data: {
-                  hName: 'th',
+                  hName: 'TableHead',
                   hProperties: {
                     className: cell.align === 'right' ? 'text-right' :
                               cell.align === 'center' ? 'text-center' : 
@@ -136,17 +136,17 @@ export const remarkTables: Plugin = function() {
           {
             type: 'tableBody',
             data: {
-              hName: "tbody"
+              hName: "TableBody"
             },
             children: rows.map(row => ({
               type: 'tableRow',
               data: {
-                hName: "tr"
+                hName: "TableRow"
               },
               children: row.cells.map(cell => ({
                 type: 'tableCell',
                 data: {
-                  hName: 'td',
+                  hName: 'TableCell',
                   hProperties: {
                     className: cell.align === 'right' ? 'text-right' :
                               cell.align === 'center' ? 'text-center' : 
