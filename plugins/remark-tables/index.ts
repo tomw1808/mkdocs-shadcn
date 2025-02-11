@@ -14,9 +14,14 @@ interface TableCell extends Node {
   }
 }
 
+interface TableBody extends Node {
+  type: 'tableBody'
+  children: TableRow[]
+}
+
 interface TableHeader extends Node {
   type: 'tableHeader'
-  children: TableCell[]
+  children: TableRow[]
 }
 
 interface TableRow extends Node {
@@ -26,7 +31,7 @@ interface TableRow extends Node {
 
 interface TableNode extends Node {
   type: 'table'
-  children: (TableHeader | TableRow)[]
+  children: (TableHeader | TableBody)[]
   data: {
     hName: 'Table'
     hProperties: {
@@ -109,17 +114,17 @@ export const remarkTables: Plugin = function() {
           {
             type: 'tableHeader',
             data: {
-              hName: "TableHeader"
+              hName: "thead"
             },
             children: [{
               type: 'tableRow',
               data: {
-                hName: "TableRow"
+                hName: "tr"
               },
               children: headerCells.map(cell => ({
                 type: 'tableCell',
                 data: {
-                  hName: 'TableHead',
+                  hName: 'th',
                   hProperties: {
                     className: cell.align === 'right' ? 'text-right' :
                               cell.align === 'center' ? 'text-center' : 
@@ -136,17 +141,17 @@ export const remarkTables: Plugin = function() {
           {
             type: 'tableBody',
             data: {
-              hName: "TableBody"
+              hName: "tbody"
             },
             children: rows.map(row => ({
               type: 'tableRow',
               data: {
-                hName: "TableRow"
+                hName: "tr"
               },
               children: row.cells.map(cell => ({
                 type: 'tableCell',
                 data: {
-                  hName: 'TableCell',
+                  hName: 'td',
                   hProperties: {
                     className: cell.align === 'right' ? 'text-right' :
                               cell.align === 'center' ? 'text-center' : 

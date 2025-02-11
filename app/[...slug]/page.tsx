@@ -241,26 +241,24 @@ export default async function Page({ params }: PageProps) {
                     div: (props) => <div {...props} />,
                     iframe: (props) => <iframe {...props} />,
                     script: (props) => <Script {...props} />,
-                    Table: ({ children, className }) => {
-                      console.log(JSON.stringify(children, undefined, 2));
-                      return (
+                    table: ({ children, className }) => (
                       <Table className={className}>
                         {children}
                       </Table>
-                    )},
-                    TableHead: ({ children, className }) => (
+                    ),
+                    th: ({ children, className }) => (
                       <TableHead className={className}>{children}</TableHead>
                     ),
-                    TableCell: ({ children, className }) => (
+                    td: ({ children, className }) => (
                       <TableCell className={className}>{children}</TableCell>
                     ),
-                    TableHeader: ({ children }) => (
+                    thead: ({ children }) => (
                       <TableHeader>{children}</TableHeader>
                     ),
-                    TableBody: ({ children }) => (
+                    tbody: ({ children }) => (
                       <TableBody>{children}</TableBody>
                     ),
-                    TableRow: ({ children }) => (
+                    tr: ({ children }) => (
                       <TableRow>{children}</TableRow>
                     ),
                     pre: ({ children, ...props }) => {
