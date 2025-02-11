@@ -57,18 +57,22 @@ export const remarkTables: Plugin = function() {
     visit(tree, 'paragraph', (node: any, index: number, parent: Parent) => {
       // Check if this paragraph contains a table
       const children = node.children || []
-      if (children.length < 3) return // Need at least header, alignment, and one data row
+      
+      // Get all text content
+      let textContent = ''
+      children.forEach((child: any) => {
+        if (child.type === 'text') {
+          textContent += child.value
+        }
+      })
 
-      // Check if the content matches table format
-      const lines = children
-        .filter((child: any) => child.type === 'text')
-        .map((child: any) => child.value)
-        .join('')
-        .split('\n')
-        .filter((line: string) => line.trim())
+      // Split into lines and filter empty ones
+      const lines = textContent.split('\n').filter(line => line.trim())
 
-      if (lines.length < 3) return // Need at least 3 lines for a table
-      if (!lines.every((line: string | string[]) => line.includes('|'))) return // Every line must contain |
+      // Check if we have a valid table structure
+      if (lines.length < 3) return // Need at least header, separator, and one data row
+      if (!lines[0].includes('|') || !lines[1].includes('|')) return // First two lines must be table format
+      if (!lines[1].match(/^\s*\|[-:\s|]*\|\s*$/)) return // Second line must be separator
 
       // Parse header row
       const headerCells = parseTableRow(lines[0])
