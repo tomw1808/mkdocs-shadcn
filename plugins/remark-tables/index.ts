@@ -6,6 +6,17 @@ interface TableCell extends Node {
   type: 'tableCell'
   align?: 'left' | 'center' | 'right'
   children: Node[]
+  data?: {
+    hName: string
+    hProperties: {
+      className: string
+    }
+  }
+}
+
+interface TableHeader extends Node {
+  type: 'tableHeader'
+  children: TableCell[]
 }
 
 interface TableRow extends Node {
@@ -15,16 +26,11 @@ interface TableRow extends Node {
 
 interface TableNode extends Node {
   type: 'table'
-  children: TableRow[]
+  children: (TableHeader | TableRow)[]
   data: {
     hName: 'Table'
     hProperties: {
-      rows: {
-        cells: {
-          content: string
-          align?: 'left' | 'center' | 'right'
-        }[]
-      }[]
+      className: string
     }
   }
 }
@@ -116,8 +122,8 @@ export const remarkTables: Plugin = function() {
                 type: 'text',
                 value: cell.content
               }]
-            }))
-          },
+            })) as TableCell[]
+          } as TableHeader,
           ...rows.map(row => ({
             type: 'tableRow',
             children: row.cells.map(cell => ({
@@ -134,8 +140,8 @@ export const remarkTables: Plugin = function() {
                 type: 'text',
                 value: cell.content
               }]
-            }))
-          }))
+            })) as TableCell[]
+          }) as TableRow)
         ],
         data: {
           hName: 'Table',
