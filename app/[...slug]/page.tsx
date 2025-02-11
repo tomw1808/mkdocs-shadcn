@@ -252,12 +252,12 @@ export default async function Page({ params }: PageProps) {
                     TableCell: ({ children, className }) => (
                       <TableCell className={className}>{children}</TableCell>
                     ),
-                    tableHeader: ({ children }) => (
+                    TableHeader: ({ children }) => (
                       <TableHeader>
                         <TableRow>{children}</TableRow>
                       </TableHeader>
                     ),
-                    tableRow: ({ children }) => (
+                    TableRow: ({ children }) => (
                       <TableRow>{children}</TableRow>
                     ),
                     pre: ({ children, ...props }) => {

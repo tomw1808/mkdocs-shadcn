@@ -108,6 +108,9 @@ export const remarkTables: Plugin = function() {
         children: [
           {
             type: 'tableHeader',
+            data: {
+              hName: "TableHeader"
+            },
             children: headerCells.map(cell => ({
               type: 'tableCell',
               data: {
@@ -122,10 +125,13 @@ export const remarkTables: Plugin = function() {
                 type: 'text',
                 value: cell.content
               }]
-            })) as TableCell[]
-          } as TableHeader,
+            }))
+          },
           ...rows.map(row => ({
             type: 'tableRow',
+            data: {
+              hName: "TableRow"
+            },
             children: row.cells.map(cell => ({
               type: 'tableCell',
               data: {
@@ -151,9 +157,12 @@ export const remarkTables: Plugin = function() {
         }
       }
 
+      
+
 
       // Replace the paragraph node with our table node
       parent.children.splice(index, 1, tableNode)
+      console.log(JSON.stringify(parent.children, undefined, 2))
     })
   }
 }
