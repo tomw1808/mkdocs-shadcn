@@ -21,6 +21,7 @@ import { remarkTabs } from '@/plugins/remark-tabs'
 import { remarkAdmonition } from '@/plugins/remark-admonition'
 import { remarkImages } from '@/plugins/remark-images'
 import { remarkTables } from '@/plugins/remark-tables'
+import remarkGfm from "remark-gfm";
 import {
   Table,
   TableBody,
@@ -241,18 +242,16 @@ export default async function Page({ params }: PageProps) {
                     div: (props) => <div {...props} />,
                     iframe: (props) => <iframe {...props} />,
                     script: (props) => <Script {...props} />,
-                    table: ({ children, className }) => {
-                      console.log(JSON.stringify(children, undefined, 2))
-                      return (
+                    table: ({ children, className }) => (
                       <Table className={className}>
                         {children}
                       </Table>
-                    )},
-                    th: ({ children, className }) => (
-                      <TableHead className={className}>{children}</TableHead>
                     ),
-                    td: ({ children, className }) => (
-                      <TableCell className={className}>{children}</TableCell>
+                    th: ({ children, className, style }) => (
+                      <TableHead className={className} style={style}>{children}</TableHead>
+                    ),
+                    td: ({ children, className, style }) => (
+                      <TableCell className={className} style={style}>{children}</TableCell>
                     ),
                     thead: ({ children }) => (
                       <TableHeader>{children}</TableHeader>
@@ -274,7 +273,7 @@ export default async function Page({ params }: PageProps) {
                     parseFrontmatter: true,
                     mdxOptions: {
                       development: process.env.NODE_ENV === 'development',
-                      remarkPlugins: [remarkTabs, remarkAdmonition, remarkImages, remarkTables, [remarkCodeHike, chConfig]],
+                      remarkPlugins: [remarkTabs, remarkAdmonition, remarkImages, remarkGfm, [remarkCodeHike, chConfig]],
                       rehypePlugins: [],
                       recmaPlugins: [[recmaCodeHike, chConfig]],
                       format: 'mdx'

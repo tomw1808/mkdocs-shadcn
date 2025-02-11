@@ -49,6 +49,7 @@
     "react-dom": "^18",
     "rehype-pretty-code": "^0.14.0",
     "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.1",
     "shiki": "^1.27.2",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
