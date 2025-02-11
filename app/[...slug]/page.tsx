@@ -20,7 +20,6 @@ import { CaretLeftIcon, CaretRightIcon } from '@radix-ui/react-icons'
 import { remarkTabs } from '@/plugins/remark-tabs'
 import { remarkAdmonition } from '@/plugins/remark-admonition'
 import { remarkImages } from '@/plugins/remark-images'
-import { remarkTables } from '@/plugins/remark-tables'
 import remarkGfm from "remark-gfm";
 import {
   Table,
