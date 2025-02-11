@@ -1,12 +1,12 @@
 # Code
 
-MkDocs-Shadcn provides syntax highlighting and code block enhancements using [Code Hike](https://codehike.org/). It was rehype-
+MkDocs-Shadcn provides syntax highlighting and code block enhancements using [Code Hike](https://codehike.org/).
 
 ## Basic Usage
 
 Code blocks are created using standard markdown code fence syntax:
 
-=== "Code"
+=== "code"
     ````markdown
     ```python
     def hello_world():
@@ -14,7 +14,7 @@ Code blocks are created using standard markdown code fence syntax:
     ```
     ````
 
-=== "Result"
+=== "result"
     ```python
     def hello_world():
         print("Hello, World!")
