@@ -65,10 +65,10 @@ export const remarkTables: Plugin = function() {
         .map((child: any) => child.value)
         .join('')
         .split('\n')
-        .filter(line => line.trim())
+        .filter((line: string) => line.trim())
 
       if (lines.length < 3) return // Need at least 3 lines for a table
-      if (!lines.every(line => line.includes('|'))) return // Every line must contain |
+      if (!lines.every((line: string | string[]) => line.includes('|'))) return // Every line must contain |
 
       // Parse header row
       const headerCells = parseTableRow(lines[0])
@@ -82,7 +82,7 @@ export const remarkTables: Plugin = function() {
       })
 
       // Parse data rows
-      const rows = lines.slice(2).map(line => {
+      const rows = lines.slice(2).map((line: string) => {
         const cells = parseTableRow(line)
         cells.forEach((cell, i) => {
           cell.align = alignments[i]
