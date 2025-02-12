@@ -4,7 +4,7 @@ icon: material/alert-outline
 
 # Admonitions
 
-Admonitions are backwards compatible to the MkDocs Markdown Admonitions. There its defined as:
+Admonitions are backwards compatible to the MkDocs-Material Admonitions. There, in MkDocs-Material its defined as:
 
 !!! quote "What are Admonitions?"
 
