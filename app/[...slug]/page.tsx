@@ -282,17 +282,17 @@ export default async function Page({ params }: PageProps) {
                       footnoteContent?: string;
                     }) => {
                       const {children, footnoteContent} = props;
-                      if (!footnoteContent) {
+                      
+                      // Type guard to check if children is a React element
+                      if (!React.isValidElement(children) || !footnoteContent) {
                         return <sup>{children}</sup>;
                       }
 
-                      
-                      
                       return (
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <sup className="cursor-pointer" id={children?.props?.id}>
-                              <a href={children?.props?.href} className="text-primary-500 dark:text-gray-300">{children?.props?.children}</a>
+                            <sup className="cursor-pointer" id={children.props?.id}>
+                              <a href={children.props?.href} className="text-primary-500 dark:text-gray-300">{children.props?.children}</a>
                             </sup>
                           </TooltipTrigger>
                           <TooltipContent>
