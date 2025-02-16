@@ -34,7 +34,6 @@ export const remarkFootnotes: Plugin = function () {
 
         // Second pass: attach content to references
         visit(tree, 'footnoteReference', (node: FootnoteReference) => {
-            console.log(node)
             if (definitions[node.identifier]) {
                 node.data = node.data || { hProperties: {} }
                 node.data.hProperties = node.data.hProperties || {};
