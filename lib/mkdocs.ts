@@ -216,6 +216,19 @@ export function getAllPaths() {
   return paths
 }
 
+export function findNavTitle(items: any[], currentPath: string): string | undefined {
+  for (const item of items) {
+    if (item.path === `${currentPath}.md`) {
+      return item.title
+    }
+    if (item.children) {
+      const found = findNavTitle(item.children, currentPath)
+      if (found) return found
+    }
+  }
+  return undefined
+}
+
 export function getNavigation(currentPath: string) {
   const mkdocsPath = path.join(process.cwd(), 'mkdocs', 'mkdocs.yml')
   const fileContents = fs.readFileSync(mkdocsPath, 'utf8')

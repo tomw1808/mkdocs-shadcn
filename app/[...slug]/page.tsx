@@ -63,22 +63,7 @@ export async function generateMetadata({ params }: PageProps) {
 
     // Find the navigation item that matches this path
     const currentPath = slugParams.slug.join('/')
-    let navTitle: string | undefined
-
-    function findNavTitle(items: any[]): string | undefined {
-      for (const item of items) {
-        if (item.path === `${currentPath}.md`) {
-          return item.title
-        }
-        if (item.children) {
-          const found = findNavTitle(item.children)
-          if (found) return found
-        }
-      }
-      return undefined
-    }
-
-    navTitle = findNavTitle(navItems)
+    const navTitle = findNavTitle(navItems, currentPath)
 
     return {
       title: frontmatter.title || navTitle || slugParams.slug[slugParams.slug.length - 1],
