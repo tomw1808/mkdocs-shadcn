@@ -293,10 +293,9 @@ export default async function Page({ params }: PageProps) {
                     MyCode: (props) => <CodeHikeCodeblock {...props} />,
                     // Footnotes handling
                     sup: ({ children }) => {
-                      if (!children?.props?.href?.startsWith('#fn-')) {
+                      if (!children?.props?.href?.startsWith('#user-content-fn-')) {
                         return <sup>{children}</sup>;
                       }
-                      
                       const footnoteId = children.props.href.substring(4); // Remove '#fn-'
                       const footnoteNumber = children.props.children;
                       
