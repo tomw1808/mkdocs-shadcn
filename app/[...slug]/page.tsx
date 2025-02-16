@@ -38,6 +38,7 @@ import "./page.css";
 import { CodeHikeCodeblock } from '@/components/CodeHike'
 import fs from "fs";
 import { getPlaiceholder } from "plaiceholder";
+import { remarkFootnotes } from '@/plugins/remark-footnotes'
 
 interface PageProps {
   params: {
@@ -292,8 +293,10 @@ export default async function Page({ params }: PageProps) {
                     Code: (props) => <ClientCode {...props} />,
                     MyCode: (props) => <CodeHikeCodeblock {...props} />,
                     // Footnotes handling
-                    sup: ({ children }) => {
-                      if (!children?.props?.['data-footnote-content']) {
+                    sup: (props) => {
+                      
+                      const {children, footnoteContent} = props;
+                      if (!footnoteContent) {
                         return <sup>{children}</sup>;
                       }
                       
@@ -306,7 +309,7 @@ export default async function Page({ params }: PageProps) {
                           </TooltipTrigger>
                           <TooltipContent>
                             <p className="max-w-xs text-sm">
-                              {children.props['data-footnote-content']}
+                              {footnoteContent}
                             </p>
                           </TooltipContent>
                         </Tooltip>
