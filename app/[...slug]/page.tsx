@@ -293,26 +293,20 @@ export default async function Page({ params }: PageProps) {
                     MyCode: (props) => <CodeHikeCodeblock {...props} />,
                     // Footnotes handling
                     sup: ({ children }) => {
-                      if (!children?.props?.href?.startsWith('#user-content-fn-')) {
+                      if (!children?.props?.['data-footnote-content']) {
                         return <sup>{children}</sup>;
                       }
-                      const footnoteId = children.props.href.substring(4); // Remove '#fn-'
-                      const footnoteNumber = children.props.children;
                       
                       return (
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <sup className="cursor-pointer text-blue-500">
-                              <a href={children.props.href}>{footnoteNumber}</a>
+                              <a href={children.props.href}>{children.props.children}</a>
                             </sup>
                           </TooltipTrigger>
                           <TooltipContent>
                             <p className="max-w-xs text-sm">
-                              {/* Find and render the footnote content */}
-                              {content.split('\n').find(line => 
-                                line.startsWith(`[^${footnoteId}]:`))
-                                ?.replace(`[^${footnoteId}]:`, '')
-                                ?.trim()}
+                              {children.props['data-footnote-content']}
                             </p>
                           </TooltipContent>
                         </Tooltip>
@@ -323,7 +317,7 @@ export default async function Page({ params }: PageProps) {
                     parseFrontmatter: true,
                     mdxOptions: {
                       development: process.env.NODE_ENV === 'development',
-                      remarkPlugins: [remarkTabs, remarkAdmonition, remarkImages, remarkGfm, [remarkCodeHike, chConfig]],
+                      remarkPlugins: [remarkFootnotes, remarkTabs, remarkAdmonition, remarkImages, remarkGfm, [remarkCodeHike, chConfig]],
                       rehypePlugins: [],
                       recmaPlugins: [[recmaCodeHike, chConfig]],
                       format: 'mdx'
