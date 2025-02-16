@@ -293,8 +293,10 @@ export default async function Page({ params }: PageProps) {
                     Code: (props) => <ClientCode {...props} />,
                     MyCode: (props) => <CodeHikeCodeblock {...props} />,
                     // Footnotes handling
-                    sup: (props) => {
-                      
+                    sup: (props: { 
+                      children: React.ReactElement<any>;
+                      footnoteContent?: string;
+                    }) => {
                       const {children, footnoteContent} = props;
                       if (!footnoteContent) {
                         return <sup>{children}</sup>;
