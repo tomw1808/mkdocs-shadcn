@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.2.0](https://github.com/tomw1808/mkdocs-shadcn/compare/mkdocs-dropin-v1.1.0...mkdocs-dropin-v1.2.0) (2025-02-16)
+
+
+### Features
+
+* Add blog post about tables and footnotes using remark-gfm ([f9a06f4](https://github.com/tomw1808/mkdocs-shadcn/commit/f9a06f4d059205bf50d9448d1f15a189c3fc556f))
+* Add code snippet for remark tables plugin implementation ([f45bb2f](https://github.com/tomw1808/mkdocs-shadcn/commit/f45bb2fc7f979273dcd36c3371913f6442ebb163))
+* Add custom remark plugin to handle footnote content extraction ([978502d](https://github.com/tomw1808/mkdocs-shadcn/commit/978502dfbc6549b5d132e2fe0b1d048f77dcd57c))
+* Add explicit type definition for sup component props in page.tsx ([5c274e0](https://github.com/tomw1808/mkdocs-shadcn/commit/5c274e0c7205d2e6f3e50b1ed2fedf5335402c9f))
+* Add findNavTitle import for enhanced navigation title lookup ([00748ab](https://github.com/tomw1808/mkdocs-shadcn/commit/00748ab81929e7ccf2535c1b3c9b6d7a2b436573))
+* Add footnotes reference page with interactive tooltip details ([09c5463](https://github.com/tomw1808/mkdocs-shadcn/commit/09c5463a866d3fb82abd09c7f3a85836386dead2))
+* Add navigation title fallback for page metadata when no frontmatter title exists ([a7466fe](https://github.com/tomw1808/mkdocs-shadcn/commit/a7466fe5df2303e7d1e4d090f4e7c0d616b8f5f6))
+* Add tooltip support for footnote references with dynamic content ([67470a6](https://github.com/tomw1808/mkdocs-shadcn/commit/67470a6d92b19a5663ea32f92980a7211c44ea84))
+* Enhance footnote rendering with improved tooltip and content handling ([5505613](https://github.com/tomw1808/mkdocs-shadcn/commit/5505613abf68b329a124a69ce89f53e75aaecdb5))
+* Enhance footnote styling and add tooltip support with improved link colors ([93ae605](https://github.com/tomw1808/mkdocs-shadcn/commit/93ae605c5059a79efa468880a01621ad04a4283d))
+
+
+### Bug Fixes
+
+* Add type guard for sup component children prop ([5cef005](https://github.com/tomw1808/mkdocs-shadcn/commit/5cef005c177038aca097e13189125ae3141e56e8))
+* Update footnote link handling to use GitHub-style anchor prefix ([3ad2f1f](https://github.com/tomw1808/mkdocs-shadcn/commit/3ad2f1f358d4735bcc1185355fb09210cbb8c481))
+* Update sup component type to resolve MDX component mapping type error ([f0c3ea3](https://github.com/tomw1808/mkdocs-shadcn/commit/f0c3ea36d75a94c448926707d80e007a9ca5a754))
+* wording in Admonitions ([1714471](https://github.com/tomw1808/mkdocs-shadcn/commit/1714471ab8c634e8032d809f922e6432ec59f27a))
+
 ## [1.1.0](https://github.com/tomw1808/mkdocs-shadcn/compare/mkdocs-dropin-v1.0.1...mkdocs-dropin-v1.1.0) (2025-02-11)
 
 
