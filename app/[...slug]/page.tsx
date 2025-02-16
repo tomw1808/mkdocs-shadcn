@@ -291,19 +291,30 @@ export default async function Page({ params }: PageProps) {
                     },
                     Code: (props) => <ClientCode {...props} />,
                     MyCode: (props) => <CodeHikeCodeblock {...props} />,
-                    // Footnote reference (inline number)
-                    sup: ({ children, id }) => {
-                      // Extract the footnote number from `<sup><a href="#fn-1">1</a></sup>`
-                      const footnoteNumber = children?.props?.children;
-                      const footnoteIdHref = children?.props?.href.substring(1);
-                      console.log({ footnoteIdHref, footnoteNumber })
+                    // Footnotes handling
+                    sup: ({ children }) => {
+                      if (!children?.props?.href?.startsWith('#fn-')) {
+                        return <sup>{children}</sup>;
+                      }
+                      
+                      const footnoteId = children.props.href.substring(4); // Remove '#fn-'
+                      const footnoteNumber = children.props.children;
+                      
                       return (
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <sup className="cursor-pointer text-blue-500">{footnoteNumber}</sup>
+                            <sup className="cursor-pointer text-blue-500">
+                              <a href={children.props.href}>{footnoteNumber}</a>
+                            </sup>
                           </TooltipTrigger>
                           <TooltipContent>
-                            <FootnoteContent id={footnoteIdHref} />
+                            <p className="max-w-xs text-sm">
+                              {/* Find and render the footnote content */}
+                              {content.split('\n').find(line => 
+                                line.startsWith(`[^${footnoteId}]:`))
+                                ?.replace(`[^${footnoteId}]:`, '')
+                                ?.trim()}
+                            </p>
                           </TooltipContent>
                         </Tooltip>
                       );
@@ -349,10 +360,3 @@ export default async function Page({ params }: PageProps) {
   }
 }
 
-// Function to extract footnote text from the document
-const FootnoteContent = ({ id }: { id: string }) => {
-  if (typeof document === "undefined") return null; // Avoid SSR issues
-  const footnoteElement = document.getElementById(id);
-  console.log({id, footnoteElement})
-  return footnoteElement ? footnoteElement.textContent : "Loading...";
-};
