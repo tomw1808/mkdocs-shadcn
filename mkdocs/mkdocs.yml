@@ -55,6 +55,7 @@ nav:
   - "Reference":
       - "Admonitions": "reference/admonitions.md"
       - "Code": "reference/code.md"
+      - "Footnotes": "reference/footnotes.md"
       - "Images": "reference/images.md"
       - "Navigation": "reference/navigation.md"
       - "Search": "reference/search.md"
