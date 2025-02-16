@@ -30,11 +30,14 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+
+
 import { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
 import "./page.css";
 import { CodeHikeCodeblock } from '@/components/CodeHike'
 import fs from "fs";
-import {getPlaiceholder} from "plaiceholder";
+import { getPlaiceholder } from "plaiceholder";
 
 interface PageProps {
   params: {
@@ -56,11 +59,11 @@ export async function generateMetadata({ params }: PageProps) {
     const slugParams = await params
     const { content, frontmatter } = await getMarkdownContent(slugParams.slug)
     const navItems = getFullNavigation()
-    
+
     // Find the navigation item that matches this path
     const currentPath = slugParams.slug.join('/')
     let navTitle: string | undefined
-    
+
     function findNavTitle(items: any[]): string | undefined {
       for (const item of items) {
         if (item.path === `${currentPath}.md`) {
@@ -73,7 +76,7 @@ export async function generateMetadata({ params }: PageProps) {
       }
       return undefined
     }
-    
+
     navTitle = findNavTitle(navItems)
 
     return {
@@ -164,7 +167,7 @@ export default async function Page({ params }: PageProps) {
                       if (!props.src?.startsWith('http')) {
                         const originalPath = path.join('mkdocs', 'docs', ...params.slug.slice(0, -1), props.src || '')
                         const publicPath = ensurePublicImageExists(originalPath)
-                        
+
                         // Process image dimensions at the page level
                         const imageBuffer = fs.readFileSync(originalPath)
                         const { metadata, base64 } = await getPlaiceholder(imageBuffer)
@@ -175,8 +178,8 @@ export default async function Page({ params }: PageProps) {
                               alt={props.alt}
                               width={metadata.width}
                               height={metadata.height}
-                                blurDataURL={base64}
-                                className="max-w-full"
+                              blurDataURL={base64}
+                              className="max-w-full"
                             />
                           </div>
                         )
@@ -186,7 +189,7 @@ export default async function Page({ params }: PageProps) {
                         const response = await fetch(props.src)
                         const buffer = Buffer.from(await response.arrayBuffer())
                         const { metadata, base64 } = await getPlaiceholder(buffer)
-                        
+
                         return (
                           <Image
                             src={props.src}
@@ -219,7 +222,7 @@ export default async function Page({ params }: PageProps) {
                           const response = await fetch(props.src)
                           const buffer = Buffer.from(await response.arrayBuffer())
                           const { metadata, base64 } = await getPlaiceholder(buffer)
-                          
+
                           return (
                             <Image
                               src={props.src}
@@ -232,13 +235,13 @@ export default async function Page({ params }: PageProps) {
                             />
                           )
                         }
-                        
+
                         // For local images
                         const originalPath = path.join('mkdocs', 'docs', ...params.slug.slice(0, -1), props.src || '')
                         const publicPath = ensurePublicImageExists(originalPath)
                         const imageBuffer = fs.readFileSync(originalPath)
                         const { metadata, base64 } = await getPlaiceholder(imageBuffer)
-                        
+
                         return (
                           <Image
                             src={publicPath}
@@ -287,7 +290,24 @@ export default async function Page({ params }: PageProps) {
                       return <pre {...props}>{children}</pre>
                     },
                     Code: (props) => <ClientCode {...props} />,
-                    MyCode: (props) => <CodeHikeCodeblock {...props} />
+                    MyCode: (props) => <CodeHikeCodeblock {...props} />,
+                    // Footnote reference (inline number)
+                    sup: ({ children, id }) => {
+                      // Extract the footnote number from `<sup><a href="#fn-1">1</a></sup>`
+                      const footnoteNumber = children?.props?.children;
+                      const footnoteIdHref = children?.props?.href.substring(1);
+                      console.log({ footnoteIdHref, footnoteNumber })
+                      return (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <sup className="cursor-pointer text-blue-500">{footnoteNumber}</sup>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <FootnoteContent id={footnoteIdHref} />
+                          </TooltipContent>
+                        </Tooltip>
+                      );
+                    },
                   }}
                   options={{
                     parseFrontmatter: true,
@@ -329,3 +349,10 @@ export default async function Page({ params }: PageProps) {
   }
 }
 
+// Function to extract footnote text from the document
+const FootnoteContent = ({ id }: { id: string }) => {
+  if (typeof document === "undefined") return null; // Avoid SSR issues
+  const footnoteElement = document.getElementById(id);
+  console.log({id, footnoteElement})
+  return footnoteElement ? footnoteElement.textContent : "Loading...";
+};
