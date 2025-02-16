@@ -305,7 +305,7 @@ export default async function Page({ params }: PageProps) {
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <sup className="cursor-pointer text-blue-500">
-                              <a href={children.props.href}>{children.props.children}</a>
+                              <a href={children?.props?.href}>{children?.props?.children}</a>
                             </sup>
                           </TooltipTrigger>
                           <TooltipContent>
