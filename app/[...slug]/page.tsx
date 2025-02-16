@@ -304,8 +304,8 @@ export default async function Page({ params }: PageProps) {
                       return (
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <sup className="cursor-pointer text-blue-500">
-                              <a href={children?.props?.href}>{children?.props?.children}</a>
+                            <sup className="cursor-pointer">
+                              <a href={children?.props?.href} className="text-foreground underline">{children?.props?.children}</a>
                             </sup>
                           </TooltipTrigger>
                           <TooltipContent>
