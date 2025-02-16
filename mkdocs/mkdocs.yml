@@ -55,12 +55,14 @@ nav:
   - "Reference":
       - "Admonitions": "reference/admonitions.md"
       - "Code": "reference/code.md"
+      - "Footnotes": "reference/footnotes.md"
       - "Images": "reference/images.md"
       - "Navigation": "reference/navigation.md"
       - "Search": "reference/search.md"
       - "Tables": "reference/tables.md"
       - "Versioning": "reference/versioning.md"
   - "Blog": 
+      - "2025-02-16 GitHub Flavored Markdown and Tables": "blog/20250216.md"
       - "2025-02-08 Remark Plugins": "blog/20250208.md"
   - "About": "about/mkdocs-shadcn.md"
 

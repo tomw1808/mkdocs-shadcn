@@ -1,6 +1,6 @@
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getMarkdownContent } from '@/lib/markdown'
-import { getNavigation, getFullNavigation, getAllPaths } from '@/lib/mkdocs'
+import { getNavigation, getFullNavigation, getAllPaths, findNavTitle } from '@/lib/mkdocs'
 import { SideNav } from '@/components/SideNav'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -30,11 +30,15 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+
+
 import { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
 import "./page.css";
 import { CodeHikeCodeblock } from '@/components/CodeHike'
 import fs from "fs";
-import {getPlaiceholder} from "plaiceholder";
+import { getPlaiceholder } from "plaiceholder";
+import { remarkFootnotes } from '@/plugins/remark-footnotes'
 
 interface PageProps {
   params: {
@@ -55,8 +59,14 @@ export async function generateMetadata({ params }: PageProps) {
   try {
     const slugParams = await params
     const { content, frontmatter } = await getMarkdownContent(slugParams.slug)
+    const navItems = getFullNavigation()
+
+    // Find the navigation item that matches this path
+    const currentPath = slugParams.slug.join('/')
+    const navTitle = findNavTitle(navItems, currentPath)
+
     return {
-      title: frontmatter.title || slugParams.slug[slugParams.slug.length - 1],
+      title: frontmatter.title || navTitle || slugParams.slug[slugParams.slug.length - 1],
       description: frontmatter.description || '',
     }
   } catch (error) {
@@ -143,7 +153,7 @@ export default async function Page({ params }: PageProps) {
                       if (!props.src?.startsWith('http')) {
                         const originalPath = path.join('mkdocs', 'docs', ...params.slug.slice(0, -1), props.src || '')
                         const publicPath = ensurePublicImageExists(originalPath)
-                        
+
                         // Process image dimensions at the page level
                         const imageBuffer = fs.readFileSync(originalPath)
                         const { metadata, base64 } = await getPlaiceholder(imageBuffer)
@@ -154,8 +164,8 @@ export default async function Page({ params }: PageProps) {
                               alt={props.alt}
                               width={metadata.width}
                               height={metadata.height}
-                                blurDataURL={base64}
-                                className="max-w-full"
+                              blurDataURL={base64}
+                              className="max-w-full"
                             />
                           </div>
                         )
@@ -165,7 +175,7 @@ export default async function Page({ params }: PageProps) {
                         const response = await fetch(props.src)
                         const buffer = Buffer.from(await response.arrayBuffer())
                         const { metadata, base64 } = await getPlaiceholder(buffer)
-                        
+
                         return (
                           <Image
                             src={props.src}
@@ -198,7 +208,7 @@ export default async function Page({ params }: PageProps) {
                           const response = await fetch(props.src)
                           const buffer = Buffer.from(await response.arrayBuffer())
                           const { metadata, base64 } = await getPlaiceholder(buffer)
-                          
+
                           return (
                             <Image
                               src={props.src}
@@ -211,13 +221,13 @@ export default async function Page({ params }: PageProps) {
                             />
                           )
                         }
-                        
+
                         // For local images
                         const originalPath = path.join('mkdocs', 'docs', ...params.slug.slice(0, -1), props.src || '')
                         const publicPath = ensurePublicImageExists(originalPath)
                         const imageBuffer = fs.readFileSync(originalPath)
                         const { metadata, base64 } = await getPlaiceholder(imageBuffer)
-                        
+
                         return (
                           <Image
                             src={publicPath}
@@ -266,13 +276,39 @@ export default async function Page({ params }: PageProps) {
                       return <pre {...props}>{children}</pre>
                     },
                     Code: (props) => <ClientCode {...props} />,
-                    MyCode: (props) => <CodeHikeCodeblock {...props} />
+                    MyCode: (props) => <CodeHikeCodeblock {...props} />,
+                    // Footnotes handling
+                    sup: (props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+                      footnoteContent?: string;
+                    }) => {
+                      const {children, footnoteContent} = props;
+                      
+                      // Type guard to check if children is a React element
+                      if (!React.isValidElement(children) || !footnoteContent) {
+                        return <sup>{children}</sup>;
+                      }
+
+                      return (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <sup className="cursor-pointer" id={children.props?.id}>
+                              <a href={children.props?.href} className="text-primary-500 dark:text-gray-300">{children.props?.children}</a>
+                            </sup>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="max-w-xs text-sm">
+                              {footnoteContent}
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      );
+                    },
                   }}
                   options={{
                     parseFrontmatter: true,
                     mdxOptions: {
                       development: process.env.NODE_ENV === 'development',
-                      remarkPlugins: [remarkTabs, remarkAdmonition, remarkImages, remarkGfm, [remarkCodeHike, chConfig]],
+                      remarkPlugins: [remarkFootnotes, remarkTabs, remarkAdmonition, remarkImages, remarkGfm, [remarkCodeHike, chConfig]],
                       rehypePlugins: [],
                       recmaPlugins: [[recmaCodeHike, chConfig]],
                       format: 'mdx'
