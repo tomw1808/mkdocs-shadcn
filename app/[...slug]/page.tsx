@@ -55,8 +55,29 @@ export async function generateMetadata({ params }: PageProps) {
   try {
     const slugParams = await params
     const { content, frontmatter } = await getMarkdownContent(slugParams.slug)
+    const navItems = getFullNavigation()
+    
+    // Find the navigation item that matches this path
+    const currentPath = slugParams.slug.join('/')
+    let navTitle: string | undefined
+    
+    function findNavTitle(items: any[]): string | undefined {
+      for (const item of items) {
+        if (item.path === `${currentPath}.md`) {
+          return item.title
+        }
+        if (item.children) {
+          const found = findNavTitle(item.children)
+          if (found) return found
+        }
+      }
+      return undefined
+    }
+    
+    navTitle = findNavTitle(navItems)
+
     return {
-      title: frontmatter.title || slugParams.slug[slugParams.slug.length - 1],
+      title: frontmatter.title || navTitle || slugParams.slug[slugParams.slug.length - 1],
       description: frontmatter.description || '',
     }
   } catch (error) {
