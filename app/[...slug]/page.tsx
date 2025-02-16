@@ -300,12 +300,14 @@ export default async function Page({ params }: PageProps) {
                       if (!footnoteContent) {
                         return <sup>{children}</sup>;
                       }
+
+                      
                       
                       return (
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <sup className="cursor-pointer">
-                              <a href={children?.props?.href} className="text-foreground underline">{children?.props?.children}</a>
+                            <sup className="cursor-pointer" id={children?.props?.id}>
+                              <a href={children?.props?.href} className="text-primary-500 dark:text-gray-300">{children?.props?.children}</a>
                             </sup>
                           </TooltipTrigger>
                           <TooltipContent>
