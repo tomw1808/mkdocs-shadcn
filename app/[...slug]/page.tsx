@@ -293,8 +293,7 @@ export default async function Page({ params }: PageProps) {
                     Code: (props) => <ClientCode {...props} />,
                     MyCode: (props) => <CodeHikeCodeblock {...props} />,
                     // Footnotes handling
-                    sup: (props: { 
-                      children: React.ReactElement<any>;
+                    sup: (props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
                       footnoteContent?: string;
                     }) => {
                       const {children, footnoteContent} = props;
