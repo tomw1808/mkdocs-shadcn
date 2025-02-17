@@ -5,8 +5,6 @@ import { CopyButton } from '@/components/codehike/copy-button'
 import { parseHighlightLines } from '@/lib/highlight-parser'
 import { borderHandler } from "./codehike/highlight";
 import { wordWrap } from "./codehike/word-wrap";
-import { cookies } from 'next/headers'
-
 
 
 export async function CodeHikeCodeblock({ codeblock }: { codeblock: RawCode }) {
@@ -33,13 +31,13 @@ export async function CodeHikeCodeblock({ codeblock }: { codeblock: RawCode }) {
 
   
   return <div className="[&:not(:first-child)]:mt-6">
-    {title && <div className="text-left p-2 text-sm font-light font-mono bg-gray-100 dark:bg-gray-900 border-b-2">
+    {title && <div className="text-left p-2 text-xs font-light font-mono bg-gray-200 dark:bg-gray-700 border-b-2 rounded-t-md">
         {title[1]}
     </div>}<div className="relative">
 
     <CopyButton text={highlighted.code} />
     
-    <Pre className="p-2 bg-muted" code={highlighted} handlers={[borderHandler, lineNumbers, wordWrap]} />
+    <Pre className={`p-2 bg-muted ${title ? 'rounded-t-none' : ''}`} code={highlighted} handlers={[borderHandler, lineNumbers, wordWrap]} />
 
   </div>
   </div>
