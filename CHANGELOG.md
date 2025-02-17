@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.1](https://github.com/tomw1808/mkdocs-shadcn/compare/mkdocs-dropin-v1.2.0...mkdocs-dropin-v1.2.1) (2025-02-17)
+
+
+### Bug Fixes
+
+* Code title border radius ([17415d3](https://github.com/tomw1808/mkdocs-shadcn/commit/17415d38ecf1340cbbd62a7f9b984841fb7a6b68))
+* copy button in code box top right corner ([d787979](https://github.com/tomw1808/mkdocs-shadcn/commit/d787979247656f48903c4bae6a3e3b0c9b7724fc))
+* footer links to GitHub and Portfolio ([ceef5f6](https://github.com/tomw1808/mkdocs-shadcn/commit/ceef5f64e0009e478b1eebb94c84f363916fbd88))
+
 ## [1.2.0](https://github.com/tomw1808/mkdocs-shadcn/compare/mkdocs-dropin-v1.1.0...mkdocs-dropin-v1.2.0) (2025-02-16)
 
 
