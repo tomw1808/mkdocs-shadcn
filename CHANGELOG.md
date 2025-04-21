@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/tomw1808/mkdocs-shadcn/compare/mkdocs-dropin-v1.2.1...mkdocs-dropin-v1.3.0) (2025-04-21)
+
+
+### Features
+
+* added nextra blog post ([0867b3b](https://github.com/tomw1808/mkdocs-shadcn/commit/0867b3b95bcb9757b87b2d0410953d86ed946630))
+
 ## [1.2.1](https://github.com/tomw1808/mkdocs-shadcn/compare/mkdocs-dropin-v1.2.0...mkdocs-dropin-v1.2.1) (2025-02-17)
 
 
