@@ -62,6 +62,7 @@ nav:
       - "Tables": "reference/tables.md"
       - "Versioning": "reference/versioning.md"
   - "Blog": 
+      - "2025-04-20 MkDocs-Material to Nextra 4": "blog/20250420.md"
       - "2025-02-16 GitHub Flavored Markdown and Tables": "blog/20250216.md"
       - "2025-02-08 Remark Plugins": "blog/20250208.md"
   - "About": "about/mkdocs-shadcn.md"
